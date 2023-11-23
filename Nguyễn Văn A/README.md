@@ -16,6 +16,15 @@ The project was done by [Nguyễn Văn A](https://github.com/naa-ntu), in the co
 - Open the project in your IDE
 - Run the project
 
+## Demo
+
+![Alt text](image.png)
+![Alt text](image-1.png)
+![Alt text](image-2.png)
+![Alt text](image-3.png)
+
+
+
 
 ## Usage
 
