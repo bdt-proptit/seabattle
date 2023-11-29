@@ -20,23 +20,22 @@ public class NguoiChoi_ChuanBi {
         capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
         hienThi.duongKeNgang();
         hienThi.banDo();
-
-//        nguoiChoi.getDsachTau().add(TauTuanTra.tauTuanTraFromScanner());
-//        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
-//        hienThi.banDo();
-//        hienThi.duongKeNgang();
-//        nguoiChoi.getDsachTau().add(TauKhuTruc.tauKhuTrucFromScanner());
-//        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
-//        hienThi.banDo();
-//        hienThi.duongKeNgang();
-//        nguoiChoi.getDsachTau().add(TauNgam.tauNgamFromScanner());
-//        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
-//        hienThi.banDo();
-//        hienThi.duongKeNgang();
-//        nguoiChoi.getDsachTau().add(ThietGiapHam.thietGiapHamFromScanner());
-//        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
-//        hienThi.banDo();
-//        hienThi.duongKeNgang();
+        nguoiChoi.getDsachTau().add(TauTuanTra.tauTuanTraFromScanner());
+        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
+        hienThi.duongKeNgang();
+        hienThi.banDo();
+        nguoiChoi.getDsachTau().add(TauKhuTruc.tauKhuTrucFromScanner());
+        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
+        hienThi.duongKeNgang();
+        hienThi.banDo();
+        nguoiChoi.getDsachTau().add(TauNgam.tauNgamFromScanner());
+        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
+        hienThi.duongKeNgang();
+        hienThi.banDo();
+        nguoiChoi.getDsachTau().add(ThietGiapHam.thietGiapHamFromScanner());
+        capNhatViTriTau(nguoiChoi.getDsachTau().getLast());
+        hienThi.duongKeNgang();
+        hienThi.banDo();
     }
     private void capNhatViTriTau(Tau tau) {
         int start = tau.getViTriDau().getX() == tau.getViTriDuoi().getX() ? Math.min(tau.getViTriDau().getY(), tau.getViTriDuoi().getY()) : Math.min(tau.getViTriDau().getX(), tau.getViTriDuoi().getX());
