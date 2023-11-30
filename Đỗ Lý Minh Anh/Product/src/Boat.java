@@ -24,39 +24,37 @@ public class Boat {
         return this.shape;
     }
     public String checkLocation (Coordinates firstCoordinates, Player player) {
-        int ans = 3;
-        int tmp = firstCoordinates.column;
+        boolean checkRow = true, checkColumn = true;
+        if (firstCoordinates.column + this.length > 10) {
+            checkRow = false;
+        }
+        else {
+            for (int i = 0; i < this.length; ++i) {
+                if (player.getMyBoard()[firstCoordinates.row - 'a'][ i + firstCoordinates.column] != 0) {
+                    checkRow = false;
+                    break;
+                }
+            }
+        }
         if (firstCoordinates.row - 'a' + this.length > 10) {
-            --ans;
+            checkColumn = false;
         }
         else {
             for (int i = 0; i < this.length; ++i) {
                 if (player.getMyBoard()[i + firstCoordinates.row - 'a'][firstCoordinates.column] != 0) {
-                    --ans;
+                    checkColumn = false;
                     break;
                 }
             }
         }
-        firstCoordinates.column = tmp;
-        if (firstCoordinates.column + this.length > 10) {
-            --ans;
-        }
-        else {
-            for (int i = 0; i < this.length; ++i) {
-                if (player.getMyBoard()[firstCoordinates.row - 'a'][i + firstCoordinates.column] != 0) {
-                    --ans;
-                    break;
-                }
-                if (i == 1 && ans == 2) {
-                    return "Column";
-                }
-            }
-        }
-        if (ans == 3) {
+        if (checkRow == true && checkColumn == true) {
             return "Both";
         }
-        else if (ans == 2) {
+        else if (checkRow == true) {
             return "Row";
+        }
+        else if (checkColumn == true) {
+            return "Column";
         }
         else {
             return "None";

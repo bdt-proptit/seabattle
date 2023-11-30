@@ -40,6 +40,10 @@ public class Server {
                             check = activePlayer.openFire(sc, player1);
                         }
                         if (check == true) {
+                            System.out.println("-> Player 1's Board:");
+                            player1.displayBoard();
+                            System.out.println("-> Player 2's Board:");
+                            player2.displayBoard();
                             System.out.println("----> | Player " + mark + " is the WINNER!!! | <----");
                             break;
                         }
