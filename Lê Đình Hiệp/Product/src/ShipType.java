@@ -6,13 +6,15 @@ public class ShipType {
 
     ShipType(){
         list = new ArrayList<>(5);
-        String data = "Patrol Boat\n2\n" +
-                "Patrol Boat\n2\n" +
-                "Destroyer Boat\n4\n" +
-                "Submarine\n3\n" +
-                "Battle Ship\n5\n";
+        String data = "Patrol Boat\n2\n"
+//                 + "Patrol Boat\n2\n"
+//                 + "Destroyer Boat\n4\n" +
+//                + "Submarine\n3\n" +
+//                + "Battle Ship\n5\n"
+                ;
         Scanner sc = new Scanner(data);
-        for(int i = 0; i < 5; i++){
+        while(true){
+            if(sc.hasNextLine() == false) break;
             Ship ship = new Ship();
             ship.setName(sc.nextLine());
             ship.setLength(Integer.parseInt(sc.nextLine()));

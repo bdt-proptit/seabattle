@@ -47,10 +47,12 @@ public class Manager {
                     break;
                 }
                 if(func == 2){
-                    int[] shootLocation = Menu.inputShootLocation();
                     Menu.outputShotBoard(p1);
+                    int[] shootLocation = Menu.inputShootLocation();
+
                     int status = p1.shoots(shootLocation[0], shootLocation[1], p2);
                     p1.setNumberOfShotCell(p1.getNumberOfShotCell() + 1);
+                    Menu.outputShotBoard(p1);
                     Menu.shootNoti(status);
                     Menu.pauseScreen();
                     playing = 2;
@@ -69,11 +71,12 @@ public class Manager {
                     break;
                 }
                 if(func == 2){
-                    int[] shootLocation = Menu.inputShootLocation();
                     Menu.outputShotBoard(p1);
+                    int[] shootLocation = Menu.inputShootLocation();
                     int status = p2.shoots(shootLocation[0], shootLocation[1], p1);
                     p2.setNumberOfShotCell(p2.getNumberOfShotCell() + 1);
                     Menu.shootNoti(status);
+                    Menu.outputShotBoard(p1);
                     Menu.pauseScreen();
                     playing = 1;
                     break;

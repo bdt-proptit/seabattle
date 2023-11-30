@@ -27,7 +27,7 @@ public class Menu {
         System.out.println("Bảng đối thủ dạng sương mù");
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                System.out.print(player.getShotBoard() + " ");
+                System.out.print(player.getShotBoard()[i][j] + " ");
             }
             System.out.println();
         }
@@ -35,7 +35,7 @@ public class Menu {
     public static void shootNoti(int cas){
         if(cas == 1){
             System.out.println("Đã bắn trúng");
-        }else if(cas == 2){
+        }else if(cas == 0){
             System.out.println("Đã bắn trượt");
         }
     }
