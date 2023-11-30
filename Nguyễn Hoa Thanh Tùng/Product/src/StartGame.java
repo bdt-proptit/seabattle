@@ -1,38 +1,42 @@
-import NguoiChoi.*;
-import Tau.Scan;
+import Display.Display;
+import Player.*;
+import Ship.Scan;
 
-public class BatDauTroChoi {
-    public void batDauChoi(){
+public class StartGame {
+    public void startPlay(){
         while (true){
-            HienThi hienThi = new HienThi();
-            hienThi.menuCheDoChoi();
-            hienThi.duongKeNgang();
+            Display display = new Display();
+            display.menuGameMode();
+            display.horizontalLine();
             System.out.print("Chọn chế độ chơi: ");
             int mode = Integer.valueOf(new Scan().cin());
-            hienThi.duongKeNgang();
+            display.horizontalLine();
             switch (mode) {
                 case 1:
                     System.out.println("Chế độ người với người.");
-                    hienThi.duongKeNgang();
-                    nguoiVoiNguoi();
+                    display.horizontalLine();
+                    PvP();
                     break;
                 case 2:
                     System.out.println("Chế độ người với máy.");
-                    hienThi.duongKeNgang();
-                    hienThi.menuDoKho();
-                    hienThi.duongKeNgang();
+                    display.horizontalLine();
+                    display.menuDifficultyLevel();
+                    display.horizontalLine();
                     System.out.print("Chọn độ khó: ");
                     int level=Integer.valueOf(new Scan().cin());
-                    hienThi.duongKeNgang();
+                    display.horizontalLine();
                     switch (level) {
                         case 1:
                             System.out.println("Chế độ dễ");
+                            PvE_Easy();
                             break;
                         case 2:
                             System.out.println("Chế độ trung bình.");
+                            PvE_Medium();
                             break;
                         case 3:
                             System.out.println("Chế độ khó.");
+                            PvE_Hard();
                             break;
                         case 4:
                             System.out.println("Thoát.");
@@ -40,34 +44,36 @@ public class BatDauTroChoi {
                         default:
                             System.out.println("Độ khó không hợp lệ.");
                     }
-                    hienThi.duongKeNgang();
+                    display.horizontalLine();
                     break;
                 case 3:
                     System.out.println("Thoát.");
-                    hienThi.duongKeNgang();
+                    display.horizontalLine();
                     return;
                 default:
                     System.out.println("Chế độ không hợp lệ.");
-                    hienThi.duongKeNgang();
+                    display.horizontalLine();
             }
         }
     }
-    public void nguoiVoiNguoi() {
-        HienThi hienThi = new HienThi();
-        NguoiChoi player1 = new NguoiChoi();
-        NguoiChoi player2 = new NguoiChoi();
-        new NguoiChoi_ChuanBi(player1).chuanBi();
-        new NguoiChoi_ChuanBi(player2).chuanBi();
-        while(player1.getHP()!=0 && player2.getHP()!=0) {
-            new NguoiChoi_DenLuot(player1, player2).denLuot();
-            new NguoiChoi_DenLuot(player2, player1).denLuot();
-            System.out.println("Tung " + player1.getHP());
-            System.out.println("ngoc " + player2.getHP());
+    public void PvP() {
+        Display display = new Display();
+        Player player1 = new Player();
+        Player player2 = new Player();
+        new Player_Prepare(player1).prepare();
+        new Player_Prepare(player2).prepare();
+        while(true) {
+            new Player_Turn(player1, player2).turn();
+            if (player2.getHP()==0) break;
+            new Player_Turn(player2, player1).turn();
+            if (player2.getHP()==0) break;
         }
-        hienThi.thongBaoKetQua(player1, player2);
+        display.resultNotification(player1, player2);
+        display.enterToContinue();
+        display.horizontalLine();
     }
 
-    public void nguoiVoiMayDe() {}
-    public void nguoiVoiMayTrungBinh() {}
-    public void nguoiVoiMayKho() {}
+    public void PvE_Easy() {}
+    public void PvE_Medium() {}
+    public void PvE_Hard() {}
 }

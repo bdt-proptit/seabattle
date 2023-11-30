@@ -1,28 +1,28 @@
-import NguoiChoi.*;
-import Tau.Scan;
+import Display.Display;
+import Ship.Scan;
 
 public class Main {
     public static void main(String[] args) {
-        HienThi hienThi = new HienThi();
+        Display hienThi = new Display();
         while (true) {
-            hienThi.menuBatDau();
-            hienThi.duongKeNgang();
+            hienThi.menuStart();
+            hienThi.horizontalLine();
             System.out.print("Chọn chức năng: ");
             int mode=Integer.valueOf(new Scan().cin());
-            hienThi.duongKeNgang();
+            hienThi.horizontalLine();
             switch (mode) {
                 case 1:
                     System.out.println("Bắt đầu trò chơi.");
-                    hienThi.duongKeNgang();
-                    new BatDauTroChoi().batDauChoi();
+                    hienThi.horizontalLine();
+                    new StartGame().startPlay();
                     break;
                 case 2:
                     System.out.println("Thoát trò chơi.");
-                    hienThi.duongKeNgang();
+                    hienThi.horizontalLine();
                     return;
                 default:
                     System.out.println("Chức năng không hợp lệ.");
-                    hienThi.duongKeNgang();
+                    hienThi.horizontalLine();
             }
         }
     }
