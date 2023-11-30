@@ -8,7 +8,27 @@ The project was done by [Nguyễn Văn A](https://github.com/naa-ntu), in the co
 ## Tech Stack
 
 - [Java](https://www.java.com/en/) 
+- ...
 
+
+## Software Design (UML)
+
+- ...
+
+## Demo Video
+
+- ...
+
+## Demo Image
+
+- ...
+
+## Features
+
+- Player can play with computer
+- Player can play with another player
+- Player can choose game mode
+- ...
 
 ## Installation
 
