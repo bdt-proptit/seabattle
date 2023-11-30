@@ -1,9 +1,11 @@
 package main;
 
+import main.controller.GameMode;
 import main.controller.Player;
 import main.controller.Ship;
 import main.controller.Square;
 import main.model.GameBoard;
+import main.model.GameShip;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,7 +23,7 @@ public class MainClass {
                 Player player1 = new Player();
                 Player player2 = new Player();
                 GameBoard gameBoardPlayer1 = new GameBoard();
-                //gameBoardPlayer1.initBoard();
+                gameBoardPlayer1.initBoard();
                 GameBoard gameBoardPlayer2 = new GameBoard();
                 //gameBoardPlayer2.initBoard();
                 Square oopBoardPlayer1 = new Square();
@@ -46,7 +48,9 @@ public class MainClass {
 //                listShip2[3].setSizeShip(3);
 //                listShip1[4].setSizeShip(5);
 //                listShip2[4].setSizeShip(5);
-                Ship shipTemp = new Ship();
+                GameShip gameShip = new GameShip();
+
+                Ship shipTemp = new Ship(2, gameShip);
                 shipTemp.setSizeShip(2);
                 System.out.println("Moi nguoi choi nhap vi tri cua Thuyen Tuan Tra 1: ");
                 shipTemp.checkPosShip(gameBoardPlayer1);

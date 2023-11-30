@@ -7,6 +7,10 @@ import java.util.Scanner;
 public class Ship {
     private int sizeShip;
     private GameShip ship;
+    public Ship(int sizeShip, GameShip ship){
+        this.sizeShip = sizeShip;
+        this.ship = ship;
+    }
     public void setSizeShip(int sizeShip) {
         this.sizeShip = sizeShip;
     }
