@@ -1,8 +1,8 @@
 package SeaBattle.board;
 
 public class Ship {
-    private final String name;
-    private final int length;
+    private String name;
+    private int length;
     private Position position;
     private Direction direction;
 

@@ -1,8 +1,8 @@
 package SeaBattle.board;
 
 public class Position {
-    private final int row;
-    private final int column;
+    private int row;
+    private int column;
 
     public Position(int row, int column) throws PositionException {
         if (row < 0 || column < 0)
