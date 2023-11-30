@@ -10,7 +10,7 @@ public class Main {
         Player player2 = new Player();
         while (true) {
             MainMenu menu = new MainMenu();
-            int start = menu.startMenu(sc, player1, player2);
+            menu.startMenu(sc, player1, player2);
         }
     }
 }
