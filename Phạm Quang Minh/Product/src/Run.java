@@ -7,5 +7,6 @@ public class Run {
         Scanner scanner = new Scanner(System.in);
         MenuGame menuGame = new MenuGame();
         menuGame.menu(scanner, player, oppositePlayer);
+        System.out.println();
     }
 }
