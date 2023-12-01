@@ -5,5 +5,5 @@
 - Đặt tàu sẽ mặc định nằm ngang. Nếu muốn tàu nằm dọc ấn size tàu + ‘R’ rồi ấn chuột đặt tàu như bình thường.
 - Player 1 có thể ấn phím SPACE để tự động đặt hết tàu còn lại, Player 2 ấn phím BACKSPACE.
 - Sau khi 2 bên đặt xong sẽ đến lượt đầu của Player1. 
-- Mỗi khi tấn công ấn chuột phải vào vị trí muốn tấn công trên map của đối thủ, tấn công xong sẽ ngay lập tức chuyển lượt.
+- Mỗi khi tấn công ấn chuột trái vào vị trí muốn tấn công trên map của đối thủ, tấn công xong sẽ ngay lập tức chuyển lượt.
 - Trong lượt đặt thuyền thì 2 bên sẽ tương tác trên window của mình, khi tấn công thì tương tác trên window của đối thủ.
