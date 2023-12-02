@@ -4,8 +4,8 @@ import Display.*;
 import Ship.Scan;
 
 public class Player_Turn {
-    private Player player, opponent;
-    private Display display;
+    protected Player player, opponent;
+    protected Display display;
     public Player_Turn(Player player, Player opponent) {
         this.player = player;
         this.opponent = opponent;
@@ -25,19 +25,23 @@ public class Player_Turn {
             display.horizontalLine();
             switch (mode) {
                 case 1:
+                    System.out.println("Chức năng xem bảng.");
                     display.map();
                     break;
                 case 2:
-                    new Player_Attack(player, opponent).attack(attacked);
+                    attacked = new Player_Attack(player, opponent).attack(attacked);
                     if (opponent.getHP()==0) return;
                     break;
                 case 3:
                     if (!attacked) {
                         System.out.println("Bạn chưa tấn công lượt này");
+                        display.enterToContinue();
                         display.horizontalLine();
                     }
                     else {
                         System.out.println("Kết thúc lượt chơi.");
+                        display.enterToContinue();
+                        display.changeColor();
                         display.horizontalLine();
                         return;
                     }

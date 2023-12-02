@@ -5,21 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String type;
-    private int shotCount, HP;
-    private List<Ship> listShip;
-    private int[][] positionShips;
+    protected String name;
+    protected int shotCount, HP;
+    protected List<Ship> listShip;
+    protected int[][] positionShips;
     public Player(){
-        type = "";
+        name = "";
         shotCount = 0;
         HP = 0;
         listShip = new ArrayList<>();
         positionShips = new int[10][10];
         for (int i=0;i<10;++i) for (int j=0;j<10;++j) positionShips[i][j]=0;
     }
-    public void setType() {
+    public void setName() {
         System.out.print("Nhập tên người chơi: ");
-        this.type = new Scan().cin();
+        this.name = new Scan().cin();
+    }
+    public void setName(String name) {
+        this.name=name;
     }
     public void increaseShotCount() {
         shotCount++;
@@ -36,8 +39,8 @@ public class Player {
     public void setPositionShips(int[][] positionShips) {
         this.positionShips = positionShips;
     }
-    public String getType() {
-        return type;
+    public String getName() {
+        return name;
     }
     public int getShotCount() {
         return shotCount;

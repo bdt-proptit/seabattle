@@ -2,11 +2,11 @@ package Display;
 
 import Player.Player;
 
-import java.util.Scanner;
+import java.util.*;
 
-public class Display extends EffectDisplay {
+public class Display extends Menu{
     private Player player, opponent;
-
+    protected static List<Player> winner;
     public Display(Player player, Player opponent) {
         this.player = player;
         this.opponent = opponent;
@@ -14,10 +14,9 @@ public class Display extends EffectDisplay {
     public Display(){
     }
     public void map() {
-        System.out.println("Chức năng xem bảng.");
         horizontalLine();
-        System.out.println(String.format("%-35s||%-36s", "          VỊ TRÍ ĐÃ BẮN", "            VỊ TRÍ TÀU PHE TA"));
-        System.out.println(String.format("%-35s||%-36s", " ", " "));
+        System.out.println(RED + String.format("%-35s", "          VỊ TRÍ ĐÃ BẮN") + DEFAULT + "||" + GREEN + String.format("%-35s","            VỊ TRÍ TÀU PHE TA") + DEFAULT);
+        System.out.println(String.format("%-35s||%-35s", " ", " "));
         for (int i=0;i<10;++i) {
             if(i==0) {
                 System.out.print("   ");
@@ -31,15 +30,15 @@ public class Display extends EffectDisplay {
                 if(j==0) System.out.printf("%c ", 'a'+i);
                 if (opponent.getPositionShips()[i][j]==2) System.out.print(RED_BACKGROUND + " X " + DEFAULT);
                 else if(opponent.getPositionShips()[i][j]==3) System.out.print(RED + " X " + DEFAULT);
-                else System.out.print(BLUE_BACKGROUND + GREY + " ~ " + DEFAULT);
+                else System.out.print(BLUE_BACKGROUND + BLACK + " ~ " + DEFAULT);
             }
             System.out.print("   ||   ");
             for (int j=0;j<10;++j) {
                 if(j==0) System.out.printf("%c ", 'a'+i);
-                if (player.getPositionShips()[i][j]==2) System.out.print(RED_BACKGROUND + " X " + DEFAULT);
-                else if (player.getPositionShips()[i][j]==1) System.out.print(WHITE + " * " +DEFAULT);
+                if (player.getPositionShips()[i][j]==1) System.out.print(WHITE_BACKGROUND + BLACK + " * " +DEFAULT);
+                else if (player.getPositionShips()[i][j]==2) System.out.print(RED_BACKGROUND + " X " + DEFAULT);
                 else if(player.getPositionShips()[i][j]==3) System.out.print(RED + " X " + DEFAULT);
-                else System.out.print(BLUE_BACKGROUND + GREY + " ~ " + DEFAULT);
+                else System.out.print(BLUE_BACKGROUND + BLACK + " ~ " + DEFAULT);
             }
             System.out.println();
         }
@@ -47,52 +46,35 @@ public class Display extends EffectDisplay {
         enterToContinue();
     }
     public void informationPlayer() {
-        System.out.println(String.format("%-40s", "Tên người chơi: " + player.getType()) + String.format("%-20s", "Số lượt đã bắn: " + player.getShotCount()));
-        System.out.println(String.format("%-40s", "Số tàu còn lại: " + player.getListShip().size()) + String.format("%-20s", "Số tàu đã phá: " + (5- opponent.getListShip().size())));
+//        System.out.println("Hiển thị thông tin người chơi.");
+        System.out.println(getBackgroundColor() + BLACK + String.format("%-40s", "Tên người chơi: " + player.getName()) + String.format("%-20s", "Số lượt đã bắn: " + player.getShotCount()) + DEFAULT);
+        System.out.println(getBackgroundColor() + BLACK + String.format("%-40s", "Số tàu còn lại: " + player.getListShip().size()) + String.format("%-20s", "Số tàu đã phá: " + (5- opponent.getListShip().size())) + DEFAULT);
     }
-    public void menuPlayer() {
-        System.out.println(
-                "-----------------------------\n" +
-                "|      1. Xem bảng          |\n" +
-                "|      2. Khai hỏa          |\n" +
-                "|      3. Kết thúc lượt     |\n" +
-                "-----------------------------");
-    }
-    public void menuStart() {
-        System.out.println("--------------------------------");
-        System.out.println("|     1. Bắt đầu trò chơi.     |");
-        System.out.println("|     2. Thoát trò chơi.       |");
-        System.out.println("--------------------------------");
-    }
-    public void menuGameMode() {
-        System.out.println("-------------------------------");
-        System.out.println("|     1. Người với Người.     |");
-        System.out.println("|     2. Người với Máy.       |");
-        System.out.println("|     3. Thoát                |");
-        System.out.println("-------------------------------");
-    }
-    public void menuDifficultyLevel() {
-        System.out.println("-------------------------");
-        System.out.println("|     1. Dễ             |");
-        System.out.println("|     2. Trung bình     |");
-        System.out.println("|     3. Khó            |");
-        System.out.println("|     4. Thoát          |");
-        System.out.println("-------------------------");
+    public void showRanking() {
+//        System.out.println("Hiển thị bảng xếp hạng.");
+        if(winner.size()==0) {
+            System.out.println("Chưa có người chơi nào chiến thắng.");
+            enterToContinue();
+            return;
+        }
+        Collections.sort(winner, new SortComparator());
+        System.out.println(String.format("%-15s%-30s%-20s%-10s", "Ranking", "Tên người chơi", "Số lần bắn", "Số tàu còn lại"));
+        horizontalLine();
+        for (int i=0;i<winner.size();++i) {
+            System.out.println(String.format("%-3s%-12d%-30s%-20d%-10d", " ", i+1, winner.get(i).getName(), winner.get(i).getShotCount(), winner.get(i).getListShip().size()));
+            horizontalLine();
+        }
+        enterToContinue();
     }
     public void resultNotification(Player player1, Player player2) {
-        if(player2.getHP()==0) System.out.println("Người chơi " + RED + player1.getType() + DEFAULT + " chiến thắng với " + RED + player1.getShotCount() + DEFAULT + " lần bắn.");
-        else System.out.println("Người chơi " + RED + player2.getType() + DEFAULT + " chiến thắng với " + RED + player2.getShotCount() + DEFAULT + " lần bắn.");
-    }
-    public void horizontalLine(){
-        System.out.println(String.format(RED + CROSSED + "%-80s" + DEFAULT, " "));
-    }
-    public void enterToContinue() {
-        while (true) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhấn Enter để tiếp tục...");
-            if (sc.nextLine().isEmpty()) {
-                break;
-            }
+//        System.out.println("Thông báo kết quả người chiến thắng");
+        if(player2.getHP()==0) {
+            System.out.println("Người chơi " + RED + player1.getName() + DEFAULT + " chiến thắng với " + RED + player1.getShotCount() + DEFAULT + " lần bắn.");
+            winner.add(player1);
+        } else {
+            System.out.println("Người chơi " + RED + player2.getName() + DEFAULT + " chiến thắng với " + RED + player2.getShotCount() + DEFAULT + " lần bắn.");
+            winner.add(player2);
         }
+        enterToContinue();
     }
 }

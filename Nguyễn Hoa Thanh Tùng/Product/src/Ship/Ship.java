@@ -2,6 +2,8 @@ package Ship;
 
 import Display.Display;
 
+import java.util.Random;
+
 public class Ship {
     private String type;
     private int HP, length;
@@ -32,7 +34,6 @@ public class Ship {
     public Coordinate getBowPosition() {
         return bowPosition;
     }
-
     public Coordinate getSternPosition() {
         return sternPosition;
     }
@@ -52,40 +53,28 @@ public class Ship {
         System.out.print("Nhập vị trí đầu: ");
         this.bowPosition = Coordinate.coodinateFromScanner();
     }
-    public void setSternPossition() {
+    public void setBowPosition(int x, int y){
+        this.bowPosition = new Coordinate(x, y);
+    }
+    public void setSternPosition() {
         System.out.print("Nhập vị trí đuôi: ");
         this.sternPosition = Coordinate.coodinateFromScanner();
     }
-    public static Ship getShipFromScanner(String type, int length, int position[][]) {
-        Ship ship = new Ship(type, length);
-        Display display = new Display();
-        while (true) {
-            System.out.println(String.format("Nhập thông tin %s (1x%d):", ship.getType(), ship.getLength()));
-            ship.setBowPosition();
-            ship.setSternPossition();
-            if(ship.checkShipPosition(position)) {
-                System.out.println("Đặt " + ship.getType() + " thành công.");
-                return ship;
-            } else {
-                System.out.println("Đặt tàu không thành công.");
-                display.horizontalLine();
-            }
-        }
+    public void setSternPosition(int x, int y){
+        this.sternPosition = new Coordinate(x, y);
     }
-    public boolean checkShipPosition(int viTri[][]){
-        if(getBowPosition().getX()!= getSternPosition().getX() && getBowPosition().getY()!= getSternPosition().getY()) return false;
+    public int checkShipPosition(int viTri[][]){
+//        0: Đặt thành công
+//        1: Đã có tàu
+//        2: Tàu không đủ chiều dài
+//        3: Vị trí đầu và đuôi tàu không hợp lệ
+        if(getBowPosition().getX()!= getSternPosition().getX() && getBowPosition().getY()!= getSternPosition().getY()) return 3;
         int start = getBowPosition().getX() == getSternPosition().getX() ? Math.min(getBowPosition().getY(), getSternPosition().getY()) : Math.min(getBowPosition().getX(), getSternPosition().getX());
         int   end = getBowPosition().getX() == getSternPosition().getX() ? Math.max(getBowPosition().getY(), getSternPosition().getY()) : Math.max(getBowPosition().getX(), getSternPosition().getX());
-        if(end-start+1!= getLength()) {
-            System.out.println("Tàu không đủ chiều dài.");
-            return false;
-        }
+        if(end-start+1!= getLength()) return 2;
         for (int i=start;i<=end;++i) {
-            if((getBowPosition().getX()== getSternPosition().getX() && viTri[getBowPosition().getX()][i]==1) || (getBowPosition().getY()== getSternPosition().getY() && viTri[i][getBowPosition().getY()]==1)) {
-                System.out.println("Vị trí này đã có thuyền.");
-                return false;
-            }
+            if((getBowPosition().getX()== getSternPosition().getX() && viTri[getBowPosition().getX()][i]==1) || (getBowPosition().getY()== getSternPosition().getY() && viTri[i][getBowPosition().getY()]==1)) return 1;
         }
-        return true;
+        return 0;
     }
 }

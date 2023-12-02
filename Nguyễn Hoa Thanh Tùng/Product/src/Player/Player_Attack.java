@@ -10,25 +10,50 @@ import Ship.*;
             3: vị trí bị bắn nhưng không có tàu (bắn trượt)
  */
 public class Player_Attack {
-    private Player player, opponent;
-    private Display display;
+    protected Player player, opponent;
+    protected Display display;
     public Player_Attack(Player player, Player opponent) {
         this.player = player;
         this.opponent = opponent;
         display = new Display();
     }
 
-    public void attack(boolean attacked) {
+    public boolean attack(boolean attacked) {
         System.out.println("Chức năng khai hỏa.");
         display.horizontalLine();
         if(attacked) {
             System.out.println("Bạn đã tấn công ở lượt này.");
             display.enterToContinue();
-            return;
+            return true;
         }
-        Coordinate shootingPosition = chooseShootingPosition();
-        player.increaseShotCount();
-        boolean shotHit = false;
+        while (!attacked) {
+            Coordinate shootingPosition = chooseShootingPosition();
+            player.increaseShotCount();
+            attacked = !checkShotHit(shootingPosition);
+            if (!attacked && !continueAttack()) break;
+        }
+        return true;
+    }
+    public boolean continueAttack(){
+        while (true) {
+            System.out.println("Bạn có muốn bắn tiếp không (y/n)?");
+            switch (new Scan().cin()){
+                case "y", "Y":
+                    display.horizontalLine();
+                    System.out.println("Tiếp tục bắn.");
+                    return true;
+                case "n", "N":
+                    display.horizontalLine();
+                    System.out.println("Ngừng bắn.");
+                    display.enterToContinue();
+                    return false;
+                default:
+                    System.out.println("Không hợp lệ.");
+
+            }
+        }
+    }
+    public boolean checkShotHit(Coordinate shootingPosition) {
         for(Ship ship : opponent.getListShip()) {
             int start = ship.getBowPosition().getX()==ship.getSternPosition().getX() ? Math.min(ship.getBowPosition().getY(), ship.getSternPosition().getY()) : Math.min(ship.getBowPosition().getX(), ship.getSternPosition().getX());
             int end = ship.getBowPosition().getX()==ship.getSternPosition().getX() ? Math.max(ship.getBowPosition().getY(), ship.getSternPosition().getY()) : Math.max(ship.getBowPosition().getX(), ship.getSternPosition().getX());
@@ -36,16 +61,13 @@ public class Player_Attack {
                     (shootingPosition.getY()==ship.getBowPosition().getY() && shootingPosition.getY()==ship.getSternPosition().getY() && start <= shootingPosition.getX() && shootingPosition.getX() <= end)) {
                 opponent.getPositionShips()[shootingPosition.getX()][shootingPosition.getY()]=2;
                 updateResult(opponent, ship);
-                shotHit = true;
-                return;
+                return true;
             }
-            if(!shotHit) {
-                System.out.println("Bạn đã bắn trượt.");
-                attacked=true;
-                display.enterToContinue();
-            }
-            opponent.getPositionShips()[shootingPosition.getX()][shootingPosition.getY()]=3;
         }
+        System.out.println("Bạn đã bắn trượt.");
+        opponent.getPositionShips()[shootingPosition.getX()][shootingPosition.getY()]=3;
+        display.enterToContinue();
+        return false;
     }
     private Coordinate chooseShootingPosition(){
         while(true) {
@@ -53,6 +75,7 @@ public class Player_Attack {
             Coordinate shootingPosition = Coordinate.coodinateFromScanner();
             int status = opponent.getPositionShips()[shootingPosition.getX()][shootingPosition.getY()];
             if(status==2 || status==3) {
+                display.horizontalLine();
                 System.out.println("Bạn đã bắn ở vị trí này.");
                 display.enterToContinue();
                 display.horizontalLine();
@@ -64,7 +87,8 @@ public class Player_Attack {
         }
     }
     private void updateResult(Player opponent, Ship ship) {
-        System.out.println("Bạn đã bắn trúng tàu.");
+        display.horizontalLine();
+        System.out.println("Bạn đã bắn trúng " + ship.getType());
         ship.shotHit();
         opponent.decreaseHP();
         if(ship.getHP()==0) {
@@ -72,7 +96,5 @@ public class Player_Attack {
             System.out.println("Tàu đã chìm.");
             if(opponent.getHP()==0) return;
         }
-        display.enterToContinue();
-        display.horizontalLine();
     }
 }
