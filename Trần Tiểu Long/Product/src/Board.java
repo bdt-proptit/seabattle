@@ -156,9 +156,11 @@ public class Board {
                     else if (j % 4 == 3) {
                         if (matrix[I][J] != '#') {
                             if (matrix[I][J] == 'o') System.out.print(ANSI_GREEN + matrix[I][J] + ANSI_RESET);
-                            else if (matrix[I][J] == 'x') System.out.print(ANSI_RED + matrix[I][J] + ANSI_RESET);
+                           else if (matrix[I][J] == 'x') System.out.print(ANSI_RED + matrix[I][J] + ANSI_RESET);
+                           else System.out.print(ANSI_BLUE + "." + ANSI_RESET);
                         }
-                        else System.out.print(ANSI_BLUE + matrix[I][J] + ANSI_RESET);
+                        else System.out.print(ANSI_BLUE + "." + ANSI_RESET);
+                        J ++;
                     }
                     else System.out.print(" "); 
                 }
