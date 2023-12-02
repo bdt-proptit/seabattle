@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player extends BattleField{
-    public Boat[] boats = new Boat[2];
-    public int numberOfBoats = 0, check = 0;
+    public Boat[] boats = new Boat[5];
+    public int numberOfBoats = 0, check = 0, numberOfHits = 0;
     public void setUpBoat() {
-        while (numberOfBoats < 2) {
+        while (numberOfBoats < 5) {
             showBoard();
             Scanner input = new Scanner(System.in);
             String name;
@@ -46,8 +46,11 @@ public class Player extends BattleField{
                 }
             }
         }
+        showBoard();
     }
+
     public void beAttacked(){
+        numberOfHits++;
         Scanner input = new Scanner(System.in);
         System.out.print("x: ");
         int x = input.nextInt();

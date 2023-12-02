@@ -3,7 +3,7 @@ public class BattleField {
     BattleField(){
         for(int i = 1; i <= 10; i++){
             for(int j = 1; j <= 10; j++){
-                setBoard(i, j, 'o');
+                setBoard(i, j, ' ');
             }
         }
     }
@@ -34,8 +34,8 @@ public class BattleField {
                 else if(i == 0) System.out.printf(" %2d ", j);
                 else if(j == 0) System.out.printf("%2d |", i);
                 else{
-                    //if(getBoard(i, j) == '~') System.out.print("o");
-                    System.out.printf(" %c |", getBoard(i, j));
+                    if(getBoard(i, j) == '~') System.out.print("   |");
+                    else System.out.printf(" %c |", getBoard(i, j));
                 }
             }
             System.out.print("\n");
