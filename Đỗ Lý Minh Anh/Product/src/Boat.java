@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-
 public class Boat {
     private String name;
     private int length;
     private String shape;
-    private String[] location = new String[length];
     public void setName (String name) {
         this.name = name;
     }
@@ -47,13 +44,13 @@ public class Boat {
                 }
             }
         }
-        if (checkRow == true && checkColumn == true) {
+        if (checkRow && checkColumn) {
             return "Both";
         }
-        else if (checkRow == true) {
+        else if (checkRow) {
             return "Row";
         }
-        else if (checkColumn == true) {
+        else if (checkColumn) {
             return "Column";
         }
         else {

@@ -40,13 +40,4 @@ public class Player {
     public boolean openFire (Scanner sc, Player enemy) {
         return operation.playerOpensFire(sc, this, enemy);
     }
-    public void displayBoard () {
-        operation.displayBoardOfPlayer(this);
-    }
-    public void displayCurrentStatus () {
-        operation.displayCurrentStatusOfThePlayer(this);
-    }
-    public void displayBoardOfEnemy (Player enemy) {
-        operation.displayTheBoardInFogOfWar(enemy);
-    }
 }

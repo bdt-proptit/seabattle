@@ -5,16 +5,36 @@ public class Server {
         Scanner sc = new Scanner(System.in);
         Player player1 = new Player();
         Player player2 = new Player();
+        Operation operation = new Operation();
         while (true) {
-            Operation operation = new Operation();
             operation.displayMenu();
             System.out.println("--> Enter your choice:");
             int option = Integer.parseInt(sc.nextLine());
             if (option == 1) {
                 System.out.println("*** Player 1 sets up the boat! ***");
-                player1.setUpBoats(sc);
+                System.out.println("1. Set up the boat.");
+                System.out.println("2. Random.");
+                System.out.println("-> Enter your choice:");
+                int option1 = Integer.parseInt(sc.nextLine());
+                if (option1 == 1) {
+                    player1.setUpBoats(sc);
+                }
+                else {
+                    operation.autoSetUpTheBoat(player1);
+                }
+                operation.displayBoardOfPlayer(player1);
                 System.out.println("*** Player 2 sets up the boat! ***");
-                player2.setUpBoats(sc);
+                System.out.println("1. Set up the boat.");
+                System.out.println("2. Random.");
+                System.out.println("-> Enter your choice:");
+                option1 = Integer.parseInt(sc.nextLine());
+                if (option1 == 1) {
+                    player2.setUpBoats(sc);
+                }
+                else {
+                    operation.autoSetUpTheBoat(player2);
+                }
+                operation.displayBoardOfPlayer(player2);
                 Player activePlayer = player1;
                 int mark = 1;
                 while (true) {
@@ -24,14 +44,14 @@ public class Server {
                     else {
                         System.out.println("*** Player 2's turn! ***");
                     }
-                    activePlayer.displayCurrentStatus();
+                    operation.displayCurrentStatusOfThePlayer(activePlayer);
                     operation.displayPlayerOptions();
                     System.out.println("--> Enter your choice:");
-                    int option1 = Integer.parseInt(sc.nextLine());
-                    if (option1 == 1) {
-                        activePlayer.displayBoard();
+                    int option2 = Integer.parseInt(sc.nextLine());
+                    if (option2 == 1) {
+                        operation.displayBoardOfPlayer(activePlayer);
                     }
-                    else if (option1 == 2) {
+                    else if (option2 == 2) {
                         boolean check;
                         if (mark == 1) {
                             check = activePlayer.openFire(sc, player2);
@@ -39,20 +59,17 @@ public class Server {
                         else {
                             check = activePlayer.openFire(sc, player1);
                         }
-                        if (check == true) {
-                            System.out.println("-> Player 1's Board:");
-                            player1.displayBoard();
-                            System.out.println("-> Player 2's Board:");
-                            player2.displayBoard();
+                        if (check) {
+                            operation.displayTheResults(player1, player2);
                             System.out.println("----> | Player " + mark + " is the WINNER!!! | <----");
                             break;
                         }
                         else {
                             if (mark == 1) {
-                                activePlayer.displayBoardOfEnemy(player2);
+                                operation.displayTheBoardInFogOfWar(player2);
                             }
                             else {
-                                activePlayer.displayBoardOfEnemy(player1);
+                                operation.displayTheBoardInFogOfWar(player1);
                             }
                         }
                     }
