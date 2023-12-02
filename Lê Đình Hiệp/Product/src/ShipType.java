@@ -8,8 +8,8 @@ public class ShipType {
         list = new ArrayList<>(5);
         String data = "Patrol Boat\n2\n"
 //                 + "Patrol Boat\n2\n"
-//                 + "Destroyer Boat\n4\n" +
-//                + "Submarine\n3\n" +
+//                 + "Destroyer Boat\n4\n"
+//                + "Submarine\n3\n"
 //                + "Battle Ship\n5\n"
                 ;
         Scanner sc = new Scanner(data);
