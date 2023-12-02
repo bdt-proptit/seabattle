@@ -23,7 +23,21 @@ public class GameBoard {
                 if (i == 0 && j == 0) System.out.print("    ");
                 else if (i == 0) System.out.printf(" %4d ", j);
                 else if (j == 0) System.out.printf(" %3d |", i);
-                else System.out.printf("  %c  |", getBoard(i, j));
+                else {
+                    if(getBoard(i, j)=='x'){
+                        System.out.print(" ");
+                        System.out.printf(Color.HIT + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET+ " |");
+                    } else if(getBoard(i, j)=='o'){
+                        System.out.print(" ");
+                        System.out.printf(Color.MISS + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET+ " |");
+                    }else {
+                        System.out.print(" ");
+                        System.out.printf(Color.WATER + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET + " |");
+                    }
+                }
             }
             System.out.println();
         }
@@ -36,10 +50,18 @@ public class GameBoard {
                 else if (i == 0) System.out.printf(" %4d ", j);
                 else if (j == 0) System.out.printf(" %3d |", i);
                 else {
-                    if (getBoard(i, j) == 'x' || getBoard(i, j) == 'o') {
-                        System.out.printf("  %c  |", getBoard(i, j));
+                    if (getBoard(i, j) == 'x' ){
+                        System.out.print(" ");
+                        System.out.printf(Color.HIT + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET+ " |");
+                    } else if(getBoard(i, j) == 'o') {
+                        System.out.print(" ");
+                        System.out.printf(Color.MISS + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET + " |");
                     } else {
-                        System.out.printf("  %c  |", 'f');
+                        System.out.print(" ");
+                        System.out.print(Color.FOG + " f ");
+                        System.out.printf(Color.RESET+ " |");
                     }
                 }
             }

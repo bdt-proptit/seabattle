@@ -5,13 +5,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        MainMenu mainMenu = new MainMenu();
         Player player1 = new Player();
         Player player2 = new Player();
-        while (true) {
-            MainMenu menu = new MainMenu();
-            menu.startMenu(sc, player1, player2);
-        }
+        MainMenu menu = new MainMenu();
+        menu.startMenu(sc, player1, player2);
+
     }
 }
 
