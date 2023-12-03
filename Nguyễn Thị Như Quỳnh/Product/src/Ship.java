@@ -20,32 +20,8 @@ public class Ship {
         return nameShip;
     }
 
-    public void setNameShip(String nameShip) {
-        this.nameShip = nameShip;
-    }
-
     public int getLengthShip() {
         return lengthShip;
-    }
-
-    public void setLengthShip(int lengthShip) {
-        this.lengthShip = lengthShip;
-    }
-
-    public String getCoorDinate1() {
-        return coorDinate1;
-    }
-
-    public void setCoorDinate1(String coorDinate1) {
-        this.coorDinate1 = coorDinate1;
-    }
-
-    public String getCoorDinate2() {
-        return coorDinate2;
-    }
-
-    public void setCoorDinate2(String coorDinate2) {
-        this.coorDinate2 = coorDinate2;
     }
 
     public Boolean getShot() {
@@ -55,23 +31,12 @@ public class Ship {
     public void setShot(Boolean shot) {
         this.shot = shot;
     }
-
-    public int getShotPoint() {
-        return shotPoint;
-    }
-
-    public void setShotPoint(int shotPoint) {
-        this.shotPoint = shotPoint;
-    }
     public Boolean testShank(){
-        if(this.shotPoint==this.lengthShip)
-            return true;
-        return false;
+        return this.shotPoint == this.lengthShip;
     }
-    public void testShot(String coorDinate, char[][] board){
+    public void testShot(String coorDinate, Player player, Player enermy){
         char[] toaDo1 = coorDinate1.toCharArray();
         char[] toaDo2 = coorDinate2.toCharArray();
-        char[] toaDo = coorDinate.toCharArray();
         if (toaDo1[0] == toaDo2[0]) {
             int a = Boards.row(coorDinate1);
             int b = Boards.col(coorDinate1);
@@ -84,8 +49,9 @@ public class Ship {
             int t1 = Boards.row(coorDinate);
             int t2 = Boards.col(coorDinate);
             for (int i = b; i <= c; i++) {
-                if(a==t1&&i==t2 && board[t1][t2]=='^'){
-                    board[t1][t2]='X';
+                if(a==t1&&i==t2 && enermy.getBoard()[t1][t2]=='S' && player.getFog()[t1][t2]=='~'){
+                    player.setFog(t1, t2, 'X');
+                    enermy.setBoard(t1, t2, 'X');
                     this.shotPoint++;
                 }
             }
@@ -101,8 +67,9 @@ public class Ship {
             int t1 = Boards.row(coorDinate);
             int t2 = Boards.col(coorDinate);
             for (int i = b; i <= c; i++) {
-                if(t2==a && t1==i && board[t1][t2]=='^') {
-                    board[t1][t2] = 'X';
+                if(t2==a && t1==i && enermy.getBoard()[t1][t2]=='S') {
+                    player.setFog(t1, t2, 'X');
+                    player.setBoard(t1, t2, 'X');
                     this.shotPoint++;
                 }
             }

@@ -6,21 +6,21 @@ public class Player {
     private int numberShip;
     private char[][] board;
     private Ship[] ship;
+    private char[][] fog;
+    private int point;
 
-    public Player(String namePlayer, int wreck, int numberShip, char[][] board, Ship[] ship) {
+    public Player(String namePlayer, int wreck, int numberShip, char[][] board, Ship[] ship, char[][] fog, int point) {
         this.namePlayer = namePlayer;
         this.wreck = wreck;
         this.numberShip = numberShip;
         this.board = board;
         this.ship = ship;
+        this.fog = fog;
+        this.point = point;
     }
 
     public String getNamePlayer() {
         return namePlayer;
-    }
-
-    public void setNamePlayer(String namePlayer) {
-        this.namePlayer = namePlayer;
     }
 
     public int getWreck() {
@@ -31,27 +31,34 @@ public class Player {
         this.wreck = wreck;
     }
 
-    public int getNumberShip() {
-        return numberShip;
-    }
-
-    public void setNumberShip(int numberShip) {
-        this.numberShip = numberShip;
-    }
-
     public char[][] getBoard() {
         return board;
-    }
-
-    public void setBoard(char[][] board) {
-        this.board = board;
     }
 
     public Ship[] getShip() {
         return ship;
     }
 
-    public void setShip(Ship[] ship) {
-        this.ship = ship;
+    public char[][] getFog() {
+        return fog;
+    }
+
+    public void setFog(int row, int col, char kt) {
+        this.fog[row][col] = kt;
+    }
+    public void setBoard(int row, int col, char kt) {
+        this.board[row][col] = kt;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public Boolean winner(){
+        return this.wreck == this.numberShip;
     }
 }

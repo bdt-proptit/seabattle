@@ -1,6 +1,12 @@
 package Thuyen;
 import java.lang.Math;
 public class Boards {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+
     public static char[][] createBoard(char water){
         char[][] gameBoard = new char[15][15];
         for(int i=1;i<=10;i++){
@@ -15,10 +21,66 @@ public class Boards {
         }
         return gameBoard;
     }
-    private Boolean checkPoint(String coorDinate){
+    public static String up(String coorDinate, int length){
+        char [] toaDo = coorDinate.toCharArray();
+        toaDo[0]-=(length-1);
+        String str = toaDo[0] + Character.toString(toaDo[1]);
+        if(toaDo.length==3) str+=Character.toString('0');
+        return str;
+    }
+    public static String down(String coorDinate, int length){
+        char [] toaDo = coorDinate.toCharArray();
+        toaDo[0]+=(length-1);
+        String str = toaDo[0] + Character.toString(toaDo[1]);
+        if(toaDo.length==3) str+=Character.toString('0');
+        return str;
+    }
+    public static String left(String coorDinate, int length){
+        int coll = col(coorDinate);
+        coll-=(length-1);
+        char [] toaDo = coorDinate.toCharArray();
+        String str="";
+        if(coll>=1&&coll<=9) {
+            toaDo[1] = (char) (coll+48);
+            str = toaDo[0] + Character.toString(toaDo[1]);
+        }
+        return str;
+    }
+    public static String right(String coorDinate, int length){
+        int coll = col(coorDinate);
+        coll+=(length-1);
+        char [] toaDo = coorDinate.toCharArray();
+        String str="";
+        if(coll>=1&&coll<=9) {
+            toaDo[1] = (char)(coll+48);
+            str = toaDo[0] + Character.toString(toaDo[1]);
+        }
+        else if(coll==10){
+            str = toaDo[0] + Character.toString('1') + '0';
+        }
+        return str;
+    }
+    public static Boolean checkPoint(String coorDinate){
         char [] toaDo = coorDinate.toCharArray();
         return (toaDo.length == 2 && toaDo[0] <= 'J' && toaDo[0] >= 'A' && toaDo[1] <= '9' && toaDo[1] >= 1) ||
                 (toaDo.length == 3 && toaDo[0] <= 'J' && toaDo[0] >= 'A' && toaDo[1] == '1' && toaDo[2] == '0');
+    }
+    public static Boolean checkPoint1(char[][] fog, String coorDinate){
+        if(checkPoint(coorDinate)){
+            int roww = row(coorDinate);
+            int coll = col(coorDinate);
+            return fog[roww][coll] == '~';
+        }
+        return false;
+    }
+
+    public static Boolean checkPoint2(Player player, String coorDinate){
+        if(checkPoint(coorDinate)){
+            int roww = row(coorDinate);
+            int coll = col(coorDinate);
+            return player.getFog()[roww][coll] != 'X' && player.getFog()[roww][coll] != 'O';
+        }
+        return false;
     }
     public static int row(String coorDinate){
         char [] toaDo = coorDinate.toCharArray();
@@ -31,12 +93,17 @@ public class Boards {
         else a = toaDo[1]-48;
         return a;
     }
-    public Boolean checkSetShip(Ship ship, char[][] board, String coorDinate1, String coorDinate2){
+    public static Boolean checkSetShip(Ship ship, char[][] board, String coorDinate1, String coorDinate2){
         char [] toaDo1 = coorDinate1.toCharArray();
         char [] toaDo2 = coorDinate2.toCharArray();
         if(checkPoint(coorDinate1)&&checkPoint(coorDinate2)){
             if (toaDo1[0] == toaDo2[0]) {
-                int length = Math.abs(toaDo1[1] - toaDo2[1]+1);
+                int length, t1, t2;
+                if(toaDo1.length==3) t1=10;
+                else t1=toaDo1[1]-48;
+                if(toaDo2.length==3) t2=10;
+                else t2=toaDo2[1]-48;
+                length = Math.abs(t2-t1)+1;
                 if (length == ship.getLengthShip()){
                     int a = row(coorDinate1);
                     int b = col(coorDinate1);
@@ -54,7 +121,7 @@ public class Boards {
                 }
                 else return false;
             } else if (toaDo1[1] == toaDo2[1]&& toaDo1.length==toaDo2.length) {
-                int length = Math.abs(toaDo1[0] - toaDo2[0]+1);
+                int length = Math.abs(toaDo1[0] - toaDo2[0])+1;
                 if (length == ship.getLengthShip()){
                     int a = col(coorDinate1);
                     int b = row(coorDinate1);
@@ -75,7 +142,7 @@ public class Boards {
         }
         else return false;
     }
-    public void setShip(char[][] board, String coorDinate1, String coorDinate2) {
+    public static void setShip(char[][] board, String coorDinate1, String coorDinate2) {
         char[] toaDo1 = coorDinate1.toCharArray();
         char[] toaDo2 = coorDinate2.toCharArray();
         if (toaDo1[0] == toaDo2[0]) {
@@ -88,7 +155,7 @@ public class Boards {
                 c = temp;
             }
             for (int i = b; i <= c; i++) {
-                board[a][i] = '^';
+                board[a][i] = 'S';
             }
         } else if (toaDo1[1] == toaDo2[1] && toaDo1.length == toaDo2.length) {
             int a = col(coorDinate1);
@@ -100,39 +167,55 @@ public class Boards {
                 c = temp;
             }
             for (int i = b; i <= c; i++) {
-                board[i][a] = '^';
+                board[i][a] = 'S';
             }
         }
     }
-    public void shoot(String coorDinate,  Player player){
+    public static Boolean checkShoot(String coorDinate, Player player, Player enermy){
         int roww = row(coorDinate);
         int coll = col(coorDinate);
-        if(player.getBoard()[roww][coll]=='~'){
+        return enermy.getBoard()[roww][coll] == 'S' && player.getFog()[roww][coll] == '~';
+    }
+    public static void shoot(String coorDinate, Player player, Player enermy){
+        int roww = row(coorDinate);
+        int coll = col(coorDinate);
+        if(enermy.getBoard()[roww][coll]=='~'&&player.getFog()[roww][coll]=='~'){
             System.out.println("Khong trung!");
-            player.getBoard()[roww][coll]='O';
-            showBoard(player.getBoard());
+            player.setFog(roww, coll, 'O');
+            showBoard(player.getFog());
         }
-        else if(player.getBoard()[roww][coll]=='^'){
+        else if (enermy.getBoard()[roww][coll]=='S'&&player.getFog()[roww][coll]=='~'){
             System.out.println("Trung!");
             for (int i=1;i<=5;i++) {
-                player.getShip()[i].testShot(coorDinate, player.getBoard());
+                enermy.getShip()[i].testShot(coorDinate, player, enermy);
             }
             for (int i=1;i<=5;i++) {
-                if(player.getShip()[i].testShank()){
-                    player.getShip()[i].setShot(true);
-                    player.setWreck(player.getWreck()+1);
+                if(enermy.getShip()[i].testShank()&& !enermy.getShip()[i].getShot()){
+                    System.out.printf("%s cua doi thu da chim!\n", enermy.getShip()[i].getNameShip());
+                    enermy.getShip()[i].setShot(true);
+                    enermy.setWreck(enermy.getWreck()+1);
                 }
             }
+            showBoard(player.getFog());
         }
-        else System.out.println("Ban da tung ban diem nay :((");
     }
-     public void showBoard(char[][] board){
+     public static void showBoard(char[][] board){
         for (int i=0;i<=10;i++){
             for (int j=0;j<=10;j++){
-                System.out.printf("%c ", board[i][j]);
-            }
+                    if (board[i][j] == 'X')
+                        System.out.print(ANSI_RED + board[i][j] + ANSI_RESET);
+                    else if (board[i][j] == 'O')
+                        System.out.print(ANSI_GREEN + board[i][j] + ANSI_RESET);
+                    else if (board[i][j] == '~')
+                        System.out.print(ANSI_BLUE + board[i][j] + ANSI_RESET);
+                    else if(board[i][j] =='S')
+                        System.out.print(ANSI_YELLOW + board[i][j] + ANSI_RESET);
+                    else System.out.printf("%c", board[i][j]);
+                    if(j<10) System.out.print(" ");
+                }
+            if(i==0) System.out.printf("%c", board[i][11]);
             System.out.println();
         }
     }
-
 }
+
