@@ -23,7 +23,6 @@ public class Board{
         }
     }
     public void printYourBoard(){
-        System.out.println("Let's set up ship on your sea!!!");
         fill.initColor();
         for(int i = 0; i < 44; i++) System.out.print("_");
         System.out.println();
