@@ -1,9 +1,6 @@
-import java.util.Scanner;
-import java.util.*;
-
 public class Main {
-    public static void main(String[] args) {
-        StartGame sys = new StartGame();
+    public static void main(String[] args) throws InterruptedException {
+        NewGame sys = new NewGame();
         sys.manHinhBatDau();
     }
 }
