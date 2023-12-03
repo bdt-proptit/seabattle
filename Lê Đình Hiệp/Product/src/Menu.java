@@ -8,7 +8,7 @@ public class Menu {
         int dy = ship.getDirection().dy;
         if(ship.getX() < 0 || ship.getX() > 9 || ship.getY() < 0 || ship.getY() > 9) return false;
         for(int i = 0; i < ship.getLength(); i++){
-            if(x + dx < 0|| x + dx > 9 ||  y + dy < 0|| y + dy > 9){
+            if(x + dx * i< 0|| x + dx * i > 9 ||  y + dy * i < 0|| y + dy * i> 9){
                 return false;
             }
             if(player.getMainBoard()[x + dx * i][y + dy * i] != 0){
@@ -226,7 +226,6 @@ public class Menu {
             int directionChoice;
             while(true){
                 System.out.print("Nhập hướng: ");
-
                  try{
                      directionChoice = Integer.parseInt(sc.nextLine());
                  }catch(NumberFormatException ex){
@@ -242,7 +241,7 @@ public class Menu {
             Direction direction = Direction.values()[directionChoice - 1];
             ship.setDirection(direction);
             if(validShip(player, ship) == true) break;
-            System.out.println("Tàu không hợp lệ, vui lòng nhập lại");
+            System.out.println(Color.ANSI_RED_BACKGROUND +"Tàu không hợp lệ, vui lòng nhập lại" + Color.ANSI_RESET);
         }
         shipType.getList().remove(shipChoice);
         return ship;
