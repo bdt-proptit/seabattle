@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class Ship {
+    private ClearScreen clrscr = new ClearScreen();
     // fields
     private String shipType; // patrol, destroyer, submarine, battle
     char x; int y; // Coordinates of the first square of the ship
@@ -47,6 +48,7 @@ public class Ship {
         System.out.print("Enter the direction of the ship: ");
         char direction = sc.next().charAt(0);
         while(!checkDirection(direction)){
+            clrscr.clear();
             System.out.print("Invalid direction!\nW: up\nA: left\nS: down\nD: right\n");
             System.out.print("Enter the direction of the ship:");
             direction = sc.next().charAt(0);

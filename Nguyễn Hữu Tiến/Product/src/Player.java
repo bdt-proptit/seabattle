@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class Player {
+    private ClearScreen clrscr = new ClearScreen();
     private String playerName;
     private Ship shipList[] = new Ship[6];
     private int remainingShips = 5;
@@ -47,6 +48,7 @@ public class Player {
             else if(i == 5)
                 shipList[i].placeShip("battle");
         }
+        clrscr.clear();
     }
     public void showInformation(Player player2){
         System.out.println("Player: " + playerName);
@@ -60,6 +62,7 @@ public class Player {
         int py = sc.nextInt();
         if(px >= 'a' && px <= 'z') px -= 32;
         if(!Ship.checkCoords(px, py)){
+            clrscr.clear();
             System.out.println("Invalid coordinate, try again!");
             px = sc.next().charAt(0);
             py = sc.nextInt();

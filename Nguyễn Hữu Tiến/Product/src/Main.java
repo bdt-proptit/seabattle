@@ -1,11 +1,16 @@
 import java.util.Scanner;
 public class Main {
+    public static ClearScreen clrscr = new ClearScreen();
     private Player player1 = new Player();
     private Player player2 = new Player();
     private Board board = new Board();
     // methods
     Scanner sc = new Scanner(System.in);
-    public Main(){}
+    public void Init(){
+        board = new Board();
+        player1 = new Player();
+        player2 = new Player();
+    }
     public void showMenu(){
         System.out.println("1. Start game!");
         System.out.println("2. How to play!");
@@ -13,9 +18,11 @@ public class Main {
         System.out.print("Enter your choice: ");
         int choice;
         choice = sc.nextInt();
+        clrscr.clear();
         while(choice < 1 || choice > 3){
             System.out.print("Invalid choice! Enter your choice: ");
             choice = sc.nextInt();
+            clrscr.clear();
         }
         switch(choice){
             case 1: startGame(); break;
@@ -24,15 +31,23 @@ public class Main {
         }
     }
     public void howToPlay(){
-        System.out.println("1, Each player has 5 ships: 2 patrol boats, 1 destroyer boat, 1 submarine, 1 battle ship");
-        System.out.println("2, Each player will place their ships on the board");
-        System.out.println("3, Each turn, a player will choose a coordinate on the board to shoot");
+        System.out.println("Each player has 5 ships: 2 patrol boats, 1 destroyer boat, 1 submarine, 1 battle ship");
+        System.out.println("Each player will place their ships on the board");
+        System.out.println("Each turn, a player will choose a coordinate on the board to shoot");
         System.out.println("A coordinate is represented by a letter and a number, the letter is from A to J, the number is from 1 to 10");
-        System.out.println("4, The game ends when a player destroys all of the enemy's ships");
-        showMenu();
-    }
-    public void update(){
-
+        System.out.println("The game ends when a player destroys all of the enemy's ships");
+        System.out.println("\n");
+        System.out.println("1. Start game!");
+        System.out.println("2. Return to menu!");
+        System.out.println("3. Exit!");
+        System.out.print("Enter your choice: ");
+        int choice;
+        choice = sc.nextInt();
+        clrscr.clear();
+        if(choice == 1) startGame();
+        else if(choice == 2) showMenu();
+        else if(choice == 3) System.exit(0);
+        else howToPlay();
     }
     public void startGame(){
         board = new Board();
@@ -56,6 +71,7 @@ public class Main {
                     break;
                 }
             }
+            clrscr.clear();
             turn *= -1;
         }
         System.out.println("1. Play again!");
@@ -70,7 +86,9 @@ public class Main {
         }
     }
     public static void main(String[] args) {
+        clrscr.clear();
         Main main = new Main();
+        main.Init();
         main.showMenu();
     }
 }
