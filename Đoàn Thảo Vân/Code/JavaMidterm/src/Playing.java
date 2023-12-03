@@ -13,11 +13,13 @@ public class Playing {
         Player NgoQuyen = new Player();
         System.out.println("Hi player Napoleon! Place your ship!");
         Napoleon.placeShip();
-        System.out.println("Hi player NgoQuyen! Place you ship!");
+
+        System.out.println("Hi player Ngo Quyen! Place you ship!");
         NgoQuyen.placeShip();
 
-        while(Napoleon.win == false && NgoQuyen.win == false){
-            if(turn == 1){
+        while(Napoleon.getWin() == false && NgoQuyen.getWin() == false){
+            if(turn % 2 == 1){
+                System.out.println(turn);
                 System.out.println("Napoleon's turn");
                 Napoleon.chooseMode(Napoleon, NgoQuyen);
             }
@@ -25,6 +27,7 @@ public class Playing {
                 System.out.println("NgoQuyen's turn");
                 NgoQuyen.chooseMode(NgoQuyen, Napoleon);
             }
+            ++turn;
         }
     }
 }

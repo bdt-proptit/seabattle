@@ -7,6 +7,8 @@ public class ShowMenu {
         System.out.println("P: Your ships' locations");
         System.out.println("o: Location where a ship was hit");
         System.out.println("x: Location where the ships weren't hit");
+        System.out.println("Let's get started!");
+        System.out.println("-----------------------------------------------------------");
     }
 
     public static void showMode(){

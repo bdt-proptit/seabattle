@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Ship {
+public class Ship extends Player{
 
     private int numberOfCellleft;
     private int x_begin, y_begin, x_end, y_end;
@@ -57,12 +57,5 @@ public class Ship {
         this.numberOfCellleft = numberOfCellleft;
     }
 
-    public void ifSink(int x, int y){
-        if(x_begin <= x && x_end >= x && y_begin <= y && y_end >= y){
-            numberOfCellleft -= 1;
-        }
-        if(numberOfCellleft == 0){
-            System.out.println("A ship was sink!");
-        }
-    }
+
 }
