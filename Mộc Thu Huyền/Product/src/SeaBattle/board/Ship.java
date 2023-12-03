@@ -49,6 +49,6 @@ public class Ship {
     }
 
     public String toString() {
-        return name + ";" + length; /*+ ";" + (position.toString()) + ";" + direction;*/
+        return name + ";" + length;
     }
 }
