@@ -34,13 +34,18 @@ public class PlayerState implements StateMethods {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println(playerManager.isSwitchStatus());
         System.out.println(GameState.state);
         int xPos = e.getX() / SQUARE_WIDTH, yPos = e.getY() / SQUARE_HEIGHT;
         if (e.getButton() == MouseEvent.BUTTON3) {
             getCurrentPlayer().getShipManager().addShip(getCurrentPlayer().getTypeShip(), xPos, yPos, getCurrentPlayer().isHorizontal());
         } else if (e.getButton() == MouseEvent.BUTTON1) {
-            getCurrentPlayer().getShipManager().attackShip(xPos, yPos);
+            if (GameMode.gameMode == GameMode.PVE && currentPlayer == playerManager.getBot()) {
+                currentPlayer.shipManager.attackShip(xPos, yPos, true);
+                if (!currentPlayer.isBroken[xPos][yPos]) playerManager.getBot().autoAttack();
+            }
+            if (GameMode.gameMode == GameMode.PVP) {
+                currentPlayer.shipManager.attackShip(xPos, yPos, true);
+            }
         }
     }
 
@@ -95,20 +100,16 @@ public class PlayerState implements StateMethods {
             case KeyEvent.VK_ENTER:
                 break;
             case KeyEvent.VK_SPACE:
-                playerManager.autoPlace.autoAddPlayer1();
+                playerManager.getAutoPlace().autoAddPlayer1();
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                playerManager.autoPlace.autoAddPlayer2();
+                if (GameMode.gameMode == GameMode.PVP) playerManager.getAutoPlace().autoAddPlayer2();
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-//        switch (e.getKeyCode()){
-//            case KeyEvent.VK_ENTER:
-//                playerManager.readyToSwap = false;
-//        }
     }
 
     public Player getCurrentPlayer() {

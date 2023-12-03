@@ -1,18 +1,18 @@
 package Main;
 import Entities.PlayerManager;
-
-import java.awt.*;
+import GameState.GameMode;
+import GameState.Menu;
 
 public class Game implements Runnable{
-    private final int FPS = 6;
-    private final int UPS = 20000;
-    private PlayerManager playerManager = new PlayerManager(this);
+    private final int FPS = 12;
+    private final int UPS = 2000;
+    private PlayerManager playerManager;
+    private Thread gameThread;
     public Game(){
-        startGameLoop();
+        Menu menu = new Menu(this);
     }
-    public void startGameLoop(){
-        Thread gameThread = new Thread(this);
-        gameThread.start();
+    public void initPlayerManager(){
+        this.playerManager = new PlayerManager(this);
     }
     public void update(){
         playerManager.update();
@@ -36,17 +36,32 @@ public class Game implements Runnable{
                 updates++;
             }
             if (deltaFrameTime >= 1){
-                playerManager.getPlayer1().repaint();
-                playerManager.getPlayer2().repaint();
+                if (GameMode.gameMode == GameMode.PVP) {
+                    playerManager.getPlayer1().repaint();
+                    playerManager.getPlayer2().repaint();
+                }
+                else if (GameMode.gameMode == GameMode.PVE){
+                    playerManager.getPlayer1().repaint();
+                    playerManager.getBot().repaint();
+                }
                 deltaFrameTime--;
                 frames++;
             }
             if (System.currentTimeMillis() - timeCheck >= 1000){
                 timeCheck = System.currentTimeMillis();
-                System.out.println("FPS: " + FPS + " | UPS: " + UPS);
+//                System.out.println("FPS: " + FPS + " | UPS: " + UPS);
                 frames = 0;
                 updates = 0;
             }
+
         }
+    }
+
+    public Thread getGameThread() {
+        return gameThread;
+    }
+
+    public void setGameThread(Thread gameThread) {
+        this.gameThread = gameThread;
     }
 }

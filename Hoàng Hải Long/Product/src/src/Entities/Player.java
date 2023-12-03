@@ -1,48 +1,64 @@
 package Entities;
+
 import Main.GameWindow;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
 
 
 public class Player extends JComponent {
-    private GameWindow gameWindow;
-    private int typeShip = 0;
-    private boolean isHorizontal = true;
-    private PlayerManager playerManager;
-    private Map map = new Map(this);
+    protected GameWindow gameWindow;
+    protected int typeShip = 0;
+    protected boolean isHorizontal = true;
+    protected PlayerManager playerManager;
+    protected Map map = new Map(this);
     public ShipManager shipManager;
-    private ExtraMethods extraMethods = new ExtraMethods(this);
-    public BufferedImage[][] gameMap;
-    private BufferedImage stick;
-    public boolean[][] explodedAnimation = new boolean[100][100];
+    protected ExtraMethods extraMethods = new ExtraMethods(this);
     public boolean isPlaying = true;
-    public BufferedImage[][] explodeFrame = new BufferedImage[100][100];
-    public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem vị trí đã bị bắn hỏng hay chưa
-    public BufferedImage[][] smokeFrame = new BufferedImage[100][100];
-    public boolean[][] isBroken = new boolean[100][100];
-    public boolean[][] isFailedShot = new boolean[100][100];
-    public boolean[][] isDrawed = new boolean[100][100];
-    public boolean[][] isPlaced = new boolean[100][100];
+    public boolean[][] isExploded = new boolean[100][100]; // Kiểm tra xem bị bắn nổ
+    public boolean[][] isBroken = new boolean[100][100]; // Kiểm tra xem bị bắn vỡ
+    public boolean[][] isFailedShot = new boolean[100][100]; // Kiểm tra bị bắn xịt
+    public boolean[][] isDrawed = new boolean[100][100]; // Kiểm tra đã vẽ tàu
+    public boolean[][] isPlaced = new boolean[100][100]; // Kiểm tra đã đặt tàu
+    public int numberExplodedShip; // Đếm số tàu đã nổ
+    public static boolean changeTurn; // Kiểm tra đổi lượt
+    public boolean isLost; // Kiểm tra thua
+    public boolean isVictory; // Kiểm tra thắng
+    protected boolean isActive; // Kiểm tra có đang chơi (Phân biệt PVP và PVE)
+    public boolean isAuto; // Kiểm tra có tự động đặt tàu không (Để xử lý hiệu ứng)
 
-    public Player(PlayerManager playerManager){
+    public Player(PlayerManager playerManager) {
         this.setPlayerManager(playerManager);
     }
 
 
     public void initClass(String mapName) {
         setShipManager(new ShipManager(getPlayerManager(), this));
-        getMap().setMap(mapName);
-        getExtraMethods().importExplodeAnimation();
-        getExtraMethods().importFire();
-        getExtraMethods().importSmoke();
+        map.setMap(mapName);
+        extraMethods.importExplodeAnimation();
+        extraMethods.importFire();
+        extraMethods.importSmoke();
+        extraMethods.importBroken();
+        extraMethods.importLostScreen();
+        extraMethods.importVictoryScreen();
+
     }
-    public void render(Graphics g){
-        map.renderMap(g);
-        if (isPlaying) shipManager.renderAllShip(g);
-        extraMethods.renderExtraMethods(g);
+
+    public void render(Graphics g) {
+        if (isLost){
+            extraMethods.drawLostScreen(g);
+        }
+        else if (isVictory){
+            extraMethods.drawVictoryScreen(g);
+        }
+        else {
+            map.renderMap(g);
+            if (isPlaying) shipManager.renderAllShip(g);
+            extraMethods.renderExtraMethods(g);
+            if (!isPlaying && !playerManager.isSwitchStatus()) extraMethods.drawChangeTurnBackground(g);
+        }
     }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         render(g);
@@ -56,12 +72,11 @@ public class Player extends JComponent {
         this.typeShip = typeShip;
     }
 
-    public GameWindow getGameWindow() {
-        return gameWindow;
-    }
-
     public void setGameWindow(GameWindow gameWindow) {
         this.gameWindow = gameWindow;
+    }
+    public GameWindow getGameWindow(){
+        return gameWindow;
     }
 
     public boolean isHorizontal() {
@@ -80,13 +95,6 @@ public class Player extends JComponent {
         this.playerManager = playerManager;
     }
 
-    public Map getMap() {
-        return map;
-    }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
 
     public ShipManager getShipManager() {
         return shipManager;
@@ -96,27 +104,10 @@ public class Player extends JComponent {
         this.shipManager = shipManager;
     }
 
-    public ExtraMethods getExtraMethods() {
-        return extraMethods;
-    }
-
-    public void setExtraMethods(ExtraMethods extraMethods) {
-        this.extraMethods = extraMethods;
-    }
-
-    public BufferedImage getStick() {
-        return stick;
-    }
-
-    public void setStick(BufferedImage stick) {
-        this.stick = stick;
-    }
-
-    public boolean isPlaying() {
-        return isPlaying;
-    }
-
     public void setPlaying(boolean playing) {
         isPlaying = playing;
+    }
+    public void setIsActive(boolean isActive){
+        this.isActive = isActive;
     }
 }
