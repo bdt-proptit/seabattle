@@ -1,3 +1,5 @@
+package graphic;
+
 public class Delay {
     public static void delay(int time) {
         try {
