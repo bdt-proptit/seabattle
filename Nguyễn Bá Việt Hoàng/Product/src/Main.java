@@ -8,8 +8,10 @@ public class Main {
         Player player1 = new Player();
         Player player2 = new Player();
         MainMenu menu = new MainMenu();
+        DisplayTitle title = new DisplayTitle();
+        ClearScreen.clrscr();
+        title.showTitle();
         menu.startMenu(sc, player1, player2);
-
     }
 }
 

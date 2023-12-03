@@ -24,15 +24,19 @@ public class GameBoard {
                 else if (i == 0) System.out.printf(" %4d ", j);
                 else if (j == 0) System.out.printf(" %3d |", i);
                 else {
-                    if(getBoard(i, j)=='x'){
+                    if (getBoard(i, j) == 'x') {
                         System.out.print(" ");
                         System.out.printf(Color.HIT + " %c ", getBoard(i, j));
-                        System.out.printf(Color.RESET+ " |");
-                    } else if(getBoard(i, j)=='o'){
+                        System.out.printf(Color.RESET + " |");
+                    } else if (getBoard(i, j) == 'o') {
                         System.out.print(" ");
                         System.out.printf(Color.MISS + " %c ", getBoard(i, j));
-                        System.out.printf(Color.RESET+ " |");
-                    }else {
+                        System.out.printf(Color.RESET + " |");
+                    } else if (getBoard(i, j) == 'd') {
+                        System.out.print(" ");
+                        System.out.printf(Color.DEAD + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET + " |");
+                    } else {
                         System.out.print(" ");
                         System.out.printf(Color.WATER + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
@@ -50,18 +54,22 @@ public class GameBoard {
                 else if (i == 0) System.out.printf(" %4d ", j);
                 else if (j == 0) System.out.printf(" %3d |", i);
                 else {
-                    if (getBoard(i, j) == 'x' ){
+                    if (getBoard(i, j) == 'x') {
                         System.out.print(" ");
                         System.out.printf(Color.HIT + " %c ", getBoard(i, j));
-                        System.out.printf(Color.RESET+ " |");
-                    } else if(getBoard(i, j) == 'o') {
+                        System.out.printf(Color.RESET + " |");
+                    } else if (getBoard(i, j) == 'o') {
                         System.out.print(" ");
                         System.out.printf(Color.MISS + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET + " |");
+                    } else if (getBoard(i, j) == 'd') {
+                        System.out.print(" ");
+                        System.out.printf(Color.DEAD + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
                     } else {
                         System.out.print(" ");
                         System.out.print(Color.FOG + " f ");
-                        System.out.printf(Color.RESET+ " |");
+                        System.out.printf(Color.RESET + " |");
                     }
                 }
             }
