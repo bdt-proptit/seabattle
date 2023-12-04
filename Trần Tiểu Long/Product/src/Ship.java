@@ -74,13 +74,22 @@ public class Ship {
     }
     //kiem tra xem tau co bi dat chong nhau ko
     int check_Ship_position(char[][] matrix, int len, int length) {
-        if (x_begin <= 0 || x_end <= 0 || x_begin > len || x_end > len || y_begin <= 0 || y_end <= 0 || y_begin > len || y_end > len || (x_end - x_begin + 1) > length || ((x_end - x_begin + 1) < length && (x_end - x_begin + 1) > 1) || (y_end - y_begin + 1) > length || ((y_end - y_begin + 1) < length && (y_end - y_begin + 1) > 1)) return 0;
-        for (int i = x_begin; i <= x_end; i++) {
-            for (int j = y_begin; j <= y_end; j++) {
-                if (matrix[i][j] == '#') return 0;
+        if (x_begin <= 0 || x_end <= 0 || x_begin > len || x_end > len || y_begin <= 0 || y_end <= 0 || y_begin > len || y_end > len ) {
+            return 0;
+        }
+        if (x_begin != x_end && y_begin != y_end) return 0;
+        int cnt = 0;
+        if (x_begin == x_end || y_begin == y_end) {
+
+            for (int i = x_begin; i <= x_end; i++) {
+                for (int j = y_begin; j <= y_end; j++) {
+                    cnt ++;
+                    if (matrix[i][j] == '#') return 0;
+                }
             }
         }
-        return 1;
+        if ((cnt >=0 && cnt < length)  || cnt > length) return 0;
+        else return 1;
     }
     //kiem tra tau con song khong
     int Check_ship(char[][] matrix) {
