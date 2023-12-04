@@ -18,8 +18,7 @@ The project was done by [Bùi Thái Sỹ](https://github.com/sybui2004), in the 
 
 ## Demo
 
-
-
+![Alt text](https://github.com/bdt-proptit/seabattle/blob/d22_bui_thai_sy/image1.png)
 
 ## Usage
 
@@ -29,21 +28,18 @@ The project was done by [Bùi Thái Sỹ](https://github.com/sybui2004), in the 
 
 ├── src
 │   ├── main
-│   │   ├── java
-│   │   │   ├── controller
-│   │   │   │   ├── GameController.java
-│   │   │   │   ├── GameMode.java
-│   │   │   │   ├── GameStatus.java
-│   │   │   │   ├── Player.java
-│   │   │   │   ├── Ship.java
-│   │   │   │   ├── ShipType.java
-│   │   │   │   └── Square.java
-│   │   │   ├── model
-│   │   │   │   ├── GameBoard.java
-│   │   │   │   ├── GameCell.java
-│   │   │   │   ├── Computer.java
-│   │   │   │   ├── GameShip.java
-│   │   │   │   ├── GameSquare.java
+│   ├── controller
+│   │   ├── Controller.java
+│   │   ├── ClearScreen.java
+│   │   ├── FillColor.java
+│   │   ├── PressEnterToContinue.java
+│   │   └── Wait.java
+│   ├── model
+│   │   ├── Board.java
+│   │   ├── Ship.java
+│   │   ├── Player.java
+│   │   ├── Computer.java
+│   │   └── Position.java
 ```
 
 ## Contributing
