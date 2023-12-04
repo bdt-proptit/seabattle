@@ -8,14 +8,18 @@ public class Board {
     }
 
     private void printShip(char[][] board, int row, int column) {
-        if (board[row][column] == 's') {
-            System.out.print(MakeColor.reset + MakeColor.backgoundRed);
-        } else if (board[row][column] == 'x') {
-            System.out.print(MakeColor.reset + MakeColor.backgoundPurple);
-        } else if (board[row][column] == 'o') {
-            System.out.print(MakeColor.reset + MakeColor.backgoundYellow);
+        if (board[row][column] >= '2' && board[row][column] <= '5') {
+            String[] color = { "\u001B[41m", "\u001B[42m", "\u001B[46m", "\u001B[44m" };
+            int index = (int) (board[row][column] - '0');
+            System.out.print(MakeColor.reset + color[index - 2]);
+            System.out.print(" " + "s" + " |");
+        } else {
+            if (board[row][column] == 'x')
+                System.out.print(MakeColor.reset + MakeColor.backgoundPurple);
+            else if (board[row][column] == 'o')
+                System.out.print(MakeColor.reset + MakeColor.backgoundYellow);
+            System.out.print(" " + board[row][column] + " |");
         }
-        System.out.print(" " + board[row][column] + " |");
         if (board[row][column] != ' ') {
             System.out.print(MakeColor.reset + MakeColor.green);
         }
@@ -40,17 +44,19 @@ public class Board {
     }
 
     public void updateBoardShip(Ship ship, Player player) {
+        char length = (char) (ship.getLength() + 48);
         char[][] board = player.getBoard();
         if (ship.getColumnStart() == ship.getColumnEnd()) {
             int begin = Math.min(ship.getRowEnd(), ship.getRowStart());
             int end = Math.max(ship.getRowEnd(), ship.getRowStart());
-            for (int i = begin; i <= end; i++)
-                board[i][ship.getColumnStart()] = 's';
+            for (int i = begin; i <= end; i++) {
+                board[i][ship.getColumnStart()] = length;
+            }
         } else {
             int begin = Math.min(ship.getColumnEnd(), ship.getColumnStart());
             int end = Math.max(ship.getColumnEnd(), ship.getColumnStart());
             for (int i = begin; i <= end; i++)
-                board[ship.getRowStart()][i] = 's';
+                board[ship.getRowStart()][i] = length;
         }
         player.setBoard(board);
     }

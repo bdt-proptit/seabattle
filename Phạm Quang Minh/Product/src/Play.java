@@ -35,6 +35,8 @@ public class Play {
     public void menuInGame(Scanner scanner, Player player, Player oppositePlayer) {
         if (!player.getCompleted() || !oppositePlayer.getCompleted()) {
             System.out.println("You haven't finished entering player.");
+            MenuGame menuGame = new MenuGame();
+            menuGame.menuInformationPlayer(scanner, player, oppositePlayer);
             return;
         }
 
@@ -43,9 +45,9 @@ public class Play {
             ClearScreen.clearScreen();
             if (player.remainNumberShips() == 0 || oppositePlayer.remainNumberShips() == 0) {
                 if (player.remainNumberShips() == 0) {
-                    winner(player, oppositePlayer);
-                } else
                     winner(oppositePlayer, player);
+                } else
+                    winner(player, oppositePlayer);
                 return;
             }
             if (swap) {
@@ -79,5 +81,7 @@ public class Play {
         printNamePlayer(player, oppositePlayer);
         Board board = new Board();
         board.displayBoardGame(player.getBoard(), oppositePlayer.getBoard());
+        File file = new File();
+        file.addPlayer(player);
     }
 }

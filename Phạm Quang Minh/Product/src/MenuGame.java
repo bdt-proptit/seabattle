@@ -17,12 +17,12 @@ public class MenuGame {
 
     public void menu(Scanner scanner, Player player, Player oppositePlayer) {
         ClearScreen.clearScreen();
-        System.out
-                .println(MakeColor.reset + MakeColor.backgoundRed + "\tSEA BATTLE" + MakeColor.reset + MakeColor.blue);
+        System.out.println(MakeColor.reset + MakeColor.backgoundRed + "\tSEA BATTLE" + MakeColor.reset + MakeColor.blue);
         System.out.println("1. Play");
         System.out.println("2. Instruction");
-        System.out.println("3. Exit");
-        int choice = Choice.enterChoice(3, scanner);
+        System.out.println("3. Ranking");
+        System.out.println("4. Exit");
+        int choice = Choice.enterChoice(4, scanner);
         ClearScreen.clearScreen();
         switch (choice) {
             case 1:
@@ -32,6 +32,9 @@ public class MenuGame {
                 instruction(scanner, player, oppositePlayer);
                 break;
             case 3:
+                File file = new File();
+                file.printRanking(player, oppositePlayer);
+            case 4:
                 return;
         }
     }
@@ -62,7 +65,7 @@ public class MenuGame {
             System.out.println("2. Player 2");
             System.out.println("3. Play");
             System.out.println("4. Exit");
-            int choice = Choice.enterChoice(3, scanner);
+            int choice = Choice.enterChoice(4, scanner);
             switch (choice) {
                 case 1:
                     enterInformation(scanner, 1, player, oppositePlayer);

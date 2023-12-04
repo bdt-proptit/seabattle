@@ -17,7 +17,6 @@ public class GameShot {
         }
         player.setOppositeBoard(board);
         oppositePlayer.setBoard(oppositeBoard);
-
         player.setNumberShot(player.getNumberShot() + 1);
         return swap;
     }

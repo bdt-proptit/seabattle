@@ -49,18 +49,24 @@ public class Ship {
         return true;
     }
 
+    private boolean checkChar(char Char) {
+        if (Char >= '2' && Char <= '5')
+            return true;
+        return false;
+    }
+
     private boolean checkOverlapOrStatus(char[][] board) {
         if (columnStart == columnEnd) {
             int begin = Math.min(rowEnd, rowStart);
             int end = Math.max(rowEnd, rowStart);
             for (int i = begin; i <= end; i++)
-                if (board[i][columnStart] == 's')
+                if (checkChar(board[i][columnStart]))
                     return false;
         } else {
             int begin = Math.min(columnEnd, columnStart);
             int end = Math.max(columnEnd, columnStart);
             for (int i = begin; i <= end; i++)
-                if (board[rowStart][i] == 's')
+                if (checkChar(board[rowStart][i]))
                     return false;
         }
         return true;
@@ -96,7 +102,11 @@ public class Ship {
         this.status = status;
     }
 
-    public boolean getCheckStatus(char[][] board) {
+    public int getLength() {
+        return length;
+    }
+
+    public boolean checkStatus(char[][] board) {
         return checkOverlapOrStatus(board);
     }
 }

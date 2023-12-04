@@ -26,7 +26,7 @@ public class Shot {
     }
 
     public boolean checkHit(char[][] Board) {
-        if (Board[row][column] == 's')
+        if (Board[row][column]>='2' && Board[row][column]<='5')
             return true;
         return false;
     }

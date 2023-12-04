@@ -8,6 +8,7 @@ public class Player {
     private char[][] oppositeBoard;
     private boolean completed;
     private ArrayList<Ship> ships;
+    private int ship;
 
     Player(int index, String name, int numberShot, char[][] board, char[][] oppositeBoard, Boolean completed,
             ArrayList<Ship> ships) {
@@ -18,6 +19,12 @@ public class Player {
         this.oppositeBoard = oppositeBoard;
         this.completed = completed;
         this.ships = ships;
+    }
+
+    Player(String name, int numberShot, int ship) {
+        this.name = name;
+        this.numberShot = numberShot;
+        this.ship = ship;
     }
 
     Player() {
@@ -48,7 +55,7 @@ public class Player {
     }
 
     public boolean getCompleted() {
-        return completed;
+        return this.completed;
     }
 
     public void setCompleted(boolean completed) {
@@ -56,7 +63,7 @@ public class Player {
     }
 
     public ArrayList<Ship> getShips() {
-        return ships;
+        return this.ships;
     }
 
     public void setShips(ArrayList<Ship> ships) {
@@ -64,11 +71,15 @@ public class Player {
     }
 
     public int getNumberShot() {
-        return numberShot;
+        return this.numberShot;
     }
 
     public void setNumberShot(int numberShot) {
         this.numberShot = numberShot;
+    }
+
+    public int getShip() {
+        return this.ship;
     }
 
     public int destroyedShips() {

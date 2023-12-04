@@ -15,16 +15,39 @@ public class GameShip {
         return 5;
     }
 
-    public void automaticShip(Scanner scanner, Player player, Player oppositPlayer) {
-        int[] length = { 1, 1, 3, 2, 4 };
-        for (int i = 0; i <= 4; i++) {
-            createAutomaticShip(length[i], player);
+    private void menuAuto() {
+        System.out.println("1. Ok");
+        System.out.println("2. Swap");
+        System.out.println("3. Exit");
+    }
+
+    public void automaticShip(Scanner scanner, Player player, Player oppositePlayer) {
+        do {
+            ClearScreen.clearScreen();
+            int[] length = { 1, 1, 3, 2, 4 };
+            for (int i = 0; i <= 4; i++) {
+                createAutomaticShip(length[i], player);
+            }
             Board board = new Board();
             board.displayBoardShip(player.getBoard());
-        }
-        player.setCompleted(!player.getCompleted());
-        MenuGame menuGame = new MenuGame();
-        menuGame.menuInformationPlayer(scanner, player, oppositPlayer);
+            menuAuto();
+            int choice = Choice.enterChoice(3, scanner);
+            MenuGame menuGame = new MenuGame();
+            switch (choice) {
+                case 1:
+                    player.setCompleted(true);
+                    menuGame.menuInformationPlayer(scanner, player, oppositePlayer);
+                    return;
+                case 2:
+                    ArrayList<Ship> ships = new ArrayList<>();
+                    player.setShips(ships);
+                    player.setBoard(board.createBoard());
+                    break;
+                case 3:
+                    menuGame.menuInformationPlayer(scanner, player, oppositePlayer);
+                    return;
+            }
+        } while (true);
     }
 
     private void createAutomaticShip(int length, Player player) {
@@ -72,13 +95,10 @@ public class GameShip {
             System.out.println("5. Exit");
             int choice = Choice.enterChoice(5, scanner);
             if (choice == 5) {
-                if (quantity < 5) {
-                    System.out.println("You have not entered a sufficient quantity of ship.");
-                    continue;
-                }
-                System.out.println("You have entered a sufficient quantity of ship.");
-                player.setCompleted(!player.getCompleted());
                 ClearScreen.clearScreen();
+                if (quantity==5){
+                    player.setCompleted(true);
+                }
                 MenuGame menuGame = new MenuGame();
                 menuGame.menuInformationPlayer(scanner, player, oppositePlayer);
             }
@@ -90,8 +110,8 @@ public class GameShip {
             String nameShip = ship.nameShip(choice);
             System.out.println(choice + ". Enter location " + nameShip + "(1 x " + lengthShip(choice) + ").");
             if (createCustomShip(scanner, choice, player)) {
-                quantity++;
                 count[choice]--;
+                quantity++;
             }
         } while (true);
     }
@@ -112,7 +132,7 @@ public class GameShip {
         return checkValidShip(player, ship);
     }
 
-    public boolean checkValidShip(Player player, Ship ship) {
+    private boolean checkValidShip(Player player, Ship ship) {
         if (!ship.checkLocation(player.getBoard())) {
             return false;
         }
@@ -127,7 +147,7 @@ public class GameShip {
     public void updateShip(Player player, Player oppositePlayer) {
         ArrayList<Ship> ships = oppositePlayer.getShips();
         for (var ship : ships) {
-            if (ship.getCheckStatus(oppositePlayer.getBoard())) {
+            if (ship.checkStatus(oppositePlayer.getBoard())) {
                 ship.setStatus(false);
             }
         }
