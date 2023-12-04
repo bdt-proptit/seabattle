@@ -35,9 +35,9 @@ public class Player {
         }
     }
     public void setUpBoats (Scanner sc) {
-        operation.playerSetsUpTheBoard(sc, this);
+        operation.playerSetsUpTheBoat(sc, this);
     }
-    public boolean openFire (Scanner sc, Player enemy) {
-        return operation.playerOpensFire(sc, this, enemy);
+    public boolean openFireAndCheck (Scanner sc, Player enemy) {
+        return operation.playerOpensFireAndCheck(sc, this, enemy);
     }
 }

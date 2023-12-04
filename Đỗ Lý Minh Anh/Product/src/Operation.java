@@ -178,7 +178,7 @@ public class Operation {
         }
         return coordinates;
     }
-    public void playerSetsUpTheBoard (Scanner sc, Player player) {
+    public void playerSetsUpTheBoat (Scanner sc, Player player) {
         System.out.println("Setting up the boat...");
         player.setMyBoard();
         Boat thePatrolBoat1 = new Boat();
@@ -259,7 +259,7 @@ public class Operation {
         System.out.println("---> The Battle Ship has been set up in " + theBattleShip.getShape() + " form. <---");
         System.out.println("All boats have been commissioned. Ready for combat!");
     }
-    public boolean playerOpensFire (Scanner sc, Player player, Player enemy) {
+    public boolean playerOpensFireAndCheck (Scanner sc, Player player, Player enemy) {
         System.out.println("Shooting...");
         boolean mark = false;
         String location;
@@ -362,13 +362,13 @@ public class Operation {
         }
         return mark;
     }
-    public void displayCurrentStatusOfThePlayer (Player player) {
+    public void displayCurrentStatus (Player player) {
         System.out.println("My current status:");
         System.out.println("** The number of squares shot on the enemy front: " + player.getTheNumberOfSquaresShot());
         System.out.println("** The number of boats hit: " + player.getTheNumberOfBoatsHit());
         System.out.println("** The number of my remaining boats: " + player.getTheNumberOfMyRemainingBoats());
     }
-    public void displayTheBoardInFogOfWar (Player enemy) {
+    public void displayTheBoardOfEnemy (Player enemy) {
         System.out.println("-> Enemy's board:");
         for (int i = 0; i <= 10; ++i) {
             for (int j = 0; j <= 10; ++j) {

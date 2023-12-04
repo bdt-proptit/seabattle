@@ -44,7 +44,7 @@ public class Server {
                     else {
                         System.out.println("*** Player 2's turn! ***");
                     }
-                    operation.displayCurrentStatusOfThePlayer(activePlayer);
+                    operation.displayCurrentStatus(activePlayer);
                     operation.displayPlayerOptions();
                     System.out.println("--> Enter your choice:");
                     int option2 = Integer.parseInt(sc.nextLine());
@@ -54,10 +54,10 @@ public class Server {
                     else if (option2 == 2) {
                         boolean check;
                         if (mark == 1) {
-                            check = activePlayer.openFire(sc, player2);
+                            check = activePlayer.openFireAndCheck (sc, player2);
                         }
                         else {
-                            check = activePlayer.openFire(sc, player1);
+                            check = activePlayer.openFireAndCheck (sc, player1);
                         }
                         if (check) {
                             operation.displayTheResults(player1, player2);
@@ -66,10 +66,10 @@ public class Server {
                         }
                         else {
                             if (mark == 1) {
-                                operation.displayTheBoardInFogOfWar(player2);
+                                operation.displayTheBoardOfEnemy (player2);
                             }
                             else {
-                                operation.displayTheBoardInFogOfWar(player1);
+                                operation.displayTheBoardOfEnemy (player1);
                             }
                         }
                     }
@@ -86,6 +86,7 @@ public class Server {
                         mark = 1;
                     }
                 }
+
             }
             else {
                 System.out.println("----> GOODBYE!!! <----");
