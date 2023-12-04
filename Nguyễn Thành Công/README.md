@@ -19,11 +19,8 @@ The project was done by [Nguyễn Thành Công](https://github.com/NTC223), in t
 ## Demo
 
 ![Alt text](image.png)
-![Alt text](image-1.png)
 ![Alt text](image-2.png)
 ![Alt text](image-3.png)
-
-
 
 
 ## Usage
@@ -35,24 +32,18 @@ The project was done by [Nguyễn Thành Công](https://github.com/NTC223), in t
 ├── src
 │   ├── main
 │   │   ├── java
-│   │   │   ├── controller
-│   │   │   │   ├── GameController.java
-│   │   │   │   ├── GameMode.java
-│   │   │   │   ├── GameStatus.java
-│   │   │   │   ├── Player.java
-│   │   │   │   ├── Ship.java
-│   │   │   │   ├── ShipType.java
-│   │   │   │   └── Square.java
-│   │   │   ├── model
-│   │   │   │   ├── Board.java
-│   │   │   │   ├── Cell.java
-│   │   │   │   ├── Game.java
-│   │   │   │   ├── GameBoard.java
-│   │   │   │   ├── GameCell.java
-│   │   │   │   ├── GamePlayer.java
-│   │   │   │   ├── GameShip.java
-│   │   │   │   ├── GameSquare.java
-
+│   │   │   ├── Board.java
+│   │   │   ├── CellStatus.java
+│   │   │   ├── Display.java
+│   │   │   ├── Game.java
+│   │   │   ├── GameConstant.java
+│   │   │   ├── GameMenu.java
+│   │   │   ├── Graphic.java
+│   │   │   ├── Main.java
+│   │   │   ├── Player.java
+│   │   │   ├── Position.java
+│   │   │   ├── Ship.java
+│   │   │   ├── Wait.java
 
 ```
 
