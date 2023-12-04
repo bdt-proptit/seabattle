@@ -1,5 +1,6 @@
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -46,6 +47,8 @@ public class Player extends BattleField{
                 continue;
             }
         }
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public void shot(){
@@ -69,6 +72,8 @@ public class Player extends BattleField{
             else isAttacked = false;
 
         }
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         if(!board[x][y].getStatus().equals("Empty")){
             System.out.println("Congratulations!!");
             for(Ship ship: ships){
@@ -143,11 +148,11 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = y; i > y-coverCells; --i) board[x][i].setStatus("P");
+                            placeSuccessfull = true;
                         }
-                        if(!coincide) placeSuccessfull = true;
                         else{
                             System.out.println("Try again");
-                            continue;
+                            break;
                         }
                         break;
                     case 2:
@@ -165,17 +170,17 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = y; i < y+coverCells; ++i) board[x][i].setStatus("P");
+                            placeSuccessfull = true;
                         }
-                        if(!coincide) placeSuccessfull = true;
                         else{
                             System.out.println("Try again");
-                            continue;
+                            break;
                         }
                         break;
                     case 3:
                         x_begin = x - coverCells; y_begin = y; y_end = y; x_end = x;
                         if(checkOutOfBoard(x-coverCells)){
-                            System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
+                            System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = x; i > x-coverCells; --i) {
@@ -187,17 +192,17 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = x; i > x-coverCells; --i) board[i][y].setStatus("P");
+                            placeSuccessfull = true;
                         }
-                        if(!coincide) placeSuccessfull = true;
                         else{
                             System.out.println("Try again");
-                            continue;
+                            break;
                         }
                         break;
                     case 4:
                         x_begin = x; y_begin = y; y_end = y; x_end = x + coverCells;
                         if(checkOutOfBoard(x+coverCells)){
-                            System.out.println("The coordinates you selected exceed the board limits, try again.");
+                            System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
                         for(int i = x; i < x+coverCells; ++i) {
@@ -209,11 +214,11 @@ public class Player extends BattleField{
                         }
                         if(!coincide){
                             for(int i = x; i < x+coverCells; ++i) board[i][y].setStatus("P");
+                            placeSuccessfull = true;
                         }
-                        if(!coincide) placeSuccessfull = true;
                         else{
                             System.out.println("Try again");
-                            continue;
+                            break;
                         }
                         break;
                 }
@@ -225,8 +230,10 @@ public class Player extends BattleField{
         }
         Ship newShip = new Ship(x_begin, x_end, y_begin, y_end, coverCells);
         ships.add(newShip);
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
-    public void placeShip(){
+    public void placeShip() throws IOException {
         setCells();
         System.out.println("1.Place First Patrol Boat (1x2)");
         place(2);
