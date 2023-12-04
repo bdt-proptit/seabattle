@@ -1,4 +1,4 @@
-import org.w3c.dom.ls.LSOutput;
+
 
 public class Menu {
     public void printMenu(){
@@ -18,6 +18,7 @@ public class Menu {
         System.out.println("Select Mode Computer");
         System.out.println("1. Easy Mode");
         System.out.println("2. Hard Mode");
+        //System.out.println("3. Back");
     }
     // Mode cho người chơi mỗi lượt chọn 1 mystical card
     //Các mystical card sẽ có chức năng:

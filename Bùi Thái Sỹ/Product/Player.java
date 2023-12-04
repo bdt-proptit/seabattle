@@ -88,7 +88,7 @@ public class Player extends Board{
         yourBoard.printYourBoard();
     }
     public void hitShip(){
-        Menu menu = new Menu();
+        Controller controller = new Controller();
         FillColor fill = new FillColor();
         fill.initColor();
         printBoard(yourBoard, oppBoard);
@@ -99,8 +99,20 @@ public class Player extends Board{
         System.out.println("y: ");
         int y = sc.nextInt();
         Position posHited = new Position(y, x);
+        while(!controller.checkHit(oppBoard, posHited)){
+            System.out.println("Coordinate is illegal! Please enter again: ");
+            System.out.println("x: ");
+            x = sc.nextInt();
+            System.out.println("y: ");
+            y = sc.nextInt();
+            posHited.setPosition(y, x);
+        }
         if(Objects.equals(oppBoard.getCell(posHited), "S" )){
-            System.out.println("Boom! You Hit!");
+            ClearScreen.clrscr();
+            System.out.println("Boom!" + name + " Hit!☠");
+            oppBoard.setCell(posHited, "☠");
+            printBoard(yourBoard, oppBoard);
+            Wait.wait(3);
             oppBoard.setCell(posHited, "X");
             if(checkWinner()){
                 ClearScreen.clrscr();
@@ -115,7 +127,7 @@ public class Player extends Board{
             hitShip();
         }else{
             System.out.println("Oh no! You Miss!");
-            oppBoard.setCell(posHited, "O");
+            oppBoard.setCell(posHited, "M");
             System.out.println("Change Turn!");
             PressEnterToContinue.pressEnterToContinue();
             ClearScreen.clrscr();

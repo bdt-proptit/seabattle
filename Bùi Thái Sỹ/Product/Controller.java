@@ -1,13 +1,15 @@
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
-
 public class Controller {
     public boolean checkPos(int a){
         return a > 10 || a < 1;
     }
     public boolean checkAutoHit(Board board, Position pos){
         return Objects.equals(board.getCell(pos), "S") || board.getCell(pos) == null;
+    }
+    public boolean checkHit(Board board, Position pos){
+        return (Objects.equals(board.getCell(pos), "S") || board.getCell(pos) == null)&&!checkPos(pos.getX())&&!checkPos(pos.getY());
     }
     public boolean checkPosShipOnBoard(Board board, Ship ship){
         if(checkPos(ship.getPosStart().getX()) || checkPos(ship.getPosStart().getY()) || checkPos(ship.getPosEnd().getX()) || checkPos(ship.getPosEnd().getY())) return false;
@@ -45,40 +47,41 @@ public class Controller {
                             ClearScreen.clrscr();
                             menu.menuSelectModeComputer();
                             String chooseModeComputer = sc.nextLine();
+                            ClearScreen.clrscr();
+                            System.out.println("Computer is setting ship....");
+                            Wait.wait(2);
+                            computer.setShipOnBoardAuto();
+
+                            ClearScreen.clrscr();
+                            System.out.println("Computer set ship on Board!");
+                            PressEnterToContinue.pressEnterToContinue();
+                            sc = new Scanner(System.in);
+                            Player player = new Player();
+                            ClearScreen.clrscr();
+                            player.setName("You");
+                            System.out.println("Hey player!!!");
+                            menu.menuToSetShipAuto();
+                            int chooseSetShipAuto = sc.nextInt();
+                            if(chooseSetShipAuto == 1){
+                                player.setShipOnBoardAuto();
+                                PressEnterToContinue.pressEnterToContinue();
+                                ClearScreen.clrscr();
+                            }
+                            else player.setShipOnBoard();
+                            ClearScreen.clrscr();
+                            System.out.println("Everything is ready!!! Enter to random who hit first!!!");
+                            System.out.println("Radoming....");
+                            Wait.wait(2);
+                            ClearScreen.clrscr();
+                            Random random = new Random();
+                            int turn = random.nextInt(2);
+                            if(turn == 0){
+                                System.out.print("Computer");
+                            }else System.out.print(player.getName());
+                            System.out.println(" hit first!");
+                            Wait.wait(2);
                             switch (chooseModeComputer){
                                 case "1" ->{
-                                    ClearScreen.clrscr();
-                                    System.out.println("Computer is setting ship....");
-                                    Wait.wait(2);
-                                    computer.setShipOnBoardAuto();
-                                    ClearScreen.clrscr();
-                                    System.out.println("Computer set ship on Board!");
-                                    PressEnterToContinue.pressEnterToContinue();
-                                    sc = new Scanner(System.in);
-                                    Player player = new Player();
-                                    ClearScreen.clrscr();
-                                    player.setName("you");
-                                    System.out.println("Hey player!!!");
-                                    menu.menuToSetShipAuto();
-                                    int chooseSetShipAuto = sc.nextInt();
-                                    if(chooseSetShipAuto == 1){
-                                        player.setShipOnBoardAuto();
-                                        PressEnterToContinue.pressEnterToContinue();
-                                        ClearScreen.clrscr();
-                                    }
-                                    else player.setShipOnBoard();
-                                    ClearScreen.clrscr();
-                                    System.out.println("Everything is ready!!! Enter to random who hit first!!!");
-                                    System.out.println("Radoming....");
-                                    Wait.wait(2);
-                                    ClearScreen.clrscr();
-                                    Random random = new Random();
-                                    int turn = random.nextInt(2);
-                                    if(turn == 0){
-                                        System.out.print("Computer");
-                                    }else System.out.print(player.getName());
-                                    System.out.println(" hit first!");
-                                    Wait.wait(2);
                                     while(!computer.checkWinner() && !player.checkWinner()){
                                         if (turn == 0) {
                                             computer.oppBoard = player.yourBoard;
@@ -95,7 +98,20 @@ public class Controller {
                                     PressEnterToContinue.pressEnterToContinue();
                                 }
                                 case "2" ->{
-
+                                    while(!computer.checkWinner() && !player.checkWinner()){
+                                        if (turn == 0) {
+                                            computer.oppBoard = player.yourBoard;
+                                            System.out.println("Computer's turn!");
+                                            computer.hitHardMode();
+                                            turn = 1;
+                                        } else {
+                                            player.oppBoard = computer.yourBoard;
+                                            System.out.println(player.getName() + "'s turn!");
+                                            player.hitShip();
+                                            turn = 0;
+                                        }
+                                    }
+                                    PressEnterToContinue.pressEnterToContinue();
                                 }
                             }
                         }
