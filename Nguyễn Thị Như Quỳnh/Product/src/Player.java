@@ -1,9 +1,9 @@
 package Thuyen;
 
 public class Player {
-    private String namePlayer;
+    private final String namePlayer;
     private int wreck;
-    private int numberShip;
+    private final int numberShip;
     private char[][] board;
     private Ship[] ship;
     private char[][] fog;
@@ -60,5 +60,5 @@ public class Player {
 
     public Boolean winner(){
         return this.wreck == this.numberShip;
-    }
+    }//kiểm tra đã có người thắng chưa
 }

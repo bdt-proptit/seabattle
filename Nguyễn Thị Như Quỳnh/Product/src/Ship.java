@@ -1,9 +1,10 @@
 package Thuyen;
 
 public class Ship {
-    private String nameShip;
-    private int lengthShip;
-    private String coorDinate1, coorDinate2;
+    private final String nameShip;
+    private final int lengthShip;
+    private final String coorDinate1;
+    private final String coorDinate2;
     private Boolean shot;
     private int shotPoint;
 
@@ -31,10 +32,10 @@ public class Ship {
     public void setShot(Boolean shot) {
         this.shot = shot;
     }
-    public Boolean testShank(){
+    public Boolean testShank(){//xem thuyền đó đã chìm chưa
         return this.shotPoint == this.lengthShip;
     }
-    public void testShot(String coorDinate, Player player, Player enermy){
+    public void testShot(String coorDinate, Player player, Player enermy){//kiểm tra điểm bị bắn là của thuyền nào và thay đổi các thông số
         char[] toaDo1 = coorDinate1.toCharArray();
         char[] toaDo2 = coorDinate2.toCharArray();
         if (toaDo1[0] == toaDo2[0]) {
@@ -69,7 +70,7 @@ public class Ship {
             for (int i = b; i <= c; i++) {
                 if(t2==a && t1==i && enermy.getBoard()[t1][t2]=='S') {
                     player.setFog(t1, t2, 'X');
-                    player.setBoard(t1, t2, 'X');
+                    enermy.setBoard(t1, t2, 'X');
                     this.shotPoint++;
                 }
             }

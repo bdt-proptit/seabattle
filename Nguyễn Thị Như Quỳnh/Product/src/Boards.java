@@ -21,21 +21,21 @@ public class Boards {
         }
         return gameBoard;
     }
-    public static String up(String coorDinate, int length){
+    public static String up(String coorDinate, int length){//lấy tọa độ cuối ở hướng Bắc
         char [] toaDo = coorDinate.toCharArray();
         toaDo[0]-=(length-1);
         String str = toaDo[0] + Character.toString(toaDo[1]);
         if(toaDo.length==3) str+=Character.toString('0');
         return str;
     }
-    public static String down(String coorDinate, int length){
+    public static String down(String coorDinate, int length){//lấy tọa độ cuối ở hướng Nam
         char [] toaDo = coorDinate.toCharArray();
         toaDo[0]+=(length-1);
         String str = toaDo[0] + Character.toString(toaDo[1]);
         if(toaDo.length==3) str+=Character.toString('0');
         return str;
     }
-    public static String left(String coorDinate, int length){
+    public static String left(String coorDinate, int length){//lấy tọa độ cuối ở hướng Tây
         int coll = col(coorDinate);
         coll-=(length-1);
         char [] toaDo = coorDinate.toCharArray();
@@ -46,7 +46,7 @@ public class Boards {
         }
         return str;
     }
-    public static String right(String coorDinate, int length){
+    public static String right(String coorDinate, int length){//lấy tọa độ cuối ở hướng Đông
         int coll = col(coorDinate);
         coll+=(length-1);
         char [] toaDo = coorDinate.toCharArray();
@@ -60,12 +60,12 @@ public class Boards {
         }
         return str;
     }
-    public static Boolean checkPoint(String coorDinate){
+    public static Boolean checkPoint(String coorDinate){//Kiểm tra điểm có tồn tại và nằm trên bảng không
         char [] toaDo = coorDinate.toCharArray();
-        return (toaDo.length == 2 && toaDo[0] <= 'J' && toaDo[0] >= 'A' && toaDo[1] <= '9' && toaDo[1] >= 1) ||
+        return (toaDo.length == 2 && toaDo[0] <= 'J' && toaDo[0] >= 'A' && toaDo[1] <= '9' && toaDo[1] >= '1') ||
                 (toaDo.length == 3 && toaDo[0] <= 'J' && toaDo[0] >= 'A' && toaDo[1] == '1' && toaDo[2] == '0');
     }
-    public static Boolean checkPoint1(char[][] fog, String coorDinate){
+    public static Boolean checkPoint1(char[][] fog, String coorDinate){//Kiểm tra điểm đó đã bị bắn chưa
         if(checkPoint(coorDinate)){
             int roww = row(coorDinate);
             int coll = col(coorDinate);
@@ -73,27 +73,18 @@ public class Boards {
         }
         return false;
     }
-
-    public static Boolean checkPoint2(Player player, String coorDinate){
-        if(checkPoint(coorDinate)){
-            int roww = row(coorDinate);
-            int coll = col(coorDinate);
-            return player.getFog()[roww][coll] != 'X' && player.getFog()[roww][coll] != 'O';
-        }
-        return false;
-    }
-    public static int row(String coorDinate){
+    public static int row(String coorDinate){//chuyển tọa độ hàng về kiểu int
         char [] toaDo = coorDinate.toCharArray();
         return toaDo[0]-65+1;
     }
-    public static int col(String coorDinate){
+    public static int col(String coorDinate){//chuyển tọa độ cột về kiểu int
         char [] toaDo = coorDinate.toCharArray();
         int a;
         if(toaDo.length==3) a=10;
         else a = toaDo[1]-48;
         return a;
     }
-    public static Boolean checkSetShip(Ship ship, char[][] board, String coorDinate1, String coorDinate2){
+    public static Boolean checkSetShip(Ship ship, char[][] board, String coorDinate1, String coorDinate2){//Kiểm tra có đặt được thuyền tại tọa độ đó không
         char [] toaDo1 = coorDinate1.toCharArray();
         char [] toaDo2 = coorDinate2.toCharArray();
         if(checkPoint(coorDinate1)&&checkPoint(coorDinate2)){
@@ -142,7 +133,7 @@ public class Boards {
         }
         else return false;
     }
-    public static void setShip(char[][] board, String coorDinate1, String coorDinate2) {
+    public static void setShip(char[][] board, String coorDinate1, String coorDinate2) {//đặt thuyền
         char[] toaDo1 = coorDinate1.toCharArray();
         char[] toaDo2 = coorDinate2.toCharArray();
         if (toaDo1[0] == toaDo2[0]) {
@@ -171,12 +162,12 @@ public class Boards {
             }
         }
     }
-    public static Boolean checkShoot(String coorDinate, Player player, Player enermy){
+    public static Boolean checkShoot(String coorDinate, Player player, Player enermy){//kiểm tra điểm đó đã bắn chưa và có trúng không
         int roww = row(coorDinate);
         int coll = col(coorDinate);
         return enermy.getBoard()[roww][coll] == 'S' && player.getFog()[roww][coll] == '~';
     }
-    public static void shoot(String coorDinate, Player player, Player enermy){
+    public static void shoot(String coorDinate, Player player, Player enermy){//bắn
         int roww = row(coorDinate);
         int coll = col(coorDinate);
         if(enermy.getBoard()[roww][coll]=='~'&&player.getFog()[roww][coll]=='~'){
