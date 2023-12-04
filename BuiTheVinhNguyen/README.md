@@ -36,28 +36,26 @@ The project was done by [Bùi Thế Vĩnh Nguyên](https://github.com/naa-ntu), 
 
 ├── src
 │   ├── Audio
-│   │   ├── WinningMusic.wav
-│   │   ├── PentaKill.wav
-│   │   ├── QuadraKill.wav
-│   │   ├── TripleKill.wav
-│   │   ├── DoubleKill.wav
-│   │   ├── FirstBlood.wav
-│   │   ├── Miss Sound.wav
-│   │   ├── Hit Sound.wav
-│   │   ├── Ingame_Music.wav
-│   │   ├── Choosing sound.wav
 │   ├── Classes
 │   │   │   ├── Ingame.java
 │   │   │   ├── Main.java
 │   │   │   ├── Starting.java
 │   │   │   ├── Leader.java
 │   │   │   ├── Board.java
+│   │   │   ├── Settings.java
 │   ├── Data
 │   │   │   ├── saveLoadFunction.java
 │   │   │   ├── leaderBoard.txt
 
 
 ```
+
+## UML
+### Class Diagram:
+![Alt text](ClassDiagram.png)
+
+### Activity Diagram:
+![Alt text](ActivityDiagram.png)
 
 ## Contributing
 
