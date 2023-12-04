@@ -1,21 +1,22 @@
 public class Ship {
     private String name;
-    private char symbol;
     private int size;
     private int hP;
     private Position position;
     private String orientation;
 
-    Ship(String name, int size, char symbol) {
+    Ship(String name, int size) {
         this.name = name;
         this.size = size;
-        this.symbol = symbol;
         hP = size;
     }
     public int getSize(){
         return this.size;
     }
-    public void setPosition(Position position){
+    public void setPosition(Position positionClone){
+        Position position = new Position();
+        position.setX(positionClone.getX());
+        position.setY(positionClone.getY());
         this.position = position;
     }
     public Position getPosition(){
@@ -45,7 +46,7 @@ public class Ship {
             return this.position.getX() == position.getX() && position.getY()<=this.position.getY() && position.getY() >= this.position.getY()-size+1;
         }
         else if (orientation.equals("EAST")){
-            return this.position.getY() == position.getY() && position.getY()>=this.position.getY() && position.getY() <= this.position.getY()+size-1;
+            return this.position.getX() == position.getX() && position.getY()>=this.position.getY() && position.getY() <= this.position.getY()+size-1;
         }
         return false;
     }
