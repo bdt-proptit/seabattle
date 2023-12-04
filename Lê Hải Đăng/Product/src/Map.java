@@ -18,14 +18,16 @@ public class Map {
     Map() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                grid[i][j] = 1;
+                grid[i][j] = 0;
             }
         }
-        // createAllShips();
+        createAllShips();
         // grid[2][3] = 1;
     }
 
     Boolean checkShip(int x, int y) {
+        if (grid[y][x] == 1)
+            down += 1;
         return grid[y][x] == 1;
     }
 

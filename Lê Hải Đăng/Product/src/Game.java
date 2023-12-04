@@ -19,9 +19,9 @@ public class Game {
                 System.out.print(i + 1 + " | ");
 
             for (int j = 0; j < 10; j++) {
-                if (board[j][i] == 1)
+                if (board[i][j] == 1)
                     System.out.print("o" + " | ");
-                else if (board[j][i] == 2)
+                else if (board[i][j] == 2)
                     System.out.print("x" + " | ");
                 else
                     System.out.print(" " + " | ");
@@ -42,9 +42,11 @@ public class Game {
     }
 
     int checkWin() {
-        if (p1.getDown() == 14)
+        int cond = 14;// 14
+        // System.out.println(p1.getDown());
+        if (p1.getDown() == cond)
             return 1;
-        if (p2.getDown() == 14)
+        if (p2.getDown() == cond)
             return 2;
         return 0;
     }
@@ -104,6 +106,13 @@ public class Game {
                             board1[y][x] = 2;
 
                         printGrid(board1);
+                        if (checkWin() == 1) {
+                            System.out.println("Player 1 wins");
+                            return;
+                        } else if (checkWin() == 2) {
+                            System.out.println("Player 2 wins");
+                            return;
+                        }
                         pause();
                     } else {
                         if (p1.checkShip(x, y))
@@ -112,10 +121,25 @@ public class Game {
                             board2[y][x] = 2;
 
                         printGrid(board2);
+                        if (checkWin() == 1) {
+                            System.out.println("Player 1 wins");
+                            return;
+                        } else if (checkWin() == 2) {
+                            System.out.println("Player 2 wins");
+                            return;
+                        }
                         pause();
                     }
                     break;
                 }
+                // System.out.println(checkWin());
+                // if (checkWin() == 1) {
+                // System.out.println("Player 1 wins");
+                // return;
+                // } else if (checkWin() == 2) {
+                // System.out.println("Player 2 wins");
+                // return;
+                // }
             }
 
         }
