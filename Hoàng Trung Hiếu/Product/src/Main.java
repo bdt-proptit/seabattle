@@ -12,8 +12,5 @@ public class Main {
         // Bắt đầu trò chơi
         seaBattleGame.startGame();
 
-        // Đóng Scanner sau khi kết thúc trò chơi
-        scanner.close();
     }
-
 }

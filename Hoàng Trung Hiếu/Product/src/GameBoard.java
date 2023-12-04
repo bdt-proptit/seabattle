@@ -1,15 +1,23 @@
 class GameBoard {
-    int[][] board; // Mảng 2 chiều biểu diễn bảng
-    Ship[] ships; // Mảng lưu trữ các tàu
-
-    // Khởi tạo bảng và các tàu
+    int[][] board;
+    Cell[][] cells;
     public GameBoard() {
-        this.board = new int[10][10]; // Bảng kích thước 10x10
-        this.ships = new Ship[5]; // Mảng lưu trữ 5 tàu
-        // Khởi tạo các tàu và đặt giá trị cho ships[i] tương ứng
+        this.board = new int[10][10];
+
+
+        this.cells = new Cell[10][10];
+        initializeCells();
     }
 
-    // Phương thức đặt tàu vào bảng
+    // Hàm khởi tạo các ô trên bảng
+    private void initializeCells() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                cells[i][j] = new Cell();
+            }
+        }
+    }
+
     public boolean placeShip(int x, int y, int size, boolean vertical) {
         // Kiểm tra hướng đặt tàu
         if (vertical) {

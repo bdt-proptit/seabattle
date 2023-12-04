@@ -20,70 +20,71 @@ class SeaBattleGame {
 
         // Hiển thị thông tin trước khi bắt đầu
         System.out.println("Bắt đầu trò chơi Sea Battle!");
-
-        // Biến chỉ số của người chơi hiện tại
         int currentPlayerIndex = 0;
 
         while (!gameOver) {
-            Player currentPlayer = players[currentPlayerIndex];
+     //       Player currentPlayer = players[currentPlayerIndex];
 
-            // Hiển thị bảng của người chơi hiện tại
-            System.out.println("Lượt của " + currentPlayer.name);
-            System.out.println("Bảng của " + currentPlayer.name + ":");
-            currentPlayer.board.displayBoard();
+            for (Player currentPlayer : players) {
+                if (gameOver) break;
 
-            // Lựa chọn hành động của người chơi
-            System.out.println("Lựa chọn hành động:");
-            System.out.println("1. Xem bảng của mình");
-            System.out.println("2. Bắn tàu đối phương");
-            System.out.println("3. Kết thúc lượt");
+                // Hiển thị bảng của người chơi hiện tại
+                System.out.println("Lượt của " + currentPlayer.name);
+                System.out.println("Bảng của " + currentPlayer.name + ":");
+                currentPlayer.board.displayBoard();
 
-            Scanner scanner = new Scanner(System.in);
-            int choice = scanner.nextInt();
+                // Lựa chọn hành động của người chơi
+                System.out.println("Lựa chọn hành động:");
+                System.out.println("1. Xem bảng của mình");
+                System.out.println("2. Bắn tàu đối phương");
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Bảng của " + currentPlayer.name + ":");
-                    currentPlayer.board.displayBoard();
-                    break;
-                case 2:
-                    System.out.println("Nhập tọa độ bắn (ví dụ: A5):");
-                    // Xử lý việc bắn tàu ở vị trí target của đối phương
-                    // currentPlayer.shoot(target); // Cần triển khai phương thức này trong class Player
-                    break;
-                case 3:
-                    System.out.println(currentPlayer.name + " đã kết thúc lượt.");
-                    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-                    break;
-                default:
-                    System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
-                    break;
-            }
+                Scanner scanner = new Scanner(System.in);
+                int choice = scanner.nextInt();
 
-            // Kiểm tra điều kiện kết thúc trò chơi
-            if (isGameOver()) {
-                gameOver = true;
-                System.out.println("Trò chơi kết thúc!");
-                // Hiển thị thông tin về người chiến thắng và bảng kết quả
-                // displayWinner(); // Cần triển khai phương thức này
-            }
+                switch (choice) {
+                    case 1:
+                        System.out.println("Bảng của " + currentPlayer.name + ":");
+                        currentPlayer.board.displayBoard();
+                        break;
+                    case 2:
+                        System.out.println("Nhập tọa độ bắn (ví dụ: A5):");
+                        System.out.print("Nhập hàng (1-10): ");
+                        int x = scanner.nextInt() - 1;
+                        System.out.print("Nhập cột (A-J): ");
+                        String yString = scanner.next().toUpperCase();
+                        int y = yString.charAt(0) - 'A';
 
-            // Chuyển lượt sang người chơi tiếp theo
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
-        }
-    }
+                        boolean hit = currentPlayer.shoot(x, y, players[(currentPlayerIndex + 1) % 2].board);
 
-    // Inside SeaBattleGame class
-    public boolean isGameOver() {
-        for (Player player : players) {
-            Ship[] playerShips = player.getShips(); // Lấy danh sách tàu của người chơi
-            for (Ship ship : playerShips) {
-                if (ship != null && !ship.isSunk()) { // Kiểm tra ship có null không trước khi gọi isSunk()
-                    return false; // Nếu có tàu chưa bị chìm, trò chơi chưa kết thúc
+                        if (hit) {
+                            if (currentPlayer.hasLost()) {
+                                gameOver = true;
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
+                        break;
                 }
+                currentPlayerIndex = (currentPlayerIndex + 1) % 2;
+
             }
         }
-        return true; // Nếu không còn tàu nào chưa chìm, trò chơi đã kết thúc
-    }
 
+        // Hiển thị kết quả khi game kết thúc
+        System.out.println("Trò chơi kết thúc!");
+        for (Player player : players) {
+            System.out.println("Bảng của " + player.name + ":");
+            player.board.displayBoard();
+        }
+        System.out.println("Kết quả:");
+        for (Player player : players) {
+            if (player.hasLost()) {
+                System.out.println(player.name + " đã phá hủy hết tàu của đối thủ và thắng cuộc!");
+            } else {
+                System.out.println(player.name + " đã thua cuộc.");
+            }
+        }
+    }
 }
