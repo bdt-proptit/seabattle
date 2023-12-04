@@ -69,6 +69,15 @@ public class Game {
             }
         }
     }
+    void clrscr(){
+        //Clears Screen in java
+        try {
+            if (System.getProperty("os.name").contains("Windows"))
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch (IOException | InterruptedException ex) {}
+    }
     //kiem tra vi tri tan cong
     int  Check_position(int x, int y){
         if (x >= 1 && x <= len && y >= 1 && y <= len) return 1;
@@ -100,12 +109,64 @@ public class Game {
         String randomString = String.valueOf(randomChar) + String.valueOf(randomNumber);
         return randomString;
     }
+    Vector<Ranking> ranking = new Vector<>(); //danh sach bang xep hang
+    // Đường dẫn của file bảng xếp hạng
+    void doc_and_xoa_file() {
+        String filePath = "E:/Java/main/src/main/java/sea_battle/danh_sach_ranking.txt";
 
+        // Đọc dữ liệu từ file và đưa vào Vector
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ");
+                String name = parts[0];
+                int attacks = Integer.parseInt(parts[1]);
+                int remainingShips = Integer.parseInt(parts[2]);
+
+                ranking.add(new Ranking(name, attacks, remainingShips));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Xóa dữ liệu từ file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write(""); // Xóa toàn bộ dữ liệu trong file
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Collections.sort(ranking, Comparator.comparing(Ranking::getAttackCount).thenComparing(Ranking::getShip_live).thenComparing(Ranking::getPlayerName));
+
+
+    }
+    void ghi_du_lieu() {
+        String filePath = "E:/Java/main/src/main/java/sea_battle/danh_sach_ranking.txt";
+        // Ghi dữ liệu từ Vector vào file
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (Ranking rankings : ranking) {
+                bw.write(rankings.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    void xoa_du_lieu(){
+        ranking.clear();
+    }
+    void in_rank(){
+        if (ranking.size() == 0) System.out.println("Chua co danh sach!");
+        int f = 1;
+        for (Ranking rankings : ranking) {
+            System.out.println(f++ + " " + rankings);
+        }
+    }
     //muc 1
     public int luot_1 = 1;
     void Level_1(){
         Scanner sc = new Scanner(System.in);
         if (luot_1 == 1) {
+            clrscr();
             player_1.setPoint(0);
             player_1.setNumber_of_ships_live(5);
             player_1.setNumber_of_ships_destroy(0);
@@ -298,6 +359,7 @@ public class Game {
         }
         else  {
             //Nguoi choi 2
+            clrscr();
             player_2.setPoint(0);
             player_2.setNumber_of_ships_live(5);
             player_2.setNumber_of_ships_destroy(0);
@@ -842,60 +904,7 @@ public class Game {
             player_2.getBattle_ship().set_up_ship(player_2.getMatrix());
         }
     }
-    Vector<Ranking> ranking = new Vector<>(); //danh sach bang xep hang
-    // Đường dẫn của file bảng xếp hạng
-    void doc_and_xoa_file() {
-        String filePath = "E:/Java/main/src/main/java/sea_battle/danh_sach_ranking.txt";
 
-        // Đọc dữ liệu từ file và đưa vào Vector
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" ");
-                String name = parts[0];
-                int attacks = Integer.parseInt(parts[1]);
-                int remainingShips = Integer.parseInt(parts[2]);
-
-                ranking.add(new Ranking(name, attacks, remainingShips));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Xóa dữ liệu từ file
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write(""); // Xóa toàn bộ dữ liệu trong file
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collections.sort(ranking, Comparator.comparing(Ranking::getAttackCount).thenComparing(Ranking::getShip_live).thenComparing(Ranking::getPlayerName));
-
-
-    }
-    void ghi_du_lieu() {
-        String filePath = "E:/Java/main/src/main/java/sea_battle/danh_sach_ranking.txt";
-        // Ghi dữ liệu từ Vector vào file
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            for (Ranking rankings : ranking) {
-                bw.write(rankings.toString());
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    void xoa_du_lieu(){
-        ranking.clear();
-    }
-    void in_rank(){
-        if (ranking.size() == 0) System.out.println("Chua co danh sach!");
-        for (Ranking rankings : ranking) {
-            System.out.println(rankings);
-        }
-//        for (Ranking rank : ranking) {
-//            System.out.println( rank.getPlayerName() + " " + rank.getAttackCount() + " " + rank.getShip_live());
-//        }
-    }
     void Start_game(){
         Scanner sc  = new Scanner(System.in);
         int luot = 1, lan_dau_1 = 0, lan_dau_2 = 0, win_player = 0;
@@ -908,6 +917,7 @@ public class Game {
         player_2.set_up();
         while (true){
             if (luot == 1){
+                clrscr();
                 if (level == 1 || (level == 2 && (lan_dau_1 != 0  || lan_dau_1 == 0) ))  System.out.println("---------------------Luot choi cua nguoi so 1: " + player_1.getName() + "---------------------");
                 //Vong chuan bi cua nguoi choi 1
                 if (lan_dau_1 == 0) {
@@ -969,7 +979,13 @@ public class Game {
                         }
                         else {
                             player_2.show_board_lite();
-                            break;
+                            System.out.println("An 1 neu khong muon xem nua!");
+                            int k = sc.nextInt();
+                            while (k != 1) {
+                                System.out.println("Vui long nhap dung so 1!");
+                                k = sc.nextInt();
+                            }
+                            if (k == 1) break;
                         }
                     }
                     if (win_player == 1) {
@@ -979,6 +995,7 @@ public class Game {
                 luot = 0;
             }
             else{
+                clrscr();
                 if (level == 1 || (level == 2 && (lan_dau_2 != 0 || lan_dau_2 == 0))) System.out.println("---------------------Luot choi cua nguoi so 2: "  + player_2.getName() + "---------------------");
                 //Vong chuan bi cua nguoi choi 2
                 if (lan_dau_2 == 0) {
@@ -1041,7 +1058,13 @@ public class Game {
                         }
                         else {
                             player_1.show_board_lite();
-                            break;
+                            System.out.println("An 1 neu khong muon xem nua!");
+                            int k = sc.nextInt();
+                            while (k != 1) {
+                                System.out.println("Vui long nhap dung so 1!");
+                                k = sc.nextInt();
+                            }
+                            if (k == 1) break;
                         }
                     }
                     if (win_player == 2) {
@@ -1051,12 +1074,6 @@ public class Game {
                 luot = 1;
             }
         }
-
-//        ranking.add(new Ranking("Alice", 5, 3));
-//        players.add(new Player("Bob", 3, 4));
-//        players.add(new Player("Charlie", 4, 2));
-//        players.add(new Player("David", 5, 2));
-
         if (win_player == 1) {
             System.out.println("Nguoi choi 1 da chien thang!");
             ranking.add(new Ranking(player_1.getName(), player_1.getPoint(), player_1.getNumber_of_ships_live()));
@@ -1069,6 +1086,10 @@ public class Game {
     }
 
     void Huong_dan(){
+        System.out.println("Se co 2 muc do choi: \n" + "+Level 1: Nguoi choi duoc dat thuyen/tau\n" + "+Level 2: Thuyen se duoc dat ngau nhien");
+        System.out.println("Se co 2 loai bang: \n" + "+ 10 x 10\n" + "+ 20 x 20");
+        System.out.println("Nguoi choi vao phan Setting de chon cac chuc nang/che do tren");
+
         System.out.println("Moi nguoi choi so huu 5 con thuyen nhu sau:\n" +
                 "\n" +
                 "+ 2 Thuyen Tuan Tra (Patrol Boat) 1x2\n" +
