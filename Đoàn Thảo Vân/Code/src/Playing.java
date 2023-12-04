@@ -1,8 +1,11 @@
+import java.io.IOException;
+
 public class Playing {
 
     static int turn = 1;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+//        ClearScreen.clrscr();
         ShowMenu.menu();
 //        Ship a = new Ship(1, 1, 2, 3, 2);
 //        Ship b = new Ship(3, 6, 3, 3, 4);
