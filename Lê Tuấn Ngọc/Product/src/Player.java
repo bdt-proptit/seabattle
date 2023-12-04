@@ -39,30 +39,11 @@ public class Player {
     public ArrayList<Ships> getListShips() {
         return listShips;
     }
-
-    public void setListShips(ArrayList<Ships> listShips) {
-        this.listShips = listShips;
-    }
     public int getNumberOfKilledShip() {
         return numberOfKilledShip;
     }
     public void setNumberOfKilledShip(int numberOfKilledShip) {
         this.numberOfKilledShip = numberOfKilledShip;
-    }
-    public Ships getPatrolBoat1() {
-        return patrolBoat1;
-    }
-    public Ships getPatrolBoat2() {
-        return patrolBoat2;
-    }
-    public Ships getDestroyerBoat() {
-        return destroyerBoat;
-    }
-    public Ships getSubmarine() {
-        return submarine;
-    }
-    public Ships getBattleShip() {
-        return battleShip;
     }
     public Board getMap() {
         return map;

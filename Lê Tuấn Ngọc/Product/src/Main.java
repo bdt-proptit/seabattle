@@ -65,5 +65,20 @@ public class Main {
     }
 }
 
+//* cho người chơi đc chọn thuyền để nhập
+//- giới hạn lại cách nhập tọa độ của người chơi : DONE
+//- kiểm tra tọa độ bắn có out khỏi bản đồ hay trùng ko : DONE
+//- kiểm tra người chơi đặt tàu có bị out hay trùng, đúng size ko : DONE
+//- cập nhật thuyền của bản thân bị bắn để nhìn trên map : DONE
+//- đổi các cách nhập lựa chọn thành String lỡ có người nhập ký tự vào : DONE
+//- sủa lại manage (chuyển showmap vào và có thể chuyển solvePoint vào) : DONE
+//- còn time thì sửa lại đồ họa cho pro : gần DONE
 
+//- sửa cách tìm điểm trong solve
+//- có hay ko việc ném mịa fire từ player vào manage : DONE
+//- làm màu cho các ô bắn, chỉnh lại phần map để hiển thị màu khi bắn trúng hay trượt : DONE
+//- có hay ko việc chỉnh lại chế độ show map?
+//- thêm tính năng dynamic map
+
+//-random xybegin, -> random xyend, check xem out ko, có thì random lại -> check xem trùng ko, trùng thì random lại
 

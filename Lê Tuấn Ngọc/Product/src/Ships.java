@@ -5,29 +5,15 @@ public class Ships {
     private String endPoints;
     private int size;
     private String name;
-    private boolean live;
     private int numberOfDamagePoints;
     private ArrayList<String> listShipPoints = new ArrayList<String>();
 
     Ships(){
-        live = true;
         numberOfDamagePoints = 0;
-    }
-    private ArrayList<String> damagePoints = new ArrayList<String>();
-
-    public ArrayList<String> getDamagePoints() {
-        return damagePoints;
-    }
-    public String getBeginPoints() {
-        return beginPoints;
     }
 
     public void setBeginPoints(String beginPoints) {
         this.beginPoints = beginPoints;
-    }
-
-    public String getEndPoints() {
-        return endPoints;
     }
 
     public void setEndPoints(String endPoints) {
@@ -47,15 +33,6 @@ public class Ships {
 
     public void setName(String name) {
         this.name = name;
-    }
-    public boolean getLive(){
-        if(damagePoints.size() == size) live = false;
-        else live = true;
-        return live;
-    }
-
-    public void setLive(boolean live) {
-        this.live = live;
     }
     public void setNumberOfDamagePoints(int numberOfDamagePoints) {
         this.numberOfDamagePoints = numberOfDamagePoints;

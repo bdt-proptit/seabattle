@@ -9,7 +9,7 @@ public class LogIn {
         System.out.println("Xem luật chơi: 3");
         System.out.println("Thoát: 4");
         while (true){
-            System.out.print("Nhập lựa chọn: ");;
+            System.out.print("Nhập lựa chọn: ");
             choice = sc.next();
             if(choice.equals("1") || choice.equals("2") || choice.equals("3") || choice.equals("4")) break;
             else System.out.println("Lựa chọn không phù hợp, mời nhập lại lựa chọn!");
@@ -20,6 +20,7 @@ public class LogIn {
                 System.out.println("Chế độ chưa hoàn thành, chơi tạm chế độ 2 đi =))");
                 return 1;
             case "2":
+                sc.nextLine();
                 System.out.print("Nhập tên người chơi 1: ");
                 String namePlayer1 = sc.nextLine();
                 System.out.print("Nhập tên người chơi 2: ");
@@ -28,6 +29,13 @@ public class LogIn {
 
                 player1.setName(namePlayer1);
                 player2.setName(namePlayer2);
+
+                System.out.print("Nhập size map (>=10 và <=20): ");
+                int size = sc.nextInt();
+                System.out.println("");
+
+                player1.getMap().setSize(size,size);
+                player2.getMap().setSize(size,size);
 
                 System.out.println("Xin mời " + player1.getName() + " hãy setup tàu của mình!");
                 manage.setUpMap(player1, manage);

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Manage {
@@ -11,71 +13,150 @@ public class Manage {
     SolvePoints solve = new SolvePoints();
 
     public void setUpMap(Player player, Manage manage){
-        for(Ships it : player.getListShips()){
-            manage.showMyBoard(player);
-            String begin;
-            String end;
-            while (true){
-                System.out.println("(Lưu ý khi nhập điểm hãy nhập hàng trước cột sau VD: A1 B1)");
-                switch (it.getSize()){
-                    case 5:
-                        System.out.print("Nhập tọa độ đầu và cuối của thiết giáp hạm 1x5: ");
-                        break;
-                    case 4:
-                        System.out.print("Nhập tọa độ đầu và cuối của thuyền khu vực 1x4: ");
-                        break;
-                    case 3:
-                        System.out.print("Nhập tọa độ đầu và cuối của tàu ngầm 1x3: ");
-                        break;
-                    case 2:
-                        System.out.print("Nhập tọa độ đầu và cuối của thuyền tuần tra 1x2: ");
-                        break;
-                }
-                begin = sc.next();
-                end = sc.next();
-
-                //check tọa độ nhập vào có bị out khỏi map ko
-                if(solve.rows(begin) >= 1 && solve.rows(begin) <= 10 && solve.columns(begin) >= 1 && solve.columns(begin) <=10
-                        && solve.rows(end) >= 1 && solve.rows(end) <= 10 && solve.columns(end) >= 1 && solve.columns(end) <=10){
-
-                    //check tọa độ nhập vào có bị trùng tàu khác ko, có thì checkShip = 1
-                    int checkShip = 0;
-                    int xBegin = solve.rows(begin);
-                    int yBegin = solve.columns(begin);
-                    int xEnd = solve.rows(end);
-                    int yEnd = solve.columns(end);
-                    if(xBegin == xEnd){
-                        for(int i=Math.min(yBegin, yEnd) ; i<=Math.max(yBegin,yEnd) ; i++){
-                            if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(xBegin,i))){
-                                checkShip = 1;
-                                break;
-                            }
-                        }
-                    }
-                    else {
-                        for(int i=Math.min(xBegin, xEnd) ; i<=Math.max(xBegin,xEnd) ; i++){
-                            if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(i, yBegin))){
-                                checkShip = 1;
-                                break;
-                            }
-                        }
-                    }
-
-                    if(checkShip == 0){
-                        //check độ dài tàu có hợp lệ k
-                        if((Math.abs(xBegin - xEnd) + Math.abs(yBegin - yEnd)) == it.getSize() - 1 || (xBegin == xEnd || yBegin == yEnd)) break;
-                        else System.out.println("Độ dài của tàu không phù hợp, vui lòng nhập lại!");
-                    }
-                    else System.out.println("Tọa độ thuyền bị trùng, vui lòng nhập lại!");
-                }
-                else System.out.println("Tọa độ thuyền không hợp lệ, vui lòng nhập lại!");
-            }
-            it.setBeginPoints(begin);
-            it.setEndPoints(end);
-
-            it.setShipPoints(begin,end);
-            player.getMap().setListShipPoints(it.getListShipPoints()); //cập nhật vị trí của tàu leen map
+        System.out.println("Tự động đặt tàu: 1");
+        System.out.println("Đặt tàu theo mong muốn: 2");
+        String choice;
+        while (true){
+            System.out.print("Nhập lựa chọn: ");
+            choice = sc.next();
+            if(choice.equals("1") || choice.equals("2")) break;
+            else System.out.println("Lựa chọn không phù hợp, mời nhập lại lựa chọn!");
         }
+
+        switch (choice){
+            case "1":
+                for(Ships it : player.getListShips()){
+                    Loop: while (true){
+                        int randXBegin = (int)(Math.random() * player.getMap().getRows() + 1);
+                        int randYBegin = (int)(Math.random() * player.getMap().getRows() + 1);
+                        int randXEnd = 0;
+                        int randYEnd = 0;
+                        //x,y+4 | x+4,y | x,y-4 | x-4,y
+                        ArrayList<Integer> numbers = new ArrayList<>();
+                        for (int i = 1; i <= 4; i++) {
+                            numbers.add(i);
+                        }
+                        // Sử dụng lớp Random để tráo đổi vị trí của các số
+                        Collections.shuffle(numbers);
+                        while (!numbers.isEmpty()){
+                            if(numbers.get(0).equals(1)){
+                                randXEnd = randXBegin;
+                                randYEnd = randYBegin + it.getSize() - 1;
+                            }
+                            else if(numbers.get(0).equals(2)){
+                                randXEnd = randXBegin + it.getSize() - 1;
+                                randYEnd = randYBegin;
+                            }
+                            else if(numbers.get(0).equals(3)){
+                                randXEnd = randXBegin;
+                                randYEnd = randYBegin - it.getSize() + 1;
+                            }
+                            else if(numbers.get(0).equals(4)){
+                                randXEnd = randXBegin - it.getSize() + 1;
+                                randYEnd = randYBegin;
+                            }
+                            numbers.remove(0);
+                            if(randXEnd < 1 || randYEnd < 1 || randXEnd > player.getMap().getRows() || randYEnd > player.getMap().getRows()) continue ;
+                            //check tọa độ nhập vào có bị trùng tàu khác ko, có thì checkShip = 1
+                            int checkShip = 0;
+                            if(randXBegin == randXEnd){
+                                for(int i=Math.min(randYBegin, randYEnd) ; i<=Math.max(randYBegin, randYEnd) ; i++){
+                                    if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(randXBegin,i))){
+                                        checkShip = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            else {
+                                for(int i=Math.min(randXBegin, randXEnd) ; i<=Math.max(randXBegin, randXEnd) ; i++){
+                                    if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(i, randYBegin))){
+                                        checkShip = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            if(checkShip == 0){
+                                it.setBeginPoints(solve.points(randXBegin,randYBegin));
+                                it.setEndPoints(solve.points(randXEnd, randYEnd));
+
+                                it.setShipPoints(solve.points(randXBegin,randYBegin), solve.points(randXEnd, randYEnd));
+                                player.getMap().setListShipPoints(it.getListShipPoints()); //cập nhật vị trí của tàu leen map
+                                break Loop;
+                            }
+                        }
+                    }
+                }
+                manage.showMyBoard(player);
+
+                break;
+            case "2":
+                for(Ships it : player.getListShips()){
+                    manage.showMyBoard(player);
+                    String begin;
+                    String end;
+                    while (true){
+                        System.out.println("(Lưu ý khi nhập điểm hãy nhập hàng trước cột sau VD: A1 B1)");
+                        switch (it.getSize()){
+                            case 5:
+                                System.out.print("Nhập tọa độ đầu và cuối của thiết giáp hạm 1x5: ");
+                                break;
+                            case 4:
+                                System.out.print("Nhập tọa độ đầu và cuối của thuyền khu vực 1x4: ");
+                                break;
+                            case 3:
+                                System.out.print("Nhập tọa độ đầu và cuối của tàu ngầm 1x3: ");
+                                break;
+                            case 2:
+                                System.out.print("Nhập tọa độ đầu và cuối của thuyền tuần tra 1x2: ");
+                                break;
+                        }
+                        begin = sc.next();
+                        end = sc.next();
+
+                        //check tọa độ nhập vào có bị out khỏi map ko
+                        if(solve.rows(begin) >= 1 && solve.rows(begin) <= player.getMap().getRows() && solve.columns(begin) >= 1 && solve.columns(begin) <=player.getMap().getRows()
+                                && solve.rows(end) >= 1 && solve.rows(end) <= player.getMap().getRows() && solve.columns(end) >= 1 && solve.columns(end) <=player.getMap().getRows()){
+
+                            //check tọa độ nhập vào có bị trùng tàu khác ko, có thì checkShip = 1
+                            int checkShip = 0;
+                            int xBegin = solve.rows(begin);
+                            int yBegin = solve.columns(begin);
+                            int xEnd = solve.rows(end);
+                            int yEnd = solve.columns(end);
+                            if(xBegin == xEnd){
+                                for(int i=Math.min(yBegin, yEnd) ; i<=Math.max(yBegin,yEnd) ; i++){
+                                    if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(xBegin,i))){
+                                        checkShip = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            else {
+                                for(int i=Math.min(xBegin, xEnd) ; i<=Math.max(xBegin,xEnd) ; i++){
+                                    if(solve.findPoint(player.getMap().getListShipPoints(), solve.points(i, yBegin))){
+                                        checkShip = 1;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if(checkShip == 0){
+                                //check độ dài tàu có hợp lệ k
+                                if((Math.abs(xBegin - xEnd) + Math.abs(yBegin - yEnd)) == it.getSize() - 1 || (xBegin == xEnd || yBegin == yEnd)) break;
+                                else System.out.println("Độ dài của tàu không phù hợp, vui lòng nhập lại!");
+                            }
+                            else System.out.println("Tọa độ thuyền bị trùng, vui lòng nhập lại!");
+                        }
+                        else System.out.println("Tọa độ thuyền không hợp lệ, vui lòng nhập lại!");
+                    }
+                    it.setBeginPoints(begin);
+                    it.setEndPoints(end);
+
+                    it.setShipPoints(begin,end);
+                    player.getMap().setListShipPoints(it.getListShipPoints()); //cập nhật vị trí của tàu leen map
+                }
+        }
+
     }
 
     public boolean checkFireShip(Player playerFire, Player playerBeFired, String point){
@@ -169,7 +250,7 @@ public class Manage {
         while (true){
             System.out.print("Nhập tọa độ khai hỏa: ");
             firePoint = sc.next();
-            if(solve.rows(firePoint) >=1 && solve.rows(firePoint) <= 10 && solve.columns(firePoint) >= 1 && solve.columns(firePoint) <= 10){
+            if(solve.rows(firePoint) >=1 && solve.rows(firePoint) <= player.getMap().getRows() && solve.columns(firePoint) >= 1 && solve.columns(firePoint) <= player.getMap().getRows()){
                 if(!solve.findPoint(player.getMap().getListFirePoints(), firePoint)) break;
                 else System.out.println("Tọa độ đã được bắn từ trước, vui lòng nhập lại!");
             }
@@ -178,6 +259,17 @@ public class Manage {
         return firePoint;
     }
 
+    public String fireBot(Player player){
+        player.setNumberOfFire(player.getNumberOfFire() + 1);
+        String firePoint;
+        while (true){
+            firePoint = solve.points((int)(Math.random() * player.getMap().getRows() + 1), (int)(Math.random() * player.getMap().getRows() + 1));
+
+            if(!solve.findPoint(player.getMap().getListFirePoints(), firePoint)) break;
+
+        }
+        return firePoint;
+    }
     public void showMyBoard(Player player){
         for(int i=0 ; i<=player.getMap().getRows() ; i++){
             for(int j=0 ; j<=player.getMap().getColumns() ; j++){
