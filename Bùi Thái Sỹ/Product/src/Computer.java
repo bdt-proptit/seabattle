@@ -58,7 +58,7 @@ public class Computer extends Player{
                     Position[] surroundingPoints = getSurroundingPoints(pos);
                     for (Position surroundingPos : surroundingPoints) {
                         if(oppBoard.isInsideBoard(surroundingPos) &&
-                                oppBoard.getCell(surroundingPos)==null) {
+                                (Objects.equals(oppBoard.getCell(surroundingPos), "S")||oppBoard.getCell(surroundingPos)==null)) {
                             return surroundingPos;
                         }
                     }
