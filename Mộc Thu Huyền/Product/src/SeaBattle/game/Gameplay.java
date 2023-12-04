@@ -16,8 +16,6 @@ public class Gameplay {
         pOne = new Player(name);
         pTwo = new Player(COMPUTER, true);
     }
-
-
     private boolean turn(Player attack, Player defend) throws PositionException {
         Position shoot = null;
         boolean isHit, isAddHit;
@@ -26,7 +24,8 @@ public class Gameplay {
                 try {
                     shoot = attack.shoot(defend.getBoard().getBoardHideShips());
                     isAddHit = defend.addShoot(shoot);
-                } catch (BoardException e) {
+                }
+                catch (BoardException e) {
                     if (!attack.isAI()) Display.printError("Error, you've already shot at this location!");
                     isAddHit = false;
                 }
@@ -41,7 +40,8 @@ public class Gameplay {
 
             if (!attack.isAI() && !defend.isAI()) try {
                 Thread.sleep(1000);
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
             }
             return true;
         } else return false;

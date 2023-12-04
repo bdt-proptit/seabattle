@@ -36,17 +36,17 @@ public class Player {
         return list;
     }
 
-    private String randName() {
-        Random rand = new Random();
-        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String name = "";
-        int maxLung = 10, minLung = 3;
-        int l = rand.nextInt(maxLung - minLung) + minLung;
-        for (int i = 0; i < l; i++) {
-            name += letters.charAt(rand.nextInt(letters.length()));
-        }
-        return name;
-    }
+//    private String randName() {
+//        Random rand = new Random();
+//        String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//        String name = "";
+//        int maxLung = 10, minLung = 3;
+//        int l = rand.nextInt(maxLung - minLung) + minLung;
+//        for (int i = 0; i < l; i++) {
+//            name += letters.charAt(rand.nextInt(letters.length()));
+//        }
+//        return name;
+//    }
 
     public void setName(String name) {
         this.name = name;

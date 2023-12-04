@@ -1,6 +1,6 @@
 package SeaBattle.board;
 
-public class BoardException extends Exception {
+public class BoardException extends Exception { // Các trường hợp ngoại lệ
     String msg;
 
     public BoardException(String msg) {

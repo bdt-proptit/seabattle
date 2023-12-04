@@ -42,7 +42,7 @@ public class Main {
                         game.run();
                     }
                     case 3 -> {
-                        Display.printRules();
+                        Display.printRuleAndLegend();
                     }
                 }
             } while (opt != 0);

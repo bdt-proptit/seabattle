@@ -2,7 +2,6 @@ package SeaBattle.board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Board {
     private int length;
@@ -162,9 +161,12 @@ public class Board {
                         numShips++;
                     }
                     return true;
-                } else throw new BoardException("Error, another ship is nearby");
-            } else throw new BoardException("Error, there's no room for that ship with that direction");
-        } else throw new BoardException("Error, there's already a ship in that location");
+                }
+                else throw new BoardException("Error, another ship is nearby");
+            }
+            else throw new BoardException("Error, there's no space for that ship with that direction");
+        }
+        else throw new BoardException("Error, there's already a ship in that location");
     }
 
     public boolean addHit(Position position) throws BoardException {
@@ -175,10 +177,10 @@ public class Board {
         else throw new BoardException("Error, you've already shot at this location!");
     }
 
-    public Position randPositionFromList(ArrayList<Position> list) {
-        Random rand = new Random();
-        return list.get(rand.nextInt(list.size()));
-    }
+//    public Position randPositionFromList(ArrayList<Position> list) {
+//        Random rand = new Random();
+//        return list.get(rand.nextInt(list.size()));
+//    }
 
     public Board getBoardHideShips() throws PositionException {
         char[][] matrix = new char[length][length];

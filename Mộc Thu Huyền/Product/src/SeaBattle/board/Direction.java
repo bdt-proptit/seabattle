@@ -2,8 +2,8 @@ package SeaBattle.board;
 
 
 public enum Direction {
-    HORIZONTAL,
-    VERTICAL;
+    HORIZONTAL,//Ngang
+    VERTICAL;// Dọc
 
     public static Direction decode(char c) throws DirectionException {
         if (c == 'h' || c == 'H') return HORIZONTAL;
