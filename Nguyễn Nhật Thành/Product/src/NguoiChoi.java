@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 public class NguoiChoi{
     int stt;
@@ -18,7 +19,7 @@ public class NguoiChoi{
     void tangDiem(){ ++Diem; }
     void hienThiBanDau() throws InterruptedException{ sanDau.hienThi(); }
     void hienThiDaBiBan() throws InterruptedException{ daBiBan.hienThi(); }
-    void datTau() throws InterruptedException { sanDau.datTau(); }
+    void datTau() throws InterruptedException, IOException { sanDau.datTau(); }
     void biBan(){
         System.out.print("Nhập vị trí bắn: ");
         String toaDoBan = cin.nextLine();

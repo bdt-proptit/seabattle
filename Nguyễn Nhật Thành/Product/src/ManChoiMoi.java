@@ -1,15 +1,17 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class NewGame  {
+public class ManChoiMoi  {
     Scanner cin = new Scanner(System.in);
-    void endGame(NguoiChoi a) throws InterruptedException {
+    void endGame(NguoiChoi a) throws InterruptedException, IOException {
         System.out.println("Chúc mừng " + a.getTen() + " đã chiến thắng!");
         TimeUnit.SECONDS.sleep(5);
+        Main.xoaManHinh();
         manHinhBatDau();
     }
-    void inGame() throws InterruptedException {
+    void inGame() throws InterruptedException, IOException {
         ArrayList<NguoiChoi> ps = new ArrayList<>();
         ps.add(new NguoiChoi(1));
         ps.add(new NguoiChoi(2));
@@ -25,6 +27,7 @@ public class NewGame  {
                     ps.get(turn).hienThiBanDau();
                     TimeUnit.SECONDS.sleep(2);
                     for(int i=0; i<12; ++i) System.out.println();
+                    Main.xoaManHinh();
                 }
                 System.out.println("Lượt chơi của " + ps.get(turn).getTen() + ". Hãy đưa ra lựa chọn: ");
                 System.out.println("1, Bắn.");
@@ -36,10 +39,12 @@ public class NewGame  {
             ps.get(1-turn).biBan();
             if(ps.get(1-turn).biBanHa())  ps.get(turn).tangDiem();
             if(ps.get(turn).getDiem() == 5) endGame(ps.get(turn));
+            TimeUnit.SECONDS.sleep(2);
             turn = 1 - turn;
+            Main.xoaManHinh();
         }
     }
-    void manHinhBatDau() throws InterruptedException {
+    void manHinhBatDau() throws InterruptedException, IOException {
         System.out.print("                                         $$\\                  $$\\     $$\\     $$\\           \n");
         System.out.print("                                         $$ |                 $$ |    $$ |    $$ |          \n");
         System.out.print("      $$$$$$$\\  $$$$$$\\   $$$$$$\\        $$$$$$$\\   $$$$$$\\ $$$$$$\\ $$$$$$\\   $$ | $$$$$$\\  \n");

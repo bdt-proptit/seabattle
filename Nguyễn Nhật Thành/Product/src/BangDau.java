@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -35,7 +36,7 @@ public class BangDau {
             System.out.print("\n");
         }
     }
-    public void datTau() throws InterruptedException {
+    public void datTau() throws InterruptedException, IOException {
         hienThi();
         for(var x : danhSachTau){
             System.out.println("Nhập tọa độ đầu cuối của " + x.getTen() + "(dài " + x.getDoDai() + ")" + ": ");
@@ -56,6 +57,7 @@ public class BangDau {
         }
         TimeUnit.SECONDS.sleep(2);
         for(int i=0; i<12; ++i) System.out.println();
+        Main.xoaManHinh();
     }
     boolean kiemTraTrung(int x, int y){
         return grid[x][y] == 'T';
