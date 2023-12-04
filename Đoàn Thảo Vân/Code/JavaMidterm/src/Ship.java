@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Ship extends Player{
 
+    private boolean isSink = false;
     private int numberOfCellleft;
     private int x_begin, y_begin, x_end, y_end;
 
@@ -17,6 +16,14 @@ public class Ship extends Player{
 
     public int getX_begin() {
         return x_begin;
+    }
+
+    public void setSink(boolean sink) {
+        isSink = sink;
+    }
+
+    public boolean getSink() {
+        return isSink;
     }
 
     public void setX_begin(int x_begin) {
@@ -47,7 +54,6 @@ public class Ship extends Player{
         this.y_end = y_end;
     }
 
-    Scanner sc = new Scanner(System.in);
 
     public Ship(int x_begin, int x_end, int y_begin, int y_end, int numberOfCellleft){
         this.x_begin = x_begin;
@@ -56,6 +62,4 @@ public class Ship extends Player{
         this.y_end = y_end;
         this.numberOfCellleft = numberOfCellleft;
     }
-
-
 }
