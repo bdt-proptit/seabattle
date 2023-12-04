@@ -2,7 +2,7 @@
 
 Sea Battle is a game for two players. The game is played on four grids, two for each player. The grids are typically square – usually 10×10 – and the individual squares in the grid are identified by letter and number. On one grid the player arranges ships and records the shots by the opponent. On the other grid the player records their own shots.
 
-The project was done by [Nguyễn Văn A](https://github.com/naa-ntu), in the course of Object Oriented Programming at [ProPTIT](https://proptit.com/).
+The project was done by [Bùi Thế Vĩnh Nguyên](https://github.com/naa-ntu), in the course of Object Oriented Programming at [ProPTIT](https://proptit.com/).
 
 
 ## Tech Stack
@@ -13,16 +13,18 @@ The project was done by [Nguyễn Văn A](https://github.com/naa-ntu), in the co
 ## Installation
 
 - Clone the repo
-- Open the project in your IDE
-- Run the project
+- Open: Product \ GameLauncher (Batch File). 
+- Enjoy the game
 
 ## Demo
 
-![Alt text](image.png)
-![Alt text](image-1.png)
-![Alt text](image-2.png)
-![Alt text](image-3.png)
+### **Gameplay video:** https://youtu.be/YQpjQqdZBkE
+### **Images**:
 
+![Alt text](image1.png)
+![Alt text](image2.png)
+![Alt text](image3.png)
+![Alt text](image4.png)
 
 
 
@@ -33,25 +35,26 @@ The project was done by [Nguyễn Văn A](https://github.com/naa-ntu), in the co
 ```bash
 
 ├── src
-│   ├── main
-│   │   ├── java
-│   │   │   ├── controller
-│   │   │   │   ├── GameController.java
-│   │   │   │   ├── GameMode.java
-│   │   │   │   ├── GameStatus.java
-│   │   │   │   ├── Player.java
-│   │   │   │   ├── Ship.java
-│   │   │   │   ├── ShipType.java
-│   │   │   │   └── Square.java
-│   │   │   ├── model
-│   │   │   │   ├── Board.java
-│   │   │   │   ├── Cell.java
-│   │   │   │   ├── Game.java
-│   │   │   │   ├── GameBoard.java
-│   │   │   │   ├── GameCell.java
-│   │   │   │   ├── GamePlayer.java
-│   │   │   │   ├── GameShip.java
-│   │   │   │   ├── GameSquare.java
+│   ├── Audio
+│   │   ├── WinningMusic.wav
+│   │   ├── PentaKill.wav
+│   │   ├── QuadraKill.wav
+│   │   ├── TripleKill.wav
+│   │   ├── DoubleKill.wav
+│   │   ├── FirstBlood.wav
+│   │   ├── Miss Sound.wav
+│   │   ├── Hit Sound.wav
+│   │   ├── Ingame_Music.wav
+│   │   ├── Choosing sound.wav
+│   ├── Classes
+│   │   │   ├── Ingame.java
+│   │   │   ├── Main.java
+│   │   │   ├── Starting.java
+│   │   │   ├── Leader.java
+│   │   │   ├── Board.java
+│   ├── Data
+│   │   │   ├── saveLoadFunction.java
+│   │   │   ├── leaderBoard.txt
 
 
 ```
@@ -66,3 +69,4 @@ Please make sure to update tests as appropriate.
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
+
