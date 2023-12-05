@@ -1,4 +1,3 @@
-package seabattle;
 
 public class Ship {
 

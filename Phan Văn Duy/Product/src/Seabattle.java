@@ -1,4 +1,3 @@
-package seabattle;
 
 import java.util.Scanner;
 
