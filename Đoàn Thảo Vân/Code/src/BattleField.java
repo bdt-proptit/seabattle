@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 public class BattleField{
     Cell[][] board = new Cell[10][10];
@@ -9,36 +10,36 @@ public class BattleField{
             }
         }
     }
-    public void showMyBoard(){
-        System.out.println("  0 1 2 3 4 5 6 7 8 9 ");
+    public void showMyBoard() throws IOException {
+        System.out.println("   -----------------------------------------");
+        System.out.println("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |");
         for(int i = 0; i < 10; ++i){
-            System.out.printf("%d ", i);
+            System.out.printf("|%d|", i);
             for(int j = 0; j < 10; ++j){
                 if(board[i][j].getStatus().equals("Empty"))
-                    System.out.print(Color.blue + "~" + Color.ANSI_Reset);
+                    System.out.print(Color.bluebackground + "   " + Color.ANSI_Reset + "|");
                 else if(board[i][j].getStatus().equals("o"))
-                    System.out.print(Color.red + "o" + Color.ANSI_Reset);
+                    System.out.print(Color.yellowbackground + Color.red + " o " + Color.ANSI_Reset + "|");
                 else if(board[i][j].getStatus().equals("x"))
-                    System.out.print(Color.yellow + "x" + Color.ANSI_Reset);
+                    System.out.print(Color.redbackground + Color.yellow + " x " + Color.ANSI_Reset + "|");
                 else if(board[i][j].getStatus().equals("P"))
-                    System.out.print(Color.purple + "P" + Color.ANSI_Reset);
-                System.out.print(" ");
+                    System.out.print(Color.cyanbackground + Color.black + " P " + Color.ANSI_Reset + "|");
             }
             System.out.println();
         }
     }
 
     public void showForOpponent(){
-        System.out.println("  0 1 2 3 4 5 6 7 8 9 ");
+        System.out.println("--------------------------------------------");
+        System.out.println("   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |");
         for(int i = 0; i < 10; ++i){
-            System.out.printf("%d ", i);
+            System.out.printf("|%d| ", i);
             for(int j = 0; j < 10; ++j){
                 if(board[i][j].getStatus().equals("o"))
-                    System.out.print(Color.red + "o" + Color.ANSI_Reset);
+                    System.out.print(Color.yellowbackground + Color.red + " o " + Color.ANSI_Reset + "|");
                 else if(board[i][j].getStatus().equals("x"))
-                    System.out.print(Color.yellow + "x" + Color.ANSI_Reset);
-                else System.out.print(Color.blue + "~" + Color.ANSI_Reset);
-                System.out.print(" ");
+                    System.out.print(Color.redbackground + Color.yellow + " x " + Color.ANSI_Reset + "|");
+                else System.out.print(Color.bluebackground + "   " + Color.ANSI_Reset + "|");
             }
             System.out.println();
         }

@@ -21,72 +21,72 @@ public class Player extends BattleField{
     public boolean getWin(){
         return win;
     }
-    public void chooseMode(Player me, Player opponent){
-        System.out.printf("Cells were attacked: %d\n", cellsAttacked);
-        System.out.printf("Number of opponent's ships destroyed: %d\n", 5 - opponent.ships.size());
-        System.out.printf("Number of your ship now: %d\n", me.ships.size());
+    public void chooseMode(Player me, Player opponent) throws IOException {
+        System.out.println(Color.green + "Cells were attacked: " + cellsAttacked + Color.ANSI_Reset);
+        System.out.println(Color.purple + "Number of opponent's ships destroyed: " + (5 - opponent.ships.size()) + Color.ANSI_Reset);
+        System.out.println(Color.yellow + "Number of your ship now: " + me.ships.size() + Color.ANSI_Reset);
         while(true){
             ShowMenu.showMode();
-            int mode = Integer.valueOf(sc.nextLine());
-            if(mode == 1) {
+            String mode = sc.nextLine();
+            if(mode.equals("1")) {
                 me.showMyBoard();
             }
-            else if(mode == 2){
-                ++cellsAttacked;
-                opponent.showForOpponent();
-                opponent.shot();
-                if(!me.getWin()) System.out.println("End turn!");
+            else if(mode.equals("2")){
+                opponent.shot(opponent);
+                System.out.println("Press any key to end turn...");
+                String endturn = sc.nextLine();
                 break;
             }
-            else if(mode == 3){
-                System.out.println("End turn!");
-                break;
-            }
-            else{
-                System.out.println("Mode invalid, try again.");
-                continue;
-            }
+            else break;
         }
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
-    public void shot(){
+    public void shot(Player opponent) throws IOException {
         int x = 0, y = 0;
         boolean isAttacked = true, isOutOfRange = true;
-        while(isAttacked || isOutOfRange)
+        boolean continuousAttack = true;
+        while(isAttacked || isOutOfRange || continuousAttack)
         {
+            ++cellsAttacked;
+            opponent.showForOpponent();
             System.out.println("Enter the coordinates to shoot: ");
             System.out.print("x = ");
             x = Integer.valueOf(sc.nextLine());
             System.out.print("y = ");
             y = Integer.valueOf(sc.nextLine());
             if(checkOutOfBoard(x) || checkOutOfBoard(y)){
-                System.out.println("The coordinates you selected exceed the board limits, try again.");
+                System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                 continue;
             }
             else isOutOfRange = false;
             if(board[x][y].getStatus().equals("o") || board[x][y].getStatus().equals("x")){
-                System.out.println("You attacked this point before.");
+                ClearScreen.clrscr();
+                System.out.println(Color.yellow + "You attacked this point before, enter the ordinates again." + Color.ANSI_Reset);
+                System.out.println();
+                continue;
             }
             else isAttacked = false;
-
-        }
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        if(!board[x][y].getStatus().equals("Empty")){
-            System.out.println("Congratulations!!");
-            for(Ship ship: ships){
-                if(!ship.getSink()) ifSink(x, y, ship);
-                checkWin();
-                if(ships.size() == 0) break;
+            while(continuousAttack){
+                ClearScreen.clrscr();
+                if(!board[x][y].getStatus().equals("Empty")){
+                    System.out.println(Color.green + "CONGRATULATION!!" + Color.ANSI_Reset);
+                    for(Ship ship: ships){
+                        if(!ship.getSink()) ifSink(x, y, ship);
+                        checkWin();
+                    }
+                    board[x][y].setStatus("o");
+                    System.out.println(Color.yellow + "Continue to attack..." + Color.ANSI_Reset);
+                    System.out.println();
+                    break;
+                }
+                else{
+                    continuousAttack = false;
+                    System.out.println("Missed!");
+                    board[x][y].setStatus("x");
+                }
             }
-            board[x][y].setStatus("o");
         }
-        else{
-            System.out.println("Missed!");
-            board[x][y].setStatus("x");
-        }
+
     }
 
     public void ifSink(int x, int y, Ship ship){
@@ -95,7 +95,6 @@ public class Player extends BattleField{
         }
         if(ship.getNumberOfCellleft() == 0){
             numberOfShipleft--;
-//            ships.remove(ship);
             ship.setSink(true);
             System.out.println("A ship was sink!");
         }
@@ -108,7 +107,7 @@ public class Player extends BattleField{
     }
 
     static boolean placeSuccessfull = false, coincide = false;
-    public void place(int coverCells){
+    public void place(int coverCells) throws IOException {
         System.out.println();
         showMyBoard();
         System.out.println();
@@ -135,7 +134,7 @@ public class Player extends BattleField{
                 {
                     case 1:
                         x_begin = x; y_begin = y - coverCells; y_end = y; x_end = x;
-                        if(checkOutOfBoard(y-coverCells)){
+                        if(checkOutOfBoard(y-coverCells+1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                             break;
                         }
@@ -157,7 +156,7 @@ public class Player extends BattleField{
                         break;
                     case 2:
                         x_begin = x; y_begin = y ; y_end = y + coverCells; x_end = x;
-                        if(checkOutOfBoard(y+coverCells)){
+                        if(checkOutOfBoard(y+coverCells-1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the table limits, try again." + Color.ANSI_Reset);
                             break;
                         }
@@ -179,7 +178,7 @@ public class Player extends BattleField{
                         break;
                     case 3:
                         x_begin = x - coverCells; y_begin = y; y_end = y; x_end = x;
-                        if(checkOutOfBoard(x-coverCells)){
+                        if(checkOutOfBoard(x-coverCells+1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
@@ -201,7 +200,7 @@ public class Player extends BattleField{
                         break;
                     case 4:
                         x_begin = x; y_begin = y; y_end = y; x_end = x + coverCells;
-                        if(checkOutOfBoard(x+coverCells)){
+                        if(checkOutOfBoard(x+coverCells-1)){
                             System.out.println(Color.red + "The coordinates you selected exceed the board limits, try again." + Color.ANSI_Reset);
                             break;
                         }
@@ -230,8 +229,7 @@ public class Player extends BattleField{
         }
         Ship newShip = new Ship(x_begin, x_end, y_begin, y_end, coverCells);
         ships.add(newShip);
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        ClearScreen.clrscr();
     }
     public void placeShip() throws IOException {
         setCells();
@@ -239,11 +237,11 @@ public class Player extends BattleField{
         place(2);
         System.out.println("2.Place Second Patrol Boat (1x2)");
         place(2);
-        System.out.println("2.Destroyer Boat (1x4)");
+        System.out.println("3.Destroyer Boat (1x4)");
         place(4);
-        System.out.println("3.Submarine (1x3)");
+        System.out.println("4.Submarine (1x3)");
         place(3);
-        System.out.println("4.Battle Ship (1x5)");
+        System.out.println("5.Battle Ship (1x5)");
         place(5);
     }
 }

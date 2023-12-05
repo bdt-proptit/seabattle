@@ -62,4 +62,6 @@ public class Ship extends Player{
         this.y_end = y_end;
         this.numberOfCellleft = numberOfCellleft;
     }
+
+
 }

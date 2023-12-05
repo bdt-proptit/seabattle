@@ -21,12 +21,12 @@ public class Playing {
         NgoQuyen.placeShip();
         while(!Napoleon.getWin() && !NgoQuyen.getWin()){
             if(turn % 2 == 1){
-                System.out.println();
+                ClearScreen.clrscr();
                 System.out.println("Napoleon's turn");
                 Napoleon.chooseMode(Napoleon, NgoQuyen);
             }
             else{
-                System.out.println();
+                ClearScreen.clrscr();
                 System.out.println("NgoQuyen's turn");
                 NgoQuyen.chooseMode(NgoQuyen, Napoleon);
             }
