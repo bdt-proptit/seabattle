@@ -3,36 +3,32 @@
 Sea Battle là một trò chơi dành cho hai người chơi. Trò chơi được chơi trên bốn lưới, hai cho mỗi người chơi. Các lưới thường là vuông - thường là 10 × 10 - và các ô riêng lẻ trong lưới được xác định bằng chữ cái và số. Trên một lưới, người chơi sắp xếp các tàu và ghi lại các phát bắn của đối thủ. Trên lưới còn lại, người chơi ghi lại các phát bắn của riêng mình.
 
 
-## Cách thức clone
+## Nội dung thêm
 
-- Đầu tiên tạo nhánh của mình như hướng dẫn từ nhánh develop này.
-- Sau đó clone nhánh của mình về máy.
-- Tiếp theo làm việc trên nhánh của mình, cấu trúc folder như folder Nguyễn Văn A có sẵn.
-- Sau khi làm xong, push lên nhánh của mình, tạo pull request để merge vào nhánh develop.
-- Các em có thể sửa readme mặc định ở folder của mình cho đẹp, làm repo trở nên sinh động hơn cho github của mình. (có thể tham khảo cách làm file này, bỏ phần này đi, thay bằng phần của mình)
+Đây là một dự án bài tập giữa khoá cho kì Java Core của ProPTIT, thực hiện bởi BDT Khoá 9 dành cho khoá D22 CLB. Các thành viên đã hoàn thành cơ bản về Java Syntax, 3 trong 4 tính chất OOP, và có thể sử dụng Git cơ bản.
 
-Cấu trúc folder
 
-```bash
+## Tổng kết sản phẩm:
 
-├── branch develop
-│   ├── Nguyễn Văn A
-│   │   ├── Product
-|   |   |   ├── src
-|   |   |   |   ├── main
-|   |   |   |   |   ├── java
-|   |   |   |   |   │   ├── controller
-│   │   │   ├── README.md
-│   │   │   ├── image.png
-│   │   │   └── ...
-│   │   ├── UML
-│   │   │   ├── README.md
-│   │   │   ├── image.png
-│   │   │   └── ...
-│   │   ├── README.md
-│   │   └── ...
-│   ├── Nguyễn Văn B
-```
+- Hoàng Hải Long: 
+    - Github: [Source Code](https://github.com/long20102004/Mid-Practice-ProPTIT)
+    - Demo: [Youtube](https://www.youtube.com/watch?v=tb_TnbMt_PM&ab_channel=D22BCCN496-Ho%C3%A0ngH%E1%BA%A3iLong)
+- Bùi Thế Vĩnh Nguyên:
+    - Github: [Source Code](https://github.com/NguyenBui256/ShipBattle---JavaGame)
+    - Demo: [Youtube](https://www.youtube.com/watch?v=YQpjQqdZBkE&feature=youtu.be)
+- Nguyễn Nhật Thành:
+    - Github: [Source Code](https://github.com/NgNhatThanh/SeaBattle-JavaGame)
+    - Demo: [Youtube](https://www.youtube.com/watch?v=Hit3bYx5FKI&feature=youtu.be)
+- Phan Thanh Tân:
+    - Github: [Source Code](https://github.com/TanaKeKe/SeaBattle--Console)
+    - Demo: [Youtube](https://www.youtube.com/watch?v=uJ4Bco0oErA)
+- Trần Xuân Sơn:
+    - Github: [Source Code](https://github.com/Yamaaaaaaaa/BTGK_SeaBattle_d22_tran_xuan_son)
+    - Demo: [Youtube](https://www.youtube.com/watch?v=WiqDej9jEnk&feature=youtu.be)
+
+
+
+
 
 
 
