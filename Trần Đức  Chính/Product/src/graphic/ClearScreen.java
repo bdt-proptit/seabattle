@@ -1,3 +1,5 @@
+package graphic;
+
 import java.io.IOException;
 
 public class ClearScreen {

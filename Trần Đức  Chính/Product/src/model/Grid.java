@@ -1,3 +1,7 @@
+package model;
+
+import graphic.Color;
+
 public class Grid {
 
     public String[][] board;
@@ -32,20 +36,20 @@ public class Grid {
         System.out.println("  -------------------");
     }
 
-    public boolean checkExsitShip(String head, String last) {
+    public boolean checkExsitShip(String head, String tail) {
         int headXIndex = head.toUpperCase().charAt(0) - 'A';
-        int lastXIndex = last.toUpperCase().charAt(0) - 'A';
+        int tailXIndex = tail.toUpperCase().charAt(0) - 'A';
         int headYIndex = Integer.parseInt(head.substring(1)) - 1;
-        int lastYIndex = Integer.parseInt(last.substring(1)) - 1;
-        if (checkCoordinates(head) && checkCoordinates(last)) {
-            if (headXIndex == lastXIndex) {
-                for (int i = headYIndex; i <= lastYIndex; i++) {
+        int tailYIndex = Integer.parseInt(tail.substring(1)) - 1;
+        if (checkCoordinates(head) && checkCoordinates(tail)) {
+            if (headXIndex == tailXIndex) {
+                for (int i = Math.min(headYIndex, tailYIndex); i <= Math.max(tailYIndex, headYIndex); i++) {
                     if (board[headXIndex][i].equals(Color.SHIP + "S" + Color.RESET)) {
                         return true;
                     }
                 }
-            } else if (headYIndex == lastYIndex) {
-                for (int i = headXIndex; i <= lastXIndex; i++) {
+            } else if (headYIndex == tailYIndex) {
+                for (int i = Math.min(headXIndex, tailXIndex); i <= Math.max(tailXIndex, headXIndex); i++) {
                     if (board[i][headYIndex].equals(Color.SHIP + "S" + Color.RESET)) {
                         return true;
                     }
@@ -67,7 +71,29 @@ public class Grid {
     public boolean checkCoordinates(String coordinates) {
         int xIndex = coordinates.toUpperCase().charAt(0) - 'A';
         int yIndex = Integer.parseInt(coordinates.substring(1)) - 1;
-        return xIndex >= 0 && xIndex < size && yIndex >= 0 && yIndex < size;
+        return (xIndex >= 0 && xIndex < this.size) &&(yIndex >= 0 && yIndex < this.size);
+    }
+
+    public boolean checkShipIsSunk(Ship ship){
+        int headXIndex = ship.getHead().toUpperCase().charAt(0) - 'A';
+        int tailXIndex = ship.getTail().toUpperCase().charAt(0) - 'A';
+        int headYIndex = Integer.parseInt(ship.getHead().substring(1)) - 1;
+        int tailYIndex = Integer.parseInt(ship.getTail().substring(1)) - 1;
+        int cntHit = 0;
+        if (headXIndex == tailXIndex) {
+            for (int i = Math.min(headYIndex, tailYIndex); i <= Math.max(tailYIndex, headYIndex); i++) {
+                if (board[headXIndex][i].equals(Color.HIT + "X" + Color.RESET)) {
+                    cntHit++;
+                }
+            }
+        } else if (headYIndex == tailYIndex) {
+            for (int i = Math.min(headXIndex, tailXIndex); i <= Math.max(tailXIndex, headXIndex); i++) {
+                if (board[i][headYIndex].equals(Color.HIT + "X" + Color.RESET)) {
+                    cntHit++;
+                }
+            }
+        }
+        return cntHit == ship.getLength();
     }
 
     public void printAttackAndShipGrid(Grid playerAttackGrid, Grid playerGrid) {
