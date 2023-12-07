@@ -24,7 +24,7 @@ public class ToaDo {
                 setX(toaDo.charAt(1)-'0');
                 return;
             }
-            else System.out.println("Tọa độ không hợp lệ! Vui lòng nhập lại");
+            else System.out.print("Tọa độ không hợp lệ! Vui lòng nhập lại ");
         }
     }
 }

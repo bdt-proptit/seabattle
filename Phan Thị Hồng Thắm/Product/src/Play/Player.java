@@ -1,6 +1,13 @@
 package Play;
 import Ship.*;
 public class Player {
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLUE ="\u001B[34m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
     private String playerName;
     private int cellFired = 0, shipDestroy = 0, shipRemain = 5,length_BattleShip = 5,length_DestroyedBoat = 4,length_PatrolBoat = 2, length_Submarine = 3;
     public int getLength_BattleShip() {
@@ -53,10 +60,10 @@ public class Player {
     public String getPlayerName(){
         return playerName;
     }
-    public void SetupMyMap(char[][] myMap){
+    public void SetupMyMap(String[][] myMap){
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){
-                myMap[i][j]='~';
+                myMap[i][j]= ANSI_BLUE + "~" + ANSI_RESET;
             }
         }
         PatrolBoat patrolBoat1 = new PatrolBoat();
@@ -70,8 +77,10 @@ public class Player {
         BattleShip battleShip = new BattleShip();
         battleShip.SetupShip(myMap);
     }
-    public void ShowMyMap(char[][] map){
+    public void ShowMyMap(String[][] map){
+        System.out.println("  0 1 2 3 4 5 6 7 8 9");
         for(int i=0;i<10;i++){
+            System.out.print((char)('0'+i) + " ");
             for(int j=0;j<10;j++) System.out.print(map[i][j]+" ");
             System.out.print('\n');
         }
