@@ -1,3 +1,4 @@
+
 public class Ship {
     private String name;
     private int length;
@@ -12,7 +13,12 @@ public class Ship {
     }
 
     private int y;
-    private int direction;
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    private Direction direction;
 
     public void setLength(int length) {
         this.length = length;
@@ -34,15 +40,11 @@ public class Ship {
         this.y = y;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
     public int getLength() {
         return length;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }

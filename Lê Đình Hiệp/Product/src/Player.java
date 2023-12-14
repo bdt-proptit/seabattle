@@ -1,4 +1,4 @@
-import java.util.Scanner;
+
 
 public class
 Player {
@@ -75,10 +75,6 @@ Player {
         }
     }
 
-    public void setMainBoard(int[][] mainBoard) {
-        this.mainBoard = mainBoard;
-    }
-
     int shoots(int x, int y, Player opponent){
         if(opponent.getMainBoard()[x][y] != 0){
             opponent.getMainBoard()[x][y] = 0;
@@ -90,27 +86,8 @@ Player {
         return 0;
     }
     public void placeShip(Ship ship, int symbol){
-        switch (ship.getDirection()) {
-            case 1:
-                for (int i = 0; i < ship.getLength(); i++) {
-                    mainBoard[ship.getX() - i][ship.getY()] = symbol;
-                }
-                break;
-            case 2:
-                for (int i = 0; i < ship.getLength(); i++) {
-                    mainBoard[ship.getX() + i][ship.getY()] = symbol;
-                }
-                break;
-            case 3:
-                for (int i = 0; i < ship.getLength(); i++) {
-                    mainBoard[ship.getX()][ship.getY() + i] = symbol;
-                }
-                break;
-            case 4:
-                for (int i = 0; i < ship.getLength(); i++) {
-                    mainBoard[ship.getX()][ship.getY() - i] = symbol;
-                }
-                break;
+        for(int i = 0; i < ship.getLength(); i++){
+            mainBoard[ship.getX() + ship.getDirection().dx * i][ship.getY() + ship.getDirection().dy * i] = symbol;
         }
     }
 }
