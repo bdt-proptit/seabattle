@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="tran_xuan_son_Sea_Battle:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/tran_xuan_son_Sea_Battle_jar2</output-path>
+    <root id="archive" name="tran_xuan_son_Sea_Battle.jar">
+      <element id="module-output" name="tran_xuan_son_Sea_Battle" />
+    </root>
+  </artifact>
+</component>
