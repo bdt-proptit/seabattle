@@ -4,6 +4,7 @@ public class LogIn {
     public int logIn(Scanner sc, Player player1, Player player2, Manage manage) {
         String choice;
         System.out.println("Mời bạn chọn chế độ chơi!!!");
+        System.out.println("----------------------------");
         System.out.println("Chơi với máy: 1");
         System.out.println("Chơi với người đang ngồi cạnh bạn: 2");
         System.out.println("Xem luật chơi: 3");
@@ -17,7 +18,23 @@ public class LogIn {
 
         switch (choice){
             case "1":
-                System.out.println("Chế độ chưa hoàn thành, chơi tạm chế độ 2 đi =))");
+                sc.nextLine();
+                System.out.print("Nhập tên người chơi: ");
+                String namePlayer= sc.nextLine();
+
+                player1.setName(namePlayer);
+                player2.setName("Bot");
+
+                System.out.print("Nhập size map (>=10 và <=20): ");
+                int sizee = sc.nextInt();
+                System.out.println();
+
+                player1.getMap().setSize(sizee,sizee);
+                player2.getMap().setSize(sizee,sizee);
+
+                System.out.println("Xin mời " + player1.getName() + " hãy setup tàu của mình!");
+                manage.setUpMap(player1, manage);
+                manage.setUpMap(player2, manage);
                 return 1;
             case "2":
                 sc.nextLine();
@@ -25,24 +42,24 @@ public class LogIn {
                 String namePlayer1 = sc.nextLine();
                 System.out.print("Nhập tên người chơi 2: ");
                 String namePlayer2 = sc.nextLine();
-                System.out.println("");
+                System.out.println();
 
                 player1.setName(namePlayer1);
                 player2.setName(namePlayer2);
 
                 System.out.print("Nhập size map (>=10 và <=20): ");
                 int size = sc.nextInt();
-                System.out.println("");
+                System.out.println();
 
                 player1.getMap().setSize(size,size);
                 player2.getMap().setSize(size,size);
 
                 System.out.println("Xin mời " + player1.getName() + " hãy setup tàu của mình!");
                 manage.setUpMap(player1, manage);
-                for(int i=1 ; i<=50 ; i++) System.out.println("");
+                for(int i=1 ; i<=50 ; i++) System.out.println();
                 System.out.println("Xin mời " + player2.getName() + " hãy setup tàu của mình!");
                 manage.setUpMap(player2, manage);
-                for(int i=1 ; i<=50 ; i++) System.out.println("");
+                for(int i=1 ; i<=50 ; i++) System.out.println();
                 return 2;
             case "3":
                 System.out.println("-----------------------------------------------------------------------------------");

@@ -17,7 +17,12 @@ public class Main {
         while (true){
             LogIn login = new LogIn();
             checkout = login.logIn(sc, player1, player2, manage);
-            if(checkout == 3 || checkout == 1) continue;
+            if(checkout == 3) continue;
+            else if(checkout == 1){
+                BotMode botGame = new BotMode();
+                botGame.playGame(player1, player2);
+                continue;
+            }
             else if(checkout == 4) break;
 
             System.out.println(player1.getName() + ": 1");

@@ -13,6 +13,10 @@ public class BotMode{
         System.out.println(bot.getName() + ": 2");
         System.out.print("Chọn người chơi bắt đầu: ");
         int choice = sc.nextInt();
+        int vertical = 0; // 1 la thuyền đặt dọc, 2 la ngang
+        Stack<String> stFirePoints = new Stack<>();
+        ArrayList<Integer> numbers = new ArrayList<>(); // chua cac so de random
+        int check = 1; // de xem bot ban trung ko
 
         gameLoop: while(true){
             if(choice == 1){
@@ -36,55 +40,107 @@ public class BotMode{
 
             while (true){
                 System.out.println("Đến lượt " + bot.getName() + " !");
-                Stack<String> stFirePoints = new Stack<>();
-                if(manage.menu(bot, manage)){
-                    manage.showEnemyBoard(bot, player.getMap());
+                manage.showEnemyBoard(bot, player.getMap());
 
-                    String firePoint;
-                    if(stFirePoints.empty()){
+                String firePoint;
+                if(stFirePoints.empty()){
+                    while (true){
                         firePoint = manage.fireBot(bot);
+                        if(!solve.findPoint(bot.getMap().getListFirePoints(), firePoint)) break; //nếu tạo độ trùng thì phải rand lại
                     }
-                    else {
-                        if (stFirePoints.size() == 1) {
-                            int xFire = solve.rows(stFirePoints.peek());
-                            int yFire = solve.columns(stFirePoints.peek());
-                            int nextXFire = 0;
-                            int nextYFire = 0;
-                            ArrayList<Integer> numbers = new ArrayList<>();
-                            for (int i = 1; i <= 4; i++) {
-                                numbers.add(i);
-                            }
-                            // Sử dụng lớp Random để tráo đổi vị trí của các số
-                            Collections.shuffle(numbers);
-                            while (!numbers.isEmpty()) {
-                                if (numbers.get(0).equals(1)) {
-                                    nextXFire = xFire;
-                                    nextYFire = yFire - 1;
-                                } else if (numbers.get(0).equals(2)) {
-                                    nextXFire = xFire - 1;
-                                    nextYFire = yFire;
-                                } else if (numbers.get(0).equals(3)) {
-                                    nextXFire = xFire;
-                                    nextYFire = yFire + 1;
-                                } else if (numbers.get(0).equals(4)) {
-                                    nextXFire = xFire + 1;
-                                    nextYFire = yFire;
-                                }
-                                numbers.remove(0);
-                                firePoint = solve.points(nextXFire, nextYFire);
-                                if(solve.findPoint(player.getMap().getListFirePoints(), firePoint)) continue ;
+                    System.out.println("Tọa độ khai Hỏa: " + firePoint);
+                    stFirePoints.push(firePoint);
+                }
+                else {
+                    while (true){
+                        int xFire = solve.rows(stFirePoints.peek());
+                        int yFire = solve.columns(stFirePoints.peek());
+                        int nextXFire = 0;
+                        int nextYFire = 0;
 
-                                stFirePoints.push(firePoint);
-                                if(manage.checkFireShip(bot, player, firePoint)){
-                                    if(!manage.checkLiveShip(player, firePoint)){
-                                        manage.updateNumberOfShips(bot, player);
-                                        if(manage.checkWin(bot)) break gameLoop;
-                                    }
-                                }
-                                else break;
+                        if(vertical == 0 && check == 1){
+                            numbers.add(1);
+                            numbers.add(2);
+                            numbers.add(3);
+                            numbers.add(4);
+                        }
+                        else if(vertical == 1  && check == 1){
+                            numbers.add(2);
+                            numbers.add(4);
+                        }
+                        else if(vertical == 2 && check == 1){
+                            numbers.add(1);
+                            numbers.add(3);
+                        }
+
+                        // Sử dụng lớp Random để tráo đổi vị trí của các số
+                        Collections.shuffle(numbers);
+                        while (!numbers.isEmpty()) { // tim toa do diem ban
+                            if (numbers.get(0).equals(1)) { //trai
+                                nextXFire = xFire;
+                                nextYFire = yFire - 1;
+                            } else if (numbers.get(0).equals(2)) { // tren
+                                nextXFire = xFire - 1;
+                                nextYFire = yFire;
+                            } else if (numbers.get(0).equals(3)) { // phải
+                                nextXFire = xFire;
+                                nextYFire = yFire + 1;
+                            } else if (numbers.get(0).equals(4)) { // duoi
+                                nextXFire = xFire + 1;
+                                nextYFire = yFire;
                             }
+                            numbers.remove(0);
+                            if (solve.findPoint(bot.getMap().getListFirePoints(), solve.points(nextXFire, nextYFire)) || nextXFire > bot.getMap().getRows() || nextYFire > bot.getMap().getRows() || nextXFire <= 0 || nextYFire <= 0){
+                                nextXFire = xFire;
+                                nextYFire = yFire;
+                                continue ;
+                            } // nếu tạo độ trùng or out map thì chọn lai
+                            else break ;
+                        }
+
+                        if(xFire == nextXFire && yFire == nextYFire){ // ko tim dc diem ban tiep theo ptu dau cua stack
+                            stFirePoints.pop();
+                            check = 1;
+                            continue ;
+                        }
+                        else{
+                            firePoint = solve.points(nextXFire, nextYFire);
+                            System.out.println("Tọa độ khai Hỏa: " + firePoint);
+                            stFirePoints.push(firePoint);
+                            break ;
                         }
                     }
+
+                }
+
+                if(manage.checkFireShip(bot, player, firePoint)){
+                    try {
+                        Thread.sleep(3000); // Dừng lại 1 giây (1000 milliseconds)
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(!manage.checkLiveShip(player, firePoint)){
+                        vertical = 0;
+                        numbers.clear();
+                        stFirePoints.clear();
+                        manage.updateNumberOfShips(bot, player);
+                        if(manage.checkWin(bot)) break gameLoop;
+                    }
+
+                    if(stFirePoints.size() > 1){
+                        String tmp = stFirePoints.pop();
+                        if(solve.rows(tmp) == solve.rows(stFirePoints.peek())) vertical = 2;
+                        else vertical = 1;
+                        stFirePoints.push(tmp);
+                    }
+                    numbers.clear();
+                    check = 1;
+                }
+                else{
+                    stFirePoints.pop();
+                    check = 0;
+                    break ; // ban truot thi doi luot
                 }
             }
         }

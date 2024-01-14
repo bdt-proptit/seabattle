@@ -13,14 +13,19 @@ public class Manage {
     SolvePoints solve = new SolvePoints();
 
     public void setUpMap(Player player, Manage manage){
-        System.out.println("Tự động đặt tàu: 1");
-        System.out.println("Đặt tàu theo mong muốn: 2");
         String choice;
         while (true){
+            if(player.getName() == "Bot"){
+                choice = "1";
+                break;
+            }
+            System.out.println("Tự động đặt tàu: 1");
+            System.out.println("Đặt tàu theo mong muốn: 2");
             System.out.print("Nhập lựa chọn: ");
             choice = sc.next();
             if(choice.equals("1") || choice.equals("2")) break;
             else System.out.println("Lựa chọn không phù hợp, mời nhập lại lựa chọn!");
+            System.out.println("------------------------------------------");
         }
 
         switch (choice){
@@ -86,7 +91,7 @@ public class Manage {
                         }
                     }
                 }
-                manage.showMyBoard(player);
+                if(player.getName() != "Bot") manage.showMyBoard(player);
 
                 break;
             case "2":
@@ -142,7 +147,7 @@ public class Manage {
 
                             if(checkShip == 0){
                                 //check độ dài tàu có hợp lệ k
-                                if((Math.abs(xBegin - xEnd) + Math.abs(yBegin - yEnd)) == it.getSize() - 1 || (xBegin == xEnd || yBegin == yEnd)) break;
+                                if((Math.abs(xBegin - xEnd) + Math.abs(yBegin - yEnd)) == it.getSize() - 1 && (xBegin == xEnd || yBegin == yEnd)) break;
                                 else System.out.println("Độ dài của tàu không phù hợp, vui lòng nhập lại!");
                             }
                             else System.out.println("Tọa độ thuyền bị trùng, vui lòng nhập lại!");
