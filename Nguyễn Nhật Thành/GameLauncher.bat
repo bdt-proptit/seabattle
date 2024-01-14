@@ -2,5 +2,5 @@
 title Sea Battle
 chcp 65001
 cls
-java -jar SeaBattle.jar
+java -jar src\\SeaBattle.jar
 pause
