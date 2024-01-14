@@ -2,7 +2,7 @@ package seabattle;
 
 import java.util.Scanner;
 
-public class Seabattle {
+public class SeaBattle {
 
     public void startGame(Player player1, Player player2) {
         Scanner input = new Scanner(System.in);
@@ -42,10 +42,9 @@ public class Seabattle {
                             break;
                         }
                     }
-                }else if(number == -23){
+                } else if (number == -23) {
                     endGame(player1, player2);
-                }
-                else {
+                } else {
                     break;
                 }
             }
@@ -61,7 +60,7 @@ public class Seabattle {
             while (true) {
                 int number = Player.setNumber();
                 if (number == 1) {
-                    player1.disPlayMyTable();
+                    player2.disPlayMyTable();
                 } else if (number == 2) {
                     player2.disPlayHisTable(player1);
                     System.out.printf("Mời Người chơi 2 nhập tọa độ bắn: ");
@@ -91,14 +90,16 @@ public class Seabattle {
         System.out.println("""
                            \nLuat choi: 
                            Mỗi người chơi có 5 con tàu....
-                           1, 2, 3 thể hiện vị trí tàu 1, 2 3
-                           -1 thể hiện ví trí tàu đã bị bắn;
-                           -2 thể hiện vị trí đã bị bắn nhưng không trúng tàu
-                           khi nhập vị trí của tàu cần nhập 3 chỉ số (x, y, z)
+                           1, 2, 3, 4, 5 thể hiện vị trí của tàu 1, 2, 3, 4, 5
+                           (-1) thể hiện ví trí tàu đã bị bắn;
+                           (-2) thể hiện vị trí đã bị bắn nhưng không trúng tàu
+                           
+                           khi nhập vị trí của tàu, cần nhập 3 chỉ số (y, x, z)                             
                                 x, y là tọa độ của ô bên trái, cao nhất của tàu
                                 z là: = 1 khi tàu nằm ngang
                                       = 2 khi tàu nằm dọc                                                                                               
                            """);
+        Table();
     }
 
     public static void disPlayStatus(Player ta, Player dich) {
@@ -140,6 +141,36 @@ public class Seabattle {
                     System.out.printf(" " + player2.myTableNow[i][j] + " ");
                 } else {
                     System.out.printf(player2.myTableNow[i][j] + " ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+    public void Table() {
+        System.out.println("");
+        for (int i = 0; i <= 10; i++) {
+            if (i == 1) {
+                System.out.println();
+            }
+            for (int j = 0; j <= 10; j++) {
+                if (i == 0) {
+                    if (j == 0) {
+                        System.out.printf("i/j ");
+                    } else {
+                        System.out.printf(" " + j + " ");
+                    }
+                }
+                if (j == 0 && i != 0) {
+                    if (i < 10) {
+                        System.out.printf(" " + i + "  ");
+                    } else {
+                        System.out.printf(i + "  ");
+                    }
+                }
+                if (i != 0 && j != 0) {
+                    System.out.printf(" " + 0 + " ");
                 }
             }
             System.out.println();

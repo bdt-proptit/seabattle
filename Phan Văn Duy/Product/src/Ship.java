@@ -2,7 +2,6 @@ package seabattle;
 
 public class Ship {
 
-//    String name;
     private int status;
     private int length;
     private int width;
@@ -11,7 +10,7 @@ public class Ship {
     public int ngangdoc; // 1 là ngang, 0 là doc
 
     public Ship(int length, int width, int row, int col, int ngangdoc) {
-//        this.name = name;
+
         this.length = length;
         this.width = width;
         this.row = row;

@@ -10,9 +10,6 @@ public class Player {
     private int numberFired;
     private int[] vitri[];
 
-//    public Player() {
-//        //numberFired = 0;
-//    }
     public void setPosShip() {
         Scanner input = new Scanner(System.in);
         vitri = new int[11][11];
@@ -24,7 +21,7 @@ public class Player {
             vitri[i][1] = row;
             vitri[i][2] = col;
             vitri[i][3] = ngangdoc;
-             System.out.println();
+            System.out.println();
         }
         setShip();
     }

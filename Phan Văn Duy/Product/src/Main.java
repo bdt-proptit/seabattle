@@ -3,7 +3,7 @@ package seabattle;
 public class Main {
 
     public static void main(String[] args) {
-        Seabattle seabattle = new Seabattle();
+        SeaBattle seabattle = new SeaBattle();
         Player player1 = new Player();
         Player player2 = new Player();
 
