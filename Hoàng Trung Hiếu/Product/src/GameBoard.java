@@ -3,11 +3,10 @@ class GameBoard {
     Cell[][] cells;
     public GameBoard() {
         this.board = new int[10][10];
-
-
         this.cells = new Cell[10][10];
         initializeCells();
     }
+
 
     // Hàm khởi tạo các ô trên bảng
     private void initializeCells() {
@@ -17,17 +16,16 @@ class GameBoard {
             }
         }
     }
-
     public boolean placeShip(int x, int y, int size, boolean vertical) {
         // Kiểm tra hướng đặt tàu
         if (vertical) {
             if (y + size > 10) {
-                System.out.println("Không thể đặt tàu vì vượt quá biên dọc.");
+                System.out.println("\033[1;31m Không thể đặt tàu vì vượt quá biên ngang.\033[0m");
                 return false;
             }
             for (int i = y; i < y + size; i++) {
                 if (board[x][i] != 0) {
-                    System.out.println("Không thể đặt tàu vì trùng với tàu khác.");
+                    System.out.println("\033[1;31m Không thể đặt tàu vì trùng với tàu khác.\033[0m");
                     return false;
                 }
             }
@@ -36,12 +34,12 @@ class GameBoard {
             }
         } else {
             if (x + size > 10) {
-                System.out.println("Không thể đặt tàu vì vượt quá biên ngang.");
+                System.out.println("\033[1;31m Không thể đặt tàu vì vượt quá biên doc.\033[0m");
                 return false;
             }
             for (int i = x; i < x + size; i++) {
                 if (board[i][y] != 0) {
-                    System.out.println("Không thể đặt tàu vì trùng với tàu khác.");
+                    System.out.println("\033[1;31m Không thể đặt tàu vì trùng với tàu khác.\033[0m");
                     return false;
                 }
             }
@@ -67,7 +65,7 @@ class GameBoard {
                 } else if (board[i][j] == 2) {
                     System.out.print("X "); // Ô đã bắn trúng tàu
                 } else if (board[i][j] == 3) {
-                    System.out.print("- "); // Ô đã bắn nhưng không có tàu
+                    System.out.print("- "); // Ô đã bắn trượt (không có tàu)
                 }
             }
             System.out.println();
