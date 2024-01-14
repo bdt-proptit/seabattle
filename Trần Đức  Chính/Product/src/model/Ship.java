@@ -45,10 +45,13 @@ public class Ship {
         int lastYIndex = Integer.parseInt(last.substring(1)) - 1;
         int inputLength = 0;
         if (headXIndex == lastXIndex) {
-            inputLength = lastYIndex - headYIndex + 1;
+            inputLength = Math.abs(lastYIndex - headYIndex) + 1;
+            return this.getLength() == inputLength;
         } else if (headYIndex == lastYIndex) {
-            inputLength = lastXIndex - headXIndex + 1;
+            inputLength = Math.abs(lastXIndex - headXIndex) + 1;
+            return this.getLength() == inputLength;
+        } else {
+            return true;
         }
-        return this.getLength() == inputLength;
     }
 }

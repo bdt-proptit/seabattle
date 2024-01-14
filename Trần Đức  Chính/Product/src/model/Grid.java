@@ -5,35 +5,41 @@ import graphic.Color;
 public class Grid {
 
     public String[][] board;
-    private final int size = 10;
 
     public Grid() {
-        board = new String[size][size];
+        board = new String[Player.playerGridSize][Player.playerGridSize];
         initializeBoard();
     }
 
     private void initializeBoard() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < Player.playerGridSize; i++) {
+            for (int j = 0; j < Player.playerGridSize; j++) {
                 board[i][j] = Color.WATER + "~" + Color.RESET;
             }
         }
     }
 
     public void printGrid() {
-        System.out.println("  1 2 3 4 5 6 7 8 9 10");
-        System.out.println("  -------------------");
-        for (int i = 0; i < size; i++) {
-            System.out.print((char) ('A' + i) + "|");
-            for (int j = 0; j < size; j++) {
-                if (j == size - 1)
-                    System.out.print(board[i][j] + "|");
+        System.out.print(" ");
+        for (int i = 1; i <= Player.playerGridSize; i++) {
+            if (i <= 10)
+                System.out.print("  " + i);
+            else System.out.print(" " + i);
+        }
+        System.out.println();
+        System.out.println("  " + "-".repeat(3 * Player.playerGridSize));
+        for (int i = 0; i < Player.playerGridSize; i++) {
+            System.out.print((char) ('A' + i) + "| ");
+            for (int j = 0; j < Player.playerGridSize; j++) {
+                if (j == Player.playerGridSize - 1)
+                    System.out.print(board[i][j] + " |");
                 else
-                    System.out.print(board[i][j] + " ");
+                    System.out.print(board[i][j] + "  ");
+
             }
             System.out.println();
         }
-        System.out.println("  -------------------");
+        System.out.println("  " + "-".repeat(3 * Player.playerGridSize ));
     }
 
     public boolean checkExsitShip(String head, String tail) {
@@ -71,10 +77,10 @@ public class Grid {
     public boolean checkCoordinates(String coordinates) {
         int xIndex = coordinates.toUpperCase().charAt(0) - 'A';
         int yIndex = Integer.parseInt(coordinates.substring(1)) - 1;
-        return (xIndex >= 0 && xIndex < this.size) &&(yIndex >= 0 && yIndex < this.size);
+        return (xIndex >= 0 && xIndex < Player.playerGridSize) && (yIndex >= 0 && yIndex < Player.playerGridSize);
     }
 
-    public boolean checkShipIsSunk(Ship ship){
+    public boolean checkShipIsSunk(Ship ship) {
         int headXIndex = ship.getHead().toUpperCase().charAt(0) - 'A';
         int tailXIndex = ship.getTail().toUpperCase().charAt(0) - 'A';
         int headYIndex = Integer.parseInt(ship.getHead().substring(1)) - 1;
@@ -97,29 +103,40 @@ public class Grid {
     }
 
     public void printAttackAndShipGrid(Grid playerAttackGrid, Grid playerGrid) {
-        System.out.printf("%-25s%-25s\n", "  Bảng tấn công", "   Bảng thuyền");
-        System.out.printf("%-25s%-25s\n", "  1 2 3 4 5 6 7 8 9 10", "   1 2 3 4 5 6 7 8 9 10");
-        System.out.printf("%-25s%-25s\n", " ---------------------", "  ---------------------");
-        for (int i = 0; i < size; i++) {
-            System.out.print((char) ('A' + i) + "|");
-            for (int j = 0; j < size; j++) {
-                if (j == size - 1)
-                    System.out.print(playerAttackGrid.board[i][j] + "|");
+        System.out.printf("%-25s" + "%" + (Player.playerGridSize * 3 - 3) + "s\n", "   Bảng tấn công", "Bảng thuyền");
+        System.out.print(" ");
+        for (int i = 1; i <= Player.playerGridSize; i++) {
+            if (i <= 10)
+                System.out.print("  " + i);
+            else System.out.print(" " + i);
+        }
+        System.out.print(" ".repeat(7));
+        for (int i = 1; i <= Player.playerGridSize; i++) {
+            if (i <= 10)
+                System.out.print("  " + i);
+            else System.out.print(" " + i);
+        }
+        System.out.println();
+        System.out.printf("%-25s%-25s\n", "  " + "-".repeat(3 * Player.playerGridSize), " ".repeat(8) + "-".repeat(3 * Player.playerGridSize));
+        for (int i = 0; i < Player.playerGridSize; i++) {
+            System.out.print((char) ('A' + i) + "| ");
+            for (int j = 0; j < Player.playerGridSize; j++) {
+                if (j == Player.playerGridSize - 1)
+                    System.out.print(playerAttackGrid.board[i][j] + " |");
                 else
-                    System.out.print(playerAttackGrid.board[i][j] + " ");
+                    System.out.print(playerAttackGrid.board[i][j] + "  ");
             }
-            System.out.printf("%5c|",(char) ('A' + i));
-            for (int j = 0; j < size; j++) {
-                if (j == size - 1)
-                    System.out.print(playerGrid.board[i][j] + "|");
+            System.out.printf("%6c| ", (char) ('A' + i));
+            for (int j = 0; j < Player.playerGridSize; j++) {
+                if (j == Player.playerGridSize - 1)
+                    System.out.print(playerGrid.board[i][j] + " |");
                 else
-                    System.out.print(playerGrid.board[i][j] + " ");
+                    System.out.print(playerGrid.board[i][j] + "  ");
             }
             System.out.println();
         }
-        System.out.printf("%-25s%-25s\n", " ---------------------", "  ---------------------");
+        System.out.printf("%-25s%-25s\n", "  " + "-".repeat(3 * Player.playerGridSize), " ".repeat(8) + "-".repeat(3 * Player.playerGridSize));
     }
-
 
 }
 

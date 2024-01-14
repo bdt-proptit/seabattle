@@ -16,7 +16,11 @@ public class Player {
 
     private int hit = 0;
     private int shipDestroyed;
+
     public List<Ship> shipList = new ArrayList<>();
+
+    public static int playerGridSize;
+    public final Grid playerGrid = new Grid();
 
     public String getName() {
         return name;
@@ -42,13 +46,13 @@ public class Player {
         this.hit = hit;
     }
 
-    public int getShipIsSunk() {
-        return shipIsSunk;
-    }
-
-    public void setShipIsSunk(int shipIsSunk) {
-        this.shipIsSunk = shipIsSunk;
-    }
+//    public int getShipIsSunk() {
+//        return shipIsSunk;
+//    }
+//
+//    public void setShipIsSunk(int shipIsSunk) {
+//        this.shipIsSunk = shipIsSunk;
+//    }
 
     public int getShipDestroyed() {
         return shipDestroyed;
@@ -58,13 +62,14 @@ public class Player {
         this.shipDestroyed = shipDestroyed;
     }
 
-    public final Grid playerGrid = new Grid();
 
-    public Player(String name, int shipRemaining, int hit){
+
+    public Player(String name, int shipRemaining, int hit) {
         this.name = name;
         this.shipRemaining = shipRemaining;
         this.hit = hit;
     }
+
     public Player() {
         shipRemaining = shipList.size();
         shipIsSunk = 0;
@@ -87,7 +92,7 @@ public class Player {
             }
             if (!playerGrid.checkCoordinates(head) || !playerGrid.checkCoordinates(tail)) {
                 System.out.println("\nTọa độ không hợp lệ");
-                System.out.println("Vui lòng nhập lại tọa độ\n");
+                System.out.println("\nVui lòng nhập lại tọa độ\n");
                 continue;
             }
             if (playerGrid.checkExsitShip(head, tail)) {
@@ -96,7 +101,7 @@ public class Player {
                 continue;
             }
             if (headXIndex == tailXIndex) {
-                for (int i = headYIndex; i <= tailYIndex; i++) {
+                for (int i = Math.min(headYIndex, tailYIndex); i <= Math.max(headYIndex, tailYIndex); i++) {
                     playerGrid.board[headXIndex][i] = Color.SHIP + "S" + Color.RESET;
                 }
                 ship.setHead(head);
@@ -110,7 +115,7 @@ public class Player {
                 ClearScreen.clrscr();
                 break;
             } else if (headYIndex == tailYIndex) {
-                for (int i = headXIndex; i <= tailXIndex; i++) {
+                for (int i = Math.min(headXIndex, tailXIndex); i <=  Math.max(headXIndex, tailXIndex); i++) {
                     playerGrid.board[i][headYIndex] = Color.SHIP + "S" + Color.RESET;
                 }
                 ship.setHead(head);
@@ -130,6 +135,7 @@ public class Player {
         }
 
     }
+
     public void printPlayerGrid(Grid playerAttackGrid, Grid playerGrid) {
         playerGrid.printAttackAndShipGrid(playerAttackGrid, playerGrid);
     }
@@ -175,7 +181,7 @@ public class Player {
         return cntShipIsSunk;
     }
 
-    public void handPlaceShip(){
+    public void handPlaceShip() {
         ShipType shipType = new ShipType();
         while (!shipType.getList().isEmpty()) {
             System.out.println("Các loại tàu còn lại:");
@@ -204,8 +210,8 @@ public class Player {
         while (!shipType.getList().isEmpty()) {
             Ship ship = shipType.getList().get(0);
             while (true) {
-                int headXIndex = (int) (Math.random() * 9); //X đầu
-                int headYIndex = (int) (Math.random() * 9); //Y đầu
+                int headXIndex = (int) (Math.random() * Player.playerGridSize - 1); //X đầu
+                int headYIndex = (int) (Math.random() * Player.playerGridSize - 1); //Y đầu
                 int tailXIndex = -1; //X đuôi
                 int tailYIndex = -1; //Y đuôi
                 int direction = (int) (Math.random() * 4 + 1);  // 1: right, 2: left, 3: down, 4: up
@@ -227,7 +233,7 @@ public class Player {
                         tailYIndex = headYIndex + ship.getLength() - 1;
                         break;
                 }
-                if (tailXIndex < 0 || tailXIndex > 9 || tailYIndex < 0 || tailYIndex > 9) {
+                if (tailXIndex < 0 || tailXIndex > Player.playerGridSize - 1 || tailYIndex < 0 || tailYIndex > Player.playerGridSize - 1) {
                     continue;
                 }
 
@@ -245,7 +251,7 @@ public class Player {
                     shipList.add(ship);
                     shipType.getList().remove(0);
                     break;
-                } else if (headYIndex == tailYIndex) {
+                } else {
                     for (int i = Math.min(headXIndex, tailXIndex); i <= Math.max(tailXIndex, headXIndex); i++) {
                         playerGrid.board[i][headYIndex] = Color.SHIP + "S" + Color.RESET;
                     }
@@ -260,14 +266,15 @@ public class Player {
         }
     }
 
-    public boolean autoAttack(Grid playerGrid, Grid computerAttackGrid) {
+    public boolean autoAttack(Player computer, Grid playerGrid, Grid computerAttackGrid) {
         while (true) {
-            int x = (int) (Math.random() * 9);
-            int y = (int) (Math.random() * 9);
+            int x = (int) (Math.random() * Player.playerGridSize - 1);
+            int y = (int) (Math.random() * Player.playerGridSize - 1);
             String postion = (char) ('A' + x) + String.valueOf(y + 1);
             if (computerAttackGrid.checkHit(postion)) {
                 continue;
             }
+            computer.setHit(computer.getHit() + 1);
             if (playerGrid.board[x][y].equals(Color.SHIP + "S" + Color.RESET)) {
                 playerGrid.board[x][y] = Color.HIT + "X" + Color.RESET;
                 computerAttackGrid.board[x][y] = Color.HIT + "X" + Color.RESET;
@@ -279,6 +286,136 @@ public class Player {
                 System.out.println("Bắn trượt!");
                 return false;
             }
+        }
+    }
+
+//    public void resetNextPriorityPostion(Grid playerGrid, Grid computerAttackGrid) {
+
+
+//
+//    }
+
+    public boolean hardModeBotAttack(Player computer, Player player, Grid playerGrid, Grid computerAttackGrid) {
+        while (true) {
+            // Nếu 1 thuyền đã chìm thì đánh dấu các ô xung quanh nó là . (Ko cần bắn vào các ô này)
+            for (Ship ship : player.shipList) {
+                if (playerGrid.checkShipIsSunk(ship)) {
+                    int headXIndex = ship.getHead().toUpperCase().charAt(0) - 'A';
+                    int tailXIndex = ship.getTail().toUpperCase().charAt(0) - 'A';
+                    int headYIndex = Integer.parseInt(ship.getHead().substring(1)) - 1;
+                    int tailYIndex = Integer.parseInt(ship.getTail().substring(1)) - 1;
+                    if (headXIndex == tailXIndex) {
+                        if (Math.min(headYIndex, tailYIndex) - 1 >= 0 && playerGrid.board[headXIndex][Math.min(headYIndex, tailYIndex) - 1].equals(Color.WATER + "~" + Color.RESET)) {
+                            computerAttackGrid.board[headXIndex][Math.min(headYIndex, tailYIndex) - 1] = ".";
+                        }
+                        if (Math.max(headYIndex, tailYIndex) + 1 < Player.playerGridSize && playerGrid.board[headXIndex][Math.max(headYIndex, tailYIndex) + 1].equals(Color.WATER + "~" + Color.RESET)) {
+                            computerAttackGrid.board[headXIndex][Math.max(headYIndex, tailYIndex) + 1] = ".";
+                        }
+                        for (int i = Math.min(headYIndex, tailYIndex); i <= Math.max(tailYIndex, headYIndex); i++) {
+                            if (headXIndex - 1 >= 0 && playerGrid.board[headXIndex - 1][i].equals(Color.WATER + "~" + Color.RESET)) {
+                                computerAttackGrid.board[headXIndex - 1][i] = ".";
+                            }
+                            if (headXIndex + 1 < Player.playerGridSize && playerGrid.board[headXIndex + 1][i].equals(Color.WATER + "~" + Color.RESET)) {
+                                computerAttackGrid.board[headXIndex + 1][i] = ".";
+                            }
+                        }
+                    } else if (headYIndex == tailYIndex) {
+                        if (Math.min(headXIndex, tailXIndex) - 1 >= 0 && playerGrid.board[Math.min(headXIndex, tailXIndex) - 1][headYIndex].equals(Color.WATER + "~" + Color.RESET)) {
+                            computerAttackGrid.board[Math.min(headXIndex, tailXIndex) - 1][headYIndex] = ".";
+                        }
+                        if (Math.max(headXIndex, tailXIndex) + 1 < Player.playerGridSize && playerGrid.board[Math.max(headXIndex, tailXIndex) + 1][headYIndex].equals(Color.WATER + "~" + Color.RESET)) {
+                            computerAttackGrid.board[Math.max(headXIndex, tailXIndex) + 1][headYIndex] = ".";
+                        }
+                        for (int i = Math.min(headXIndex, tailXIndex); i <= Math.max(tailXIndex, headXIndex); i++) {
+                            if (headYIndex - 1 >= 0 && playerGrid.board[i][headYIndex - 1].equals(Color.WATER + "~" + Color.RESET)) {
+                                computerAttackGrid.board[i][headYIndex - 1] = ".";
+                            }
+                            if (headYIndex + 1 < Player.playerGridSize && playerGrid.board[i][headYIndex + 1].equals(Color.WATER + "~" + Color.RESET)) {
+                                computerAttackGrid.board[i][headYIndex + 1] = ".";
+                            }
+                        }
+                    }
+                }
+            }
+            // Tìm priorityPostion
+            boolean priority = false;
+            int priorityX = -1;
+            int priorityY = -1;
+            String priorityPostion = "";
+
+            for (int i = 0; i < Player.playerGridSize; i++) {
+                for (int j = 0; j < Player.playerGridSize; j++) {
+                    if (playerGrid.board[i][j].equals(Color.HIT + "X" + Color.RESET)) {
+                        if (i - 1 >= 0 && computerAttackGrid.board[i - 1][j].equals(Color.WATER + "~" + Color.RESET)) {
+                            priority = true;
+                            priorityX = i - 1;
+                            priorityY = j;
+                            priorityPostion = (char) ('A' + priorityX) + String.valueOf(priorityY + 1);
+                        }
+                        if (i + 1 < Player.playerGridSize && computerAttackGrid.board[i + 1][j].equals(Color.WATER + "~" + Color.RESET)) {
+                            priority = true;
+                            priorityX = i + 1;
+                            priorityY = j;
+                            priorityPostion = (char) ('A' + priorityX) + String.valueOf(priorityY + 1);
+                        }
+                        if (j - 1 >= 0 && computerAttackGrid.board[i][j - 1].equals(Color.WATER + "~" + Color.RESET)) {
+                            priority = true;
+                            priorityX = i;
+                            priorityY = j - 1;
+                            priorityPostion = (char) ('A' + priorityX) + String.valueOf(priorityY + 1);
+                        }
+                        if (j + 1 < Player.playerGridSize && computerAttackGrid.board[i][j + 1].equals(Color.WATER + "~" + Color.RESET)) {
+                            priority = true;
+                            priorityX = i;
+                            priorityY = j + 1;
+                            priorityPostion = (char) ('A' + priorityX) + String.valueOf(priorityY + 1);
+                        }
+                    }
+                }
+                if (priority) {
+                    break;
+                }
+            }
+            if (priority) {
+                computer.setHit(computer.getHit() + 1);
+                if (playerGrid.board[priorityX][priorityY].equals(Color.SHIP + "S" + Color.RESET)) {
+                    playerGrid.board[priorityX][priorityY] = Color.HIT + "X" + Color.RESET;
+                    computerAttackGrid.board[priorityX][priorityY] = Color.HIT + "X" + Color.RESET;
+                    System.out.println("Tọa độ máy bắn: " + priorityPostion);
+                    Delay.delay(500);
+                    System.out.println("Bắn trúng!");
+                    return true;
+                } else {
+                    playerGrid.board[priorityX][priorityY] = Color.MISS + "*" + Color.RESET;
+                    computerAttackGrid.board[priorityX][priorityY] = Color.MISS + "*" + Color.RESET;
+                    System.out.println("Tọa độ máy bắn: " + priorityPostion);
+                    Delay.delay(500);
+                    System.out.println("Bắn trượt!");
+                    return false;
+                }
+            }
+            int x = (int) (Math.random() * Player.playerGridSize - 1);
+            int y = (int) (Math.random() * Player.playerGridSize - 1);
+            String postion = (char) ('A' + x) + String.valueOf(y + 1);
+            if (computerAttackGrid.checkHit(postion)) {
+                continue;
+            }
+            computer.setHit(computer.getHit() + 1);
+            System.out.println("Tọa độ máy bắn: " + postion);
+            Delay.delay(500);
+            if (playerGrid.board[x][y].equals(Color.SHIP + "S" + Color.RESET)) {
+                playerGrid.board[x][y] = Color.HIT + "X" + Color.RESET;
+                computerAttackGrid.board[x][y] = Color.HIT + "X" + Color.RESET;
+                System.out.println("Bắn trúng!");
+
+                return true;
+            } else {
+                playerGrid.board[x][y] = Color.MISS + "*" + Color.RESET;
+                computerAttackGrid.board[x][y] = Color.MISS + "*" + Color.RESET;
+                System.out.println("Bắn trượt!");
+                return false;
+            }
+
         }
     }
 }
