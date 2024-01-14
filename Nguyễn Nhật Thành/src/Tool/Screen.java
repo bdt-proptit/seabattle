@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Screen {
-    public static void clear() throws IOException, InterruptedException {
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    public static void clear(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
     public static void delay(int second) throws InterruptedException {
         TimeUnit.SECONDS.sleep(second);

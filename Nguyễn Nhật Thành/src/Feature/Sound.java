@@ -65,13 +65,15 @@ public class Sound {
     }
     static public void onButtonMenuSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         if(canPlay){
-            if(buttonSound.isOpen()){
-                buttonSound.close();
+            if(!buttonSound.isOpen()){
                 button = AudioSystem.getAudioInputStream(buttonPath);
                 buttonSound.open(button);
                 buttonSound.start();
             }
-            else buttonSound.start();
+            else{
+                buttonSound.setMicrosecondPosition(0);
+                buttonSound.start();
+            }
         }
     }
     static public void playShotSound(boolean hit) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
