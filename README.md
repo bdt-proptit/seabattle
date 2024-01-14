@@ -90,10 +90,12 @@ Cấu trúc folder
 - Cơ chế kiểm tra khi nhập liệu cần kiểm tra không cho đặt tàu chồng lấn, đặt tàu ngoài vùng, bắn điểm ngoài vùng, bắn điểm đã bắn, ...
 - Hiển thị giao diện bảng rõ ràng, có thể dùng emoji, kí tự đặc biệt, ...
 - Output màn hình hiển thị menu, bảng của hai bên có thể in ra màu (https://www.geeksforgeeks.org/how-to-print-colored-text.../), có thể hiển thị vùng bị bắn rồi, chỗ tàu bị nổ, ... rõ ràng và đẹp hơn
+- Cơ chế sau khi người chơi bắn trúng thì sẽ được bắn tiếp cho đến khi bắn trượt
 
 ##### Độ khó ⭐⭐
 - Chế độ tự động đặt tàu ngẫu nhiên ở vòng chuẩn bị
 - Thêm tính năng bảng xếp hạng số lượt bắn ít nhất, số tàu còn lại của người chơi khi thắng, Lúc này khi vào game cần nhập thêm tên người chơi để lưu lại, ở menu ban đầu có thể chọn hiển thị bảng xếp hạng
+- Đóng gói được chương trình thành 1 file jar để có thể chạy game mà không cần ide
 
 ##### Độ khó ⭐⭐⭐
 - Cho phép chơi với máy ở menu bắt đầu, máy tự động đặt thuyền, và bắn ngẫu nhiên, biết chơi greedy như tập trung bắn nốt 1 tàu khi đã bắn trúng được 1 điểm
