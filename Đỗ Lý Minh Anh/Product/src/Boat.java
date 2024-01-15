@@ -22,23 +22,23 @@ public class Boat {
     }
     public String checkLocation (Coordinates firstCoordinates, Player player) {
         boolean checkRow = true, checkColumn = true;
-        if (firstCoordinates.column + this.length > 10) {
+        if (firstCoordinates.column + this.length > player.getBoardSize()) {
             checkRow = false;
         }
         else {
             for (int i = 0; i < this.length; ++i) {
-                if (player.getMyBoard()[firstCoordinates.row - 'a'][ i + firstCoordinates.column] != 0) {
+                if (player.getMyBoard()[firstCoordinates.row - 'a'][ i + firstCoordinates.column] != '0') {
                     checkRow = false;
                     break;
                 }
             }
         }
-        if (firstCoordinates.row - 'a' + this.length > 10) {
+        if (firstCoordinates.row - 'a' + this.length > player.getBoardSize()) {
             checkColumn = false;
         }
         else {
             for (int i = 0; i < this.length; ++i) {
-                if (player.getMyBoard()[i + firstCoordinates.row - 'a'][firstCoordinates.column] != 0) {
+                if (player.getMyBoard()[i + firstCoordinates.row - 'a'][firstCoordinates.column] != '0') {
                     checkColumn = false;
                     break;
                 }

@@ -1,5 +1,5 @@
 # UML
 
-![Alt text](Main.jpg) 
+![Alt text](Main.png)
 
-![Alt text](ActivityDiagram1.jpg)
+![Alt text](ActivityDiagram1.png)
