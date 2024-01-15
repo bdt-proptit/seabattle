@@ -2,13 +2,16 @@ public class Shot {
     private int row;
     private int column;
 
-    Shot(int row, int column){
+    Shot() {
+    }
+
+    Shot(int row, int column) {
         this.row = row;
         this.column = column;
     }
 
-    private boolean checkScope() {
-        if (row < 1 || row > 10 || column < 1 || column > 10)
+    private boolean checkScope(int size) {
+        if (row < 1 || row > size || column < 1 || column > size)
             return false;
         return true;
     }
@@ -19,14 +22,14 @@ public class Shot {
         return true;
     }
 
-    public boolean checkLocation(char board[][]) {
-        if (!checkScope() || !checkOverlap(board))
+    public boolean checkPosition(char board[][], int size) {
+        if (!checkScope(size) || !checkOverlap(board))
             return false;
         return true;
     }
 
-    public boolean checkHit(char[][] Board) {
-        if (Board[row][column] == 's')
+    public boolean checkHit(char[][] board) {
+        if (board[row][column] >= '2' && board[row][column] <= '5')
             return true;
         return false;
     }

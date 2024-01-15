@@ -1,4 +1,5 @@
 public class Ship {
+    private String name;
     private int rowStart;
     private int columnStart;
     private int rowEnd;
@@ -9,7 +10,8 @@ public class Ship {
     Ship() {
     }
 
-    Ship(int rowStart, int columnStart, int rowEnd, int columnEnd, int length, boolean status) {
+    Ship(String name, int rowStart, int columnStart, int rowEnd, int columnEnd, int length, boolean status) {
+        this.name = name;
         this.rowStart = rowStart;
         this.columnStart = columnStart;
         this.rowEnd = rowEnd;
@@ -30,8 +32,8 @@ public class Ship {
         return "Battle Ship";
     }
 
-    private boolean checkScope() {
-        if (rowStart < 1 || rowEnd > 10 || columnStart < 1 || columnEnd > 10)
+    private boolean checkScope(int size) {
+        if (rowStart < 1 || rowEnd > size || columnStart < 1 || columnEnd > size)
             return false;
         return true;
     }
@@ -49,27 +51,36 @@ public class Ship {
         return true;
     }
 
-    private boolean checkOverlapOrStatus(char[][] board) {
+    private boolean checkOverlapOrStatus(char[][] board, boolean bool) {
+        char character;
+        if (bool)
+            character = ' ';
+        else
+            character = 'x';
         if (columnStart == columnEnd) {
             int begin = Math.min(rowEnd, rowStart);
             int end = Math.max(rowEnd, rowStart);
             for (int i = begin; i <= end; i++)
-                if (board[i][columnStart] == 's')
+                if (board[i][columnStart] != character)
                     return false;
         } else {
             int begin = Math.min(columnEnd, columnStart);
             int end = Math.max(columnEnd, columnStart);
             for (int i = begin; i <= end; i++)
-                if (board[rowStart][i] == 's')
+                if (board[rowStart][i] != character)
                     return false;
         }
         return true;
     }
 
-    public boolean checkLocation(char[][] board) {
-        if (!checkScope() || !checkValid() || !checkLength() || !checkOverlapOrStatus(board))
+    public boolean checkPosition(char[][] board, int size) {
+        if (!checkScope(size) || !checkValid() || !checkLength() || !checkOverlapOrStatus(board, true))
             return false;
         return true;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getRowStart() {
@@ -96,7 +107,22 @@ public class Ship {
         this.status = status;
     }
 
-    public boolean getCheckStatus(char[][] board) {
-        return checkOverlapOrStatus(board);
+    public int getLength() {
+        return length;
+    }
+
+    public boolean checkDestroyed(char[][] board) {
+        return checkOverlapOrStatus(board, false);
+    }
+
+    public boolean checkShotInShip(Shot shot) {
+        int minColumn = Math.min(columnStart, columnEnd);
+        int maxColumn = Math.max(columnEnd, columnStart);
+        int minRow = Math.min(rowStart, rowEnd);
+        int maxRow = Math.max(rowStart, rowEnd);
+        if (minColumn <= shot.getColumn() && maxColumn >= shot.getColumn() && minRow <= shot.getRow()
+                && maxRow >= shot.getRow())
+            return true;
+        return false;
     }
 }

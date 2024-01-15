@@ -8,9 +8,13 @@ public class Player {
     private char[][] oppositeBoard;
     private boolean completed;
     private ArrayList<Ship> ships;
+    private int ship;
+    private ArrayList<Shot> shots;
+    private boolean statusNormal;
+    private int sizeBoard;
 
     Player(int index, String name, int numberShot, char[][] board, char[][] oppositeBoard, Boolean completed,
-            ArrayList<Ship> ships) {
+            ArrayList<Ship> ships, ArrayList<Shot> shots, int sizeBoard, boolean statusNormal) {
         this.index = index;
         this.name = name;
         this.numberShot = numberShot;
@@ -18,6 +22,15 @@ public class Player {
         this.oppositeBoard = oppositeBoard;
         this.completed = completed;
         this.ships = ships;
+        this.shots = shots;
+        this.sizeBoard = sizeBoard;
+        this.statusNormal = statusNormal;
+    }
+
+    Player(String name, int numberShot, int ship) {
+        this.name = name;
+        this.numberShot = numberShot;
+        this.ship = ship;
     }
 
     Player() {
@@ -48,7 +61,7 @@ public class Player {
     }
 
     public boolean getCompleted() {
-        return completed;
+        return this.completed;
     }
 
     public void setCompleted(boolean completed) {
@@ -56,7 +69,7 @@ public class Player {
     }
 
     public ArrayList<Ship> getShips() {
-        return ships;
+        return this.ships;
     }
 
     public void setShips(ArrayList<Ship> ships) {
@@ -64,13 +77,35 @@ public class Player {
     }
 
     public int getNumberShot() {
-        return numberShot;
+        return this.numberShot;
     }
 
     public void setNumberShot(int numberShot) {
         this.numberShot = numberShot;
     }
 
+    public int getShip() {
+        return this.ship;
+    }
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
+
+    public void setShots(ArrayList<Shot> list) {
+        this.shots = list;
+    }
+
+    public boolean getStatusNormal() {
+        return statusNormal;
+    }
+
+    public void setStatusNormal(boolean statusNormal) {
+        this.statusNormal = statusNormal;
+    }
+    public int getSizeBoard(){
+        return sizeBoard;
+    }
     public int destroyedShips() {
         int count = 0;
         for (var ship : ships) {
