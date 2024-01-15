@@ -12,7 +12,7 @@ public class SolvePoints {
     public int rows(String point){
         return point.codePointAt(0) - 'A' + 1;
     } //Trả về trục hoành của điểm (B1 -> 2)
-    public int columns(String point){ // Trả về trục tung của điểm (A1 -> 1)
+    public int columns(String point){ // Trả về trục tung của điểm (B1 -> 1)
         int column = 0;
         for(int i=1 ; i<point.length() ; i++){
             column = column*10 + point.codePointAt(i) - '0';
