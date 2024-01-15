@@ -948,7 +948,8 @@ public class Game {
                         int cn = sc.nextInt();
                         if (cn == 1) {
                             System.out.print("Nhap toa do X Y can ban:\n");
-                            int x = sc.nextInt(), y = sc.nextInt();
+                            char c = sc.next().charAt(0);
+                            int x = c - 'A' + 1, y = sc.nextInt();
                             //Nhap lai toa do vi bi sai
                             while (Check_position(x, y) == 0 || player_2.getMatrix()[x][y] == 'o' || player_2.getMatrix()[x][y] == 'x') {
                                 System.out.println("Vui long nhap lai!");
@@ -1026,7 +1027,8 @@ public class Game {
                         int cn = sc.nextInt();
                         if (cn == 1) {
                             System.out.print("Nhap toa do X Y can ban:\n");
-                            int x = sc.nextInt(), y = sc.nextInt();
+                            char c = sc.next().charAt(0);
+                            int x = c - 'A' + 1, y = sc.nextInt();
                             //Nhap lai toa do vi bi sai
                             while (Check_position(x, y) == 0 || player_1.getMatrix()[x][y] == 'o' || player_1.getMatrix()[x][y] == 'x') {
                                 System.out.println("Vui long nhap lai!");
