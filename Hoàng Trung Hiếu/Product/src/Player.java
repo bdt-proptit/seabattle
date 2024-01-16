@@ -14,7 +14,7 @@ class Player {
     public void placeShips() {
         Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 1; i++) {
             int size;
             if (i == 0 || i == 1) {
                 size = 2; // 2 thuyền tuần tra

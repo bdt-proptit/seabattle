@@ -24,6 +24,7 @@ class SeaBattleGame {
         System.out.println("1. Xem bảng của mình");
         System.out.println("2. Bắn tàu đối phương");
         System.out.println("3. Kết thúc lượt");
+        System.out.println("4. Xem bảng các ô đã bắn đối thủ");
 
         return scanner.nextInt();
     }
@@ -43,11 +44,9 @@ class SeaBattleGame {
             System.out.println("Tàu của " + player.name + " đã được đặt.");
             displayPlayerBoard(player);
 
-            // Ngăn cách giữa lượt đặt tàu của người chơi 1 và người chơi 2
             System.out.println("\n\n--------------------------------------------------\n\n");
         }
 
-        // Hiển thị thông điệp "Bắt đầu trò chơi Sea Battle!"
         System.out.println("\033[1;31m" + "\n\nBAT DAU TRO CHOI \n\n" + "\033[0m");
     }
 
@@ -92,6 +91,10 @@ class SeaBattleGame {
                     currentPlayerIndex = (currentPlayerIndex + 1) % 2; // Chuyển đến người chơi tiếp theo
                     gameOver = isGameOver(); // Kiểm tra điều kiện kết thúc
                     break;
+
+                    case 4:
+                    displayOpponentHitCells(players[(currentPlayerIndex + 1) % 2]);
+                    break;
                 default:
                     System.out.println("Lựa chọn không hợp lệ. Vui lòng chọn lại.");
                     break;
@@ -124,5 +127,18 @@ class SeaBattleGame {
             }
         }
         return false; // Nếu có ít nhất một người chơi còn tàu, game chưa kết thúc
+    }
+    private void displayOpponentHitCells(Player opponent) {
+        System.out.println("Bảng các ô bạn đã bắn trên bảng của " + opponent.name + ":");
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (opponent.board.cells[i][j].isHit()) {
+                    System.out.print("X "); // Đã bắn trúng ô của đối thủ
+                } else {
+                    System.out.print(". "); // Ô chưa bị bắn
+                }
+            }
+            System.out.println();
+        }
     }
 }

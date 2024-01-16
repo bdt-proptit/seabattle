@@ -11,13 +11,4 @@ class Ship {
         }
     }
 
-    public boolean isSunk() {
-        for (Cell cell : cells) {
-            if (!cell.isHit()) {
-                return false; // Nếu có ô trên tàu chưa bị bắn trúng, tàu chưa bị phá hủy
-            }
-        }
-        return true; // Nếu tất cả các ô trên tàu đã bị bắn trúng, tàu đã bị phá hủy
-    }
-
 }
