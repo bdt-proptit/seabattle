@@ -2,8 +2,10 @@ import java.util.Scanner;
 
 public class MainMenu {
     public void startMenu(Scanner sc, Player player1, Player player2) {
+        DisplayTitle title = new DisplayTitle();
         System.out.println("***** Let's play Ships Battle *****");
         while (true) {
+            title.showTitle();
             System.out.println("Please enter your choice: ");
             System.out.println("1. Start\n2. Game Rules\n3. About\n4. Exit\n");
             byte option = sc.nextByte();
@@ -45,6 +47,7 @@ public class MainMenu {
                                     ClearScreen.clrscr();
                                     choice = 2;
                                     turns++;
+                                    if(player2.check != 0) break;
                                 } else if (option == 1) {
                                     System.out.println("Your map: ");
                                     player1.showBoard();
@@ -53,7 +56,6 @@ public class MainMenu {
                                     ClearScreen.clrscr();
                                 } else {
                                     System.out.println("Invalid value!");
-
                                 }
                             }
                         } else if (turns % 2 == 0) {
@@ -72,6 +74,7 @@ public class MainMenu {
                                     ClearScreen.clrscr();
                                     choice = 1;
                                     turns++;
+                                    if(player1.check != 0) break;
                                 } else if (option == 1) {
                                     System.out.println("Your map: ");
                                     player2.showBoard();

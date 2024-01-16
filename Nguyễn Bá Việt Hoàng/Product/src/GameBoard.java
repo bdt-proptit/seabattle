@@ -32,13 +32,18 @@ public class GameBoard {
                         System.out.print(" ");
                         System.out.printf(Color.MISS + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
-                    } else if (getBoard(i, j) == 'd') {
+                    } else if (getBoard(i, j) == 'X') {
                         System.out.print(" ");
                         System.out.printf(Color.DEAD + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
-                    } else {
+
+                    } else if (getBoard(i, j) == 'w') {
                         System.out.print(" ");
                         System.out.printf(Color.WATER + " %c ", getBoard(i, j));
+                        System.out.printf(Color.RESET + " |");
+                    }else {
+                        System.out.print(" ");
+                        System.out.printf(Color.SHIP + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
                     }
                 }
@@ -62,7 +67,7 @@ public class GameBoard {
                         System.out.print(" ");
                         System.out.printf(Color.MISS + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");
-                    } else if (getBoard(i, j) == 'd') {
+                    } else if (getBoard(i, j) == 'X') {
                         System.out.print(" ");
                         System.out.printf(Color.DEAD + " %c ", getBoard(i, j));
                         System.out.printf(Color.RESET + " |");

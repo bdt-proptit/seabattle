@@ -19,18 +19,23 @@ public class Player extends GameBoard {
             Scanner input = new Scanner(System.in);
             String name;
             int sizeShip;
+            char sign;
             if (shipRemain < 2) {
                 name = "Patrol Boat";
                 sizeShip = 2;
+                sign = 'P';
             } else if (shipRemain == 2) {
                 name = "Destroyer Boat";
                 sizeShip = 4;
+                sign = 'D';
             } else if (shipRemain == 3) {
                 name = "Submarine";
                 sizeShip = 3;
+                sign = 'S';
             } else {
                 name = "Battle Ship";
                 sizeShip = 5;
+                sign = 'B';
             }
             Scanner sc = new Scanner(System.in);
             while (true) {
@@ -53,65 +58,22 @@ public class Player extends GameBoard {
                 int sternColumn = input.nextInt();
                 ships[shipRemain].setSternColumn(sternColumn);
                 ships[shipRemain].setSizeShip(sizeShip);
+                ships[shipRemain].setSign(sign);
+                sign = ships[shipRemain].getSign();
                 shipRemain++;
-                int check = 0;
-                if (bowRow < 1 || bowRow > 10 || sternRow < 1 || sternRow > 10 || bowColumn < 1 || bowColumn > 10 || sternColumn < 1 || sternColumn > 10) {
-                    check = 1;
+                if (checkSetUp(bowRow, bowColumn, sternRow, sternColumn, sizeShip)) {
+                    for (int z = bowRow; z <= sternRow; z++)
+                        for (int t = bowColumn; t <= sternColumn; t++) {
+                            setBoard(z, t, sign);
+                        }
+                    break;
+                } else {
                     shipRemain--;
                     System.out.println("Invalid value!");
-                } else {
-                    if (bowRow == sternRow) {
-                        if (bowColumn != sternColumn - sizeShip + 1 && bowColumn != sternColumn + sizeShip - 1) {
-                            check = 1;
-                            shipRemain--;
-                            System.out.println("Invalid value!");
-                        }
-                    } else {
-                        if (bowColumn != sternColumn) {
-                            check = 1;
-                            shipRemain--;
-                            System.out.println("Invalid value!");
-                        } else {
-                            if (bowRow != sternRow - sizeShip + 1 && bowRow != sternRow + sizeShip - 1) {
-                                check = 1;
-                                shipRemain--;
-                                System.out.println("Invalid value!");
-                            }
-                        }
-                    }
-                    if (check == 0) {
-                        int swap = 0;
-                        if (bowRow > sternRow) {
-                            swap = bowRow;
-                            bowRow = sternRow;
-                            sternRow = swap;
-                        }
-                        if (bowColumn > sternColumn) {
-                            swap = bowColumn;
-                            bowColumn = sternColumn;
-                            sternColumn = swap;
-                        }
-                        for (int i = bowRow; i <= sternRow; i++)
-                            for (int j = bowColumn; j <= sternColumn; j++) {
-                                if (getBoard(i, j) == 's') {
-                                    check = 1;
-                                    shipRemain--;
-                                    System.out.println("Invalid value!");
-                                    break;
-                                }
-                            }
-                    }
-                    if (check == 0) {
-                        for (int z = bowRow; z <= sternRow; z++)
-                            for (int t = bowColumn; t <= sternColumn; t++) {
-                                setBoard(z, t, 's');
-                            }
-                        break;
-                    }
+                    System.out.println("Enter to continue...");
+                    sc.nextLine();
+                    ClearScreen.clrscr();
                 }
-                System.out.println("Enter to continue...");
-                sc.nextLine();
-                ClearScreen.clrscr();
             }
             showBoard();
             System.out.println("Enter to continue...");
@@ -120,24 +82,57 @@ public class Player extends GameBoard {
         }
     }
 
+    public boolean checkSetUp(int x, int y, int z, int t, int u) {
+        if (x < 1 || x > 10 || z < 1 || z > 10 || y < 1 || y > 10 || t < 1 || t > 10) return false;
+        else {
+            if (x == z) {
+                if (y != t - u + 1 && y != t + u - 1) return false;
+            } else if (y != t) return false;
+            else if (x != z - u + 1 && x != z + u - 1) {
+                return false;
+            }
+            int swap;
+            if (x > z) {
+                swap = x;
+                x = z;
+                z = swap;
+            }
+            if (y > t) {
+                swap = y;
+                y = t;
+                t = swap;
+            }
+            for (int i = x; i <= z; i++)
+                for (int j = y; j <= t; j++)
+                    if (getBoard(i, j) == 'P'||getBoard(i, j) == 'D'||getBoard(i, j) == 'S'||getBoard(i, j) == 'B') return false;
+        }
+        return true;
+    }
+
     public void beAttacked() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter fire coordinate: ");
-        System.out.print("x: ");
-        int x = input.nextInt();
-        System.out.print("y: ");
-        int y = input.nextInt();
-        hitCheck(x, y);
+        while (true) {
+            System.out.println("Enter fire coordinate: ");
+            System.out.print("x: ");
+            int x = input.nextInt();
+            System.out.print("y: ");
+            int y = input.nextInt();
+            if (x >= 1 && x <= 10 && y >= 1 && y <= 10) {
+                hitCheck(x, y);
+                break;
+            } else System.out.println("Invalid value!");
+            if(check == 1) break;
+        }
     }
 
     public void hitCheck(int x, int y) {
-        if (getBoard(x, y) == 's') {
+        if (getBoard(x, y) == 'P'||getBoard(x, y) == 'D'||getBoard(x, y) == 'S'||getBoard(x, y) == 'B') {
             System.out.println("Hit!");
             setBoard(x, y, 'x');
             shipCheck(x, y, ships);
-            int check = 0;
+            int ok = 0;
             Scanner option = new Scanner(System.in);
-            while (check == 0) {
+            while (shipRemain >= 1 && ok == 0) {
                 System.out.println("Press \"1\" to continue your turn!\nPress \"2\" to skip your turn!");
                 byte choice = option.nextByte();
                 if (choice == 1) {
@@ -145,17 +140,14 @@ public class Player extends GameBoard {
                     System.out.println(getName() + "'s map: ");
                     showOpponentBoard();
                     beAttacked();
-                    check = 1;
+                    ok = 1;
                 } else if (choice == 2) {
                     System.out.println("Your turn has ended!");
-                    check = 1;
-                } else {
-                    System.out.println("Invalid value!");
-                }
+                    ok = 1;
+                } else System.out.println("Invalid value!");
             }
-        } else if (getBoard(x, y) == 'x') {
-            System.out.println("Miss!\nYour turn has ended!");
-        } else {
+        } else if (getBoard(x, y) == 'x') System.out.println("You hit the same coordinate!\nYour turn has ended!");
+        else {
             setBoard(x, y, 'o');
             System.out.println("Miss!\nYour turn has ended!");
         }
@@ -171,7 +163,7 @@ public class Player extends GameBoard {
                     winCheck();
                     for (int a = ships[list].getBowRow(); a <= ships[list].getSternRow(); a++) {
                         for (int b = ships[list].getBowColumn(); b <= ships[list].getSternColumn(); b++) {
-                            setBoard(a, b, 'd');
+                            setBoard(a, b, 'X');
                         }
                     }
                 }

@@ -1,14 +1,21 @@
 public class Ship extends GameBoard {
     private String name;
     private int bowRow, bowColumn, sternRow, sternColumn, sizeShip;
+    private char sign;
+
+    public char getSign() {
+        return sign;
+    }
+
+    public void setSign(char sign) {
+        this.sign = sign;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     public int getBowRow() {
         return bowRow;
