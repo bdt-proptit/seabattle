@@ -51,23 +51,25 @@ public class MainBattle {
                 coorDinate1 = sc.nextLine();
                 String[] th = new String[5];
                 int number = 0;
-                if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.up(coorDinate1, length[i]))){
-                    number++;
-                    th[number]=Boards.up(coorDinate1, length[i]);
+                if(Boards.checkPoint1(board1, coorDinate1)) {
+                    if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.up(coorDinate1, length[i]))) {
+                        number++;
+                        th[number] = Boards.up(coorDinate1, length[i]);
+                    }
+                    if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.down(coorDinate1, length[i]))) {
+                        number++;
+                        th[number] = Boards.down(coorDinate1, length[i]);
+                    }
+                    if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.left(coorDinate1, length[i]))) {
+                        number++;
+                        th[number] = Boards.left(coorDinate1, length[i]);
+                    }
+                    if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.right(coorDinate1, length[i]))) {
+                        number++;
+                        th[number] = Boards.right(coorDinate1, length[i]);
+                    }
                 }
-                if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.down(coorDinate1, length[i]))){
-                    number++;
-                    th[number]=Boards.down(coorDinate1, length[i]);
-                }
-                if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.left(coorDinate1, length[i]))){
-                    number++;
-                    th[number]=Boards.left(coorDinate1, length[i]);
-                }
-                if (Boards.checkSetShip(ship[i], board1, coorDinate1, Boards.right(coorDinate1, length[i]))){
-                    number++;
-                    th[number]=Boards.right(coorDinate1, length[i]);
-                }
-                if(number==0&&!Boards.checkPoint1(board1, coorDinate1)) {
+                if(number==0) {
                     System.out.println("Diem ban nhap co the da sai cu phap, ngoai vung dat thuyen hoac khong the dat do se chong lan len thuyen khac!");
                     System.out.println("Moi nhap lai!");
                 }
@@ -150,6 +152,7 @@ public class MainBattle {
             for (int i = 1; i <= 30; i++) System.out.println(":>");
             System.out.printf("Luot cua %s!\n", player1.getNamePlayer());
             int kt = 0;
+            label:
             while (true) {
                 System.out.printf("So diem da ban: %d\n", player1.getPoint());
                 System.out.printf("So tau da pha: %d\n", player2.getWreck());
@@ -157,36 +160,41 @@ public class MainBattle {
                 System.out.println("1. Xem bang cua ban than");
                 if (kt == 0) System.out.println("2. Ban!");
                 System.out.println("3. Ket thuc luot");
-                byte press = sc.nextByte();
-                if (press == 1) Boards.showBoard(player1.getBoard());
-                else if (press == 2) {
-                    if (kt == 0) {
-                        Boards.showBoard(player1.getFog());
-                        System.out.print("Nhap toa do muon ban(VD: A1, C4,..): ");
-                        String coorDinate = new Scanner(System.in).nextLine();
-                        while (!Boards.checkPoint1(player1.getFog(), coorDinate)) {
-                            System.out.print("Toa do ban nhap khong ton tai hoac toa do nay da tung ban!\nMoi nhap lai(VD: A1, C4,..): ");
-                            coorDinate = new Scanner(System.in).nextLine();
-                        }
-                        int check = 0;
-                        if (Boards.checkShoot(coorDinate, player1, player2)) {
-                            check = 1;
-                        } else kt = 1;
-                        Boards.shoot(coorDinate, player1, player2);
-                        player1.setPoint(player1.getPoint() + 1);
-                        if (check == 1) {
-                            if (player2.winner()) {
-                                ktt = 1;
-                                endGame(player1.getNamePlayer());
-                                break;
+                String press = sc.nextLine();
+                switch (press) {
+                    case "1":
+                        Boards.showBoard(player1.getBoard());
+                        break;
+                    case "2":
+                        if (kt == 0) {
+                            Boards.showBoard(player1.getFog());
+                            System.out.print("Nhap toa do muon ban(VD: A1, C4,..): ");
+                            String coorDinate = new Scanner(System.in).nextLine();
+                            while (!Boards.checkPoint1(player1.getFog(), coorDinate)) {
+                                System.out.print("Toa do ban nhap khong ton tai hoac toa do nay da tung ban!\nMoi nhap lai(VD: A1, C4,..): ");
+                                coorDinate = new Scanner(System.in).nextLine();
                             }
-                        }
-                    } else System.out.println("Sai cu phap! Moi nhap lai!");
-                } else if (press == 3) {
-                    player = player1;
-                    player1 = player2;
-                    player2 = player;
-                    break;
+                            int check = 0;
+                            if (Boards.checkShoot(coorDinate, player1, player2)) {
+                                check = 1;
+                            } else kt = 1;
+                            Boards.shoot(coorDinate, player1, player2);
+                            player1.setPoint(player1.getPoint() + 1);
+                            if (check == 1) {
+                                if (player2.winner()) {
+                                    ktt = 1;
+                                    endGame(player1.getNamePlayer());
+                                    break label;
+                                }
+                            }
+                        } else System.out.println("Sai cu phap! Moi nhap lai!");
+                        break;
+                    case "3":
+                        player = player1;
+                        player1 = player2;
+                        player2 = player;
+                        break label;
+                    default: System.out.println("Sai cu phap! Moi nhap lai!");
                 }
             }
         } while (ktt != 1);
