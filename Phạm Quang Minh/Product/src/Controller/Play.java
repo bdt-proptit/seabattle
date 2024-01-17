@@ -31,15 +31,14 @@ public class Play {
     }
 
     public void menuInGame(Scanner scanner, Player player, Player oppositePlayer, int level, Music music) {
-        FunctionMusic functionMusic = new FunctionMusic();
         int swap = 1;
-        if (music.getGame())
-            functionMusic.playMusic("ProPTIT", false);
         oppositePlayer.setStatusNormal(false);
         do {
+            FunctionMusic functionMusic = new FunctionMusic();
             Effect.clearScreen();
             if (player.remainNumberShips() == 0 || oppositePlayer.remainNumberShips() == 0) {
                 if (music.getGame()) {
+                    functionMusic.playMusic("ProPTIT", false);
                     functionMusic.playMusic(
                             "D:\\Programming\\Push\\Sea Battle\\src\\Audio\\Win.wav", true);
                 }
@@ -48,8 +47,8 @@ public class Play {
                 } else
                     winner(scanner, player, oppositePlayer, level);
                 Effect.EnterToContinue(scanner);
-                functionMusic.playMusic("ProPTIT", false);
                 if (music.getGame()) {
+                    functionMusic.playMusic("ProPTIT", false);
                     functionMusic.playMusic(
                             "D:\\Programming\\Push\\Sea Battle\\src\\Audio\\Beach.wav", true);
                     Effect.clip.loop(Effect.clip.LOOP_CONTINUOUSLY);
@@ -71,13 +70,6 @@ public class Play {
                         swap = functionComputer.computerShotOut(scanner, oppositePlayer, player, level, swap, music);
                     break;
                 case 3:
-                    if (music.getGame()) {
-                        Effect.clip.stop();
-                        functionMusic.playMusic(
-                                "D:\\Programming\\Push\\Sea Battle\\src\\Audio\\Beach.wav",
-                                true);
-                        Effect.clip.loop(Effect.clip.LOOP_CONTINUOUSLY);
-                    }
                     MenuGame menuGame = new MenuGame();
                     menuGame.menu(scanner, player, oppositePlayer, music);
                     return;
